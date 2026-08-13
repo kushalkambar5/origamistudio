@@ -18,7 +18,7 @@ export interface FlowingMenuItem {
 
 interface FlowingMenuProps {
   items: FlowingMenuItem[];
-  onSelectService: (service: FlowingMenuItem) => void;
+  onSelectService?: (service: FlowingMenuItem) => void;
   speed?: number;
   textColor?: string;
   bgColor?: string;
@@ -50,7 +50,7 @@ export default function FlowingMenu({
             marqueeBgColor={marqueeBgColor}
             marqueeTextColor={marqueeTextColor}
             borderColor={borderColor}
-            onClick={() => onSelectService(item)}
+            onClick={onSelectService ? () => onSelectService(item) : undefined}
           />
         ))}
       </nav>
@@ -66,7 +66,7 @@ interface MenuItemProps {
   marqueeBgColor: string;
   marqueeTextColor: string;
   borderColor: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 function MenuItem({

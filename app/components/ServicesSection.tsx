@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Share2,
   Camera,
@@ -9,9 +9,6 @@ import {
   TrendingUp,
   Bot,
   MessageSquare,
-  CheckCircle2,
-  Sparkles,
-  X,
 } from "lucide-react";
 import FlowingMenu, { FlowingMenuItem } from "./FlowingMenu";
 
@@ -152,10 +149,6 @@ const SERVICES: FlowingMenuItem[] = [
 ];
 
 export default function ServicesSection() {
-  const [selectedService, setSelectedService] = useState<FlowingMenuItem | null>(
-    null
-  );
-
   return (
     <section
       id="what-we-do"
@@ -176,7 +169,6 @@ export default function ServicesSection() {
         {/* Flowing Menu Component */}
         <FlowingMenu
           items={SERVICES}
-          onSelectService={setSelectedService}
           speed={18}
           textColor="#0f172a"
           bgColor="#ffffff"
@@ -185,83 +177,6 @@ export default function ServicesSection() {
           borderColor="#e2e8f0"
         />
       </div>
-
-      {/* Service Detail Modal */}
-      {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-white border border-[#FC6100]/40 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setSelectedService(null)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-[#FC6100] hover:text-white transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-[#FC6100]/40 flex items-center justify-center text-[#FC6100]">
-                {React.createElement(selectedService.icon, {
-                  className: "w-7 h-7",
-                })}
-              </div>
-              <div>
-                <span className="text-xs font-mono text-[#FC6100] uppercase tracking-wider font-bold">
-                  {selectedService.badge}
-                </span>
-                <h3 className="font-changa text-2xl sm:text-3xl font-extrabold text-slate-900">
-                  {selectedService.title}
-                </h3>
-              </div>
-            </div>
-
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
-              {selectedService.description}
-            </p>
-
-            <div className="mb-6 p-4 rounded-2xl bg-orange-50/60 border border-orange-200">
-              <span className="text-xs font-mono text-slate-500 uppercase tracking-widest block mb-1">
-                EXPECTED IMPACT
-              </span>
-              <span className="text-base sm:text-lg font-changa font-bold text-[#FC6100]">
-                {selectedService.metrics}
-              </span>
-            </div>
-
-            <div className="mb-8">
-              <h4 className="font-changa text-lg font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#FC6100]" />
-                WHAT'S INCLUDED IN DELIVERABLES:
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {selectedService.deliverables.map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-[#FC6100] shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
-              <button
-                onClick={() => setSelectedService(null)}
-                className="px-5 py-2.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900"
-              >
-                Close
-              </button>
-              <a
-                href="#contact-us"
-                onClick={() => setSelectedService(null)}
-                className="px-6 py-2.5 rounded-full text-xs font-changa font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-md hover:brightness-110"
-              >
-                GET CUSTOM PROPOSAL →
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
