@@ -70,20 +70,20 @@ export default function HeroSection() {
         </svg>
       </div>
 
-      {/* Full Viewport Width 3D Video Carousel Container (No max-w constraint) */}
+      {/* Brand Logo Heading - Above Video Carousel */}
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 mb-4">
+        <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase text-slate-900">
+          ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
+        </h1>
+      </div>
+
+      {/* Full Viewport Width 3D Video Carousel Container */}
       <div className="w-full relative z-10 overflow-hidden mb-6">
         <ClientVideoCarousel />
       </div>
 
+      {/* Subtitle - Remains Below Video Carousel */}
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10">
-        {/* Brand Logo & Origami Emblem */}
-        <div className="mb-6 flex flex-col items-center">
-          <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mt-2 uppercase text-slate-900">
-            ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
-          </h1>
-        </div>
-
-        {/* Main Subtitle */}
         <p className="max-w-3xl text-lg sm:text-2xl text-slate-600 font-light leading-relaxed mb-8">
           A digital marketing studio that helps brands{" "}
           <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">

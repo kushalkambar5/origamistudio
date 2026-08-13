@@ -85,43 +85,55 @@ const BASE_VIDEOS: ClientVideo[] = [
   },
 ];
 
-// 20 items in total (18° step per card)
-const RING_ITEMS = [...BASE_VIDEOS, ...BASE_VIDEOS].map((item, idx) => ({
-  ...item,
-  uniqueKey: `${item.id}-${idx}`,
-}));
+// Helper to shuffle array randomly
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 export default function ClientVideoCarousel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const draggerRef = useRef<HTMLDivElement>(null);
-  const cardInnerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const autoRotateTween = useRef<gsap.core.Tween | null>(null);
+  const autoRotateTween = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null);
 
-  // Dynamic dimensions for 0-gap, 0-overlap full viewport width arc
+  // Randomized 20 items on client load so videos are not serial
+  const [ringItems, setRingItems] = useState<
+    (ClientVideo & { uniqueKey: string })[]
+  >([]);
+
+  // Dimensions for full viewport 3D arc
   const [dimensions, setDimensions] = useState({
     radius: 900,
     cardWidth: 280,
-    cardHeight: 420,
+    cardHeight: 440,
   });
 
   useEffect(() => {
+    // Generate randomized videos array (20 items)
+    const shuffledPool = [
+      ...shuffleArray(BASE_VIDEOS),
+      ...shuffleArray(BASE_VIDEOS),
+    ];
+    setRingItems(
+      shuffledPool.map((item, idx) => ({
+        ...item,
+        uniqueKey: `${item.id}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
+      }))
+    );
+
     const updateDimensions = () => {
       const vw = window.innerWidth;
-      // Calculate radius R to span full viewport width edge-to-edge
-      // R * sin(52 deg) = vw / 2 => R = vw / (2 * sin(52 deg))
       const sin52 = Math.sin((52 * Math.PI) / 180);
       const r = Math.max(480, Math.round(vw / (2 * sin52)));
-
-      // Exact mathematical card width W for 0 gap and 0 overlap between adjacent 18-degree panels:
-      // W = 2 * R * sin(9 deg)
       const sin9 = Math.sin((9 * Math.PI) / 180);
       const w = Math.round(2 * r * sin9);
-
-      // Card height maintaining sleek aspect ratio
-      const h = Math.round(w * 1.45);
-
+      const h = Math.round(w * 1.5);
       setDimensions({ radius: r, cardWidth: w, cardHeight: h });
     };
 
@@ -131,7 +143,7 @@ export default function ClientVideoCarousel() {
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || ringItems.length === 0) return;
 
     gsap.registerPlugin(Draggable);
 
@@ -142,157 +154,142 @@ export default function ClientVideoCarousel() {
     if (!container || !ring || !dragger) return;
 
     const ctx = gsap.context(() => {
-      let xPos = 0;
-
       const { radius } = dimensions;
-      const numItems = RING_ITEMS.length; // 20
-      const angleStep = 360 / numItems; // 18 degrees
+      const numItems = ringItems.length; // 20
+      const angleStep = 360 / numItems; // 18 deg
 
-      // Parallax offset matching original formula
-      const getBgPos = (i: number) => {
-        const ringRotation = (gsap.getProperty(ring, "rotationY") as number) || 0;
-        const wrapped = gsap.utils.wrap(
-          0,
-          360,
-          ringRotation - 180 - i * angleStep
-        );
-        return (-wrapped / 360) * 350;
-      };
-
-      const updateParallax = () => {
-        cardInnerRefs.current.forEach((el, i) => {
-          if (el) {
-            const shiftX = getBgPos(i);
-            gsap.set(el, { x: shiftX });
-          }
+      // Function to launch a fresh infinite auto-spin from current rotation
+      const startAutoRotate = () => {
+        if (autoRotateTween.current) {
+          autoRotateTween.current.kill();
+        }
+        const currRot = (gsap.getProperty(ring, "rotationY") as number) || 180;
+        autoRotateTween.current = gsap.to(ring, {
+          rotationY: currRot + 360,
+          duration: 55,
+          ease: "none",
+          repeat: -1,
         });
       };
 
-      // Set initial GSAP timeline
-      const tl = gsap.timeline();
+      // Set initial 3D positions of cards
+      gsap.set(dragger, { opacity: 0 });
+      gsap.set(ring, { rotationY: 180 });
+      gsap.set(".ring-img-card", {
+        rotateY: (i: number) => i * -angleStep,
+        transformOrigin: `50% 50% ${radius}px`,
+        z: -radius,
+        backfaceVisibility: "hidden",
+        opacity: 1,
+      });
 
-      tl.set(dragger, { opacity: 0 })
-        .set(ring, { rotationY: 180 })
-        .set(".ring-img-card", {
-          rotateY: (i: number) => i * -angleStep,
-          transformOrigin: `50% 50% ${radius}px`,
-          z: -radius,
-          backfaceVisibility: "hidden",
-          opacity: 1,
-        })
-        .from(".ring-img-card", {
-          duration: 1.4,
-          y: 120,
-          opacity: 0,
-          stagger: 0.06,
-          ease: "power3.out",
-          onUpdate: updateParallax,
-          onComplete: () => {
-            autoRotateTween.current = gsap.to(ring, {
-              rotationY: "+=360",
-              duration: 50,
-              ease: "none",
-              repeat: -1,
-              onUpdate: updateParallax,
-            });
-          },
-        });
-
-      // Draggable setup matching exact snippet logic
-      Draggable.create(dragger, {
-        type: "x,y",
-        onDragStart: (e) => {
-          if (autoRotateTween.current) {
-            autoRotateTween.current.pause();
-          }
-          let clientX = 0;
-          if (e.touches && e.touches.length > 0) {
-            clientX = e.touches[0].clientX;
-          } else if ((e as MouseEvent).clientX !== undefined) {
-            clientX = (e as MouseEvent).clientX;
-          }
-          xPos = Math.round(clientX);
-        },
-
-        onDrag: function (e) {
-          let clientX = 0;
-          if (e.touches && e.touches.length > 0) {
-            clientX = e.touches[0].clientX;
-          } else if ((e as MouseEvent).clientX !== undefined) {
-            clientX = (e as MouseEvent).clientX;
-          }
-
-          const currentX = Math.round(clientX);
-          const delta = (currentX - xPos) % 360;
-
-          gsap.to(ring, {
-            rotationY: `-=${delta}`,
-            duration: 0.1,
-            ease: "power1.out",
-            onUpdate: updateParallax,
-          });
-
-          xPos = currentX;
-        },
-
-        onDragEnd: function () {
-          gsap.set(dragger, { x: 0, y: 0 });
-          if (autoRotateTween.current) {
-            autoRotateTween.current.resume();
-          }
+      // Entrance animation
+      gsap.from(".ring-img-card", {
+        duration: 1.4,
+        y: 120,
+        opacity: 0,
+        stagger: 0.06,
+        ease: "power3.out",
+        onComplete: () => {
+          startAutoRotate();
         },
       });
 
-      updateParallax();
+      // Drag physics variables
+      let startRotationY = 180;
+      let lastX = 0;
+      let velocityX = 0;
+      let lastTime = 0;
+
+      Draggable.create(dragger, {
+        type: "x",
+        onDragStart: function () {
+          // Kill auto-rotate immediately so it never snaps back
+          if (autoRotateTween.current) {
+            autoRotateTween.current.kill();
+          }
+
+          startRotationY = (gsap.getProperty(ring, "rotationY") as number) || 180;
+          lastX = this.x;
+          velocityX = 0;
+          lastTime = Date.now();
+        },
+
+        onDrag: function () {
+          const now = Date.now();
+          const dt = Math.max(1, now - lastTime);
+          const dx = this.x - lastX;
+
+          // Calculate drag velocity for smooth inertia momentum on release
+          velocityX = dx / dt;
+          lastX = this.x;
+          lastTime = now;
+
+          // Sensitivity scaling for natural touch/mouse feel
+          const rotationDelta = this.x * 0.35;
+          gsap.set(ring, { rotationY: startRotationY - rotationDelta });
+        },
+
+        onDragEnd: function () {
+          const currentRotation = (gsap.getProperty(ring, "rotationY") as number) || 180;
+
+          // Calculate smooth momentum glide based on drag velocity
+          const momentumGlide = velocityX * 180; // glide distance
+          const targetRotation = currentRotation - momentumGlide;
+
+          // Reset dragger position instantly without altering ring position
+          gsap.set(dragger, { x: 0, y: 0 });
+
+          // Smooth inertia glide animation to desired state, then resume auto-rotation
+          gsap.to(ring, {
+            rotationY: targetRotation,
+            duration: Math.min(1.8, Math.max(0.6, Math.abs(velocityX) * 0.8)),
+            ease: "power2.out",
+            onComplete: () => {
+              startAutoRotate();
+            },
+          });
+        },
+      });
     }, container);
 
     return () => {
       ctx.revert();
     };
-  }, [dimensions]);
+  }, [dimensions, ringItems]);
 
-  // Ensure all HTML5 videos auto-play
+  // Ensure all videos play
   useEffect(() => {
     videoRefs.current.forEach((vid) => {
       if (vid) {
         vid.play().catch(() => {});
       }
     });
-  }, []);
+  }, [ringItems]);
 
   const rotateToCard = (i: number) => {
     const ring = ringRef.current;
     if (!ring) return;
 
     if (autoRotateTween.current) {
-      autoRotateTween.current.pause();
+      autoRotateTween.current.kill();
     }
 
-    const angleStep = 360 / RING_ITEMS.length;
+    const angleStep = 360 / ringItems.length;
     const targetAngle = 180 + i * angleStep;
 
     gsap.to(ring, {
       rotationY: targetAngle,
       duration: 1.2,
       ease: "power2.out",
-      onUpdate: () => {
-        cardInnerRefs.current.forEach((el, idx) => {
-          if (el) {
-            const ringRotation = (gsap.getProperty(ring, "rotationY") as number) || 0;
-            const wrapped = gsap.utils.wrap(
-              0,
-              360,
-              ringRotation - 180 - idx * angleStep
-            );
-            const shiftX = (-wrapped / 360) * 350;
-            gsap.set(el, { x: shiftX });
-          }
-        });
-      },
       onComplete: () => {
-        if (autoRotateTween.current) {
-          autoRotateTween.current.resume();
-        }
+        const currRot = (gsap.getProperty(ring, "rotationY") as number) || targetAngle;
+        autoRotateTween.current = gsap.to(ring, {
+          rotationY: currRot + 360,
+          duration: 55,
+          ease: "none",
+          repeat: -1,
+        });
       },
     });
   };
@@ -319,7 +316,7 @@ export default function ClientVideoCarousel() {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* Ring Container centered horizontally */}
+        {/* Ring Container */}
         <div
           ref={ringRef}
           className="relative"
@@ -329,7 +326,7 @@ export default function ClientVideoCarousel() {
             transformStyle: "preserve-3d",
           }}
         >
-          {RING_ITEMS.map((video, i) => (
+          {ringItems.map((video, i) => (
             <div
               key={video.uniqueKey}
               onClick={() => rotateToCard(i)}
@@ -340,13 +337,8 @@ export default function ClientVideoCarousel() {
                 transformStyle: "preserve-3d",
               }}
             >
-              {/* Inner Parallax Video Wrapper */}
-              <div
-                ref={(el) => {
-                  cardInnerRefs.current[i] = el;
-                }}
-                className="w-[180%] h-full relative left-[-40%] pointer-events-none"
-              >
+              {/* Full Video Container - Uncropped */}
+              <div className="w-full h-full relative pointer-events-none overflow-hidden">
                 <video
                   ref={(el) => {
                     videoRefs.current[i] = el;
@@ -361,24 +353,14 @@ export default function ClientVideoCarousel() {
                 />
               </div>
 
-              {/* Gradient overlay for subtitle readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none" />
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
 
-              {/* Category Pill Tag */}
-              <div className="absolute top-3 left-3 pointer-events-none">
-                <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-[10px] sm:text-xs font-mono font-semibold text-[#FC6100] border border-white/10">
-                  {video.category}
-                </span>
-              </div>
-
-              {/* Client Title Tag */}
+              {/* Minimal Client Name Tag */}
               <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
-                <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-bold uppercase tracking-wider mb-0.5 truncate">
+                <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-bold uppercase tracking-wider truncate">
                   {video.client}
                 </p>
-                <h4 className="font-changa text-xs sm:text-sm font-bold text-white truncate">
-                  {video.title}
-                </h4>
               </div>
             </div>
           ))}
