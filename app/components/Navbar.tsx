@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
@@ -19,23 +19,40 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+  const prevScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
 
-      const sections = NAV_ITEMS.map((item) =>
-        item.href.replace("#", "")
-      );
-      
-      const scrollPosition = window.scrollY + 200;
+      // Determine navbar visibility based on scroll direction
+      if (currentScrollY <= 60) {
+        // Always visible at the top of the page
+        setIsVisible(true);
+      } else if (currentScrollY > prevScrollY.current + 8) {
+        // Scrolling DOWN -> Hide navbar
+        setIsVisible(false);
+        setMobileMenuOpen(false); // Close mobile menu if user scrolls down
+      } else if (currentScrollY < prevScrollY.current - 8) {
+        // Scrolling UP -> Show navbar
+        setIsVisible(true);
+      }
 
-      for (const sectionId of sections) {
+      setScrolled(currentScrollY > 20);
+      prevScrollY.current = currentScrollY;
+
+      // Active section highlight tracking
+      const sections = NAV_ITEMS.map((item) => item.href.replace("#", ""));
+      const scrollPosition = currentScrollY + 220;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sectionId = sections[i];
         const el = document.getElementById(sectionId);
         if (el) {
           const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
+          if (scrollPosition >= top) {
             setActiveSection(sectionId);
             break;
           }
@@ -43,7 +60,7 @@ export default function Navbar() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -51,30 +68,50 @@ export default function Navbar() {
     e.preventDefault();
     setMobileMenuOpen(false);
     const targetId = href.replace("#", "");
-    const targetElement = document.getElementById(targetId);
 
+    if (targetId === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveSection("home");
+      return;
+    }
+
+    const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      targetElement.scrollIntoView({
+      const headerOffset = 90;
+      const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
         behavior: "smooth",
-        block: "start",
       });
       setActiveSection(targetId);
     }
   };
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl transition-all duration-300">
+    <header
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl transition-all duration-300 ease-in-out transform ${
+        isVisible
+          ? "translate-y-0 opacity-100 pointer-events-auto"
+          : "-translate-y-28 opacity-0 pointer-events-none"
+      }`}
+    >
       <nav
-        className="w-full bg-transparent border-none px-4 py-2 flex items-center justify-between"
+        className={`w-full rounded-2xl px-4 py-2.5 flex items-center justify-between transition-all duration-300 ${
+          scrolled
+            ? "bg-white/85 backdrop-blur-xl border border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+            : "bg-white/70 backdrop-blur-md border border-slate-200/60 shadow-sm"
+        }`}
         aria-label="Main Navigation"
       >
         {/* Left: Brand Logo & Title */}
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, "#home")}
-          className="flex items-center gap-2.5 group transition-transform duration-300 hover:scale-105"
+          className="flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
         >
-          <div className="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/80 backdrop-blur-md p-1 border border-[#FC6100]/30 shadow-[0_2px_15px_rgba(252,97,0,0.15)]">
+          <div className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-white to-slate-50 p-1 border border-slate-200 shadow-sm group-hover:border-[#FC6100]/40 transition-colors">
             <Image
               src="/logo.png"
               alt="Origami Studio Logo"
@@ -84,18 +121,13 @@ export default function Navbar() {
               priority
             />
           </div>
-          <div className="flex flex-col">
-            <span className="font-changa text-lg font-bold tracking-wider text-slate-900 uppercase flex items-center gap-1">
-              ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
-            </span>
-            <span className="text-[9px] tracking-widest text-slate-500 font-mono -mt-1 hidden sm:block">
-              origamistudio.in
-            </span>
-          </div>
+          <span className="font-changa text-lg font-bold tracking-wider text-slate-900 uppercase">
+            ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
+          </span>
         </a>
 
-        {/* Center Nav Links (Desktop) - No background, transparent, no border */}
-        <div className="hidden lg:flex items-center gap-1 bg-white/70 backdrop-blur-md border border-slate-200/80 shadow-sm px-3 py-1.5 rounded-full">
+        {/* Center Nav Links (Desktop) */}
+        <div className="hidden lg:flex items-center gap-1 bg-slate-100/70 p-1 rounded-full border border-slate-200/50">
           {NAV_ITEMS.map((item) => {
             const sectionId = item.href.replace("#", "");
             const isActive = activeSection === sectionId;
@@ -104,16 +136,13 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`relative px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-full ${
+                className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
                   isActive
-                    ? "text-[#FC6100] font-semibold"
-                    : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
+                    ? "bg-white text-[#FC6100] shadow-sm"
+                    : "text-slate-600 hover:text-slate-950 hover:bg-white/50"
                 }`}
               >
                 {item.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#FC6100] glow-orange-sm animate-pulse" />
-                )}
               </a>
             );
           })}
@@ -124,7 +153,7 @@ export default function Navbar() {
           <a
             href="#contact-us"
             onClick={(e) => handleNavClick(e, "#contact-us")}
-            className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] hover:brightness-110 shadow-[0_4px_15px_rgba(252,97,0,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-[0_4px_16px_rgba(252,97,0,0.3)] hover:shadow-[0_6px_20px_rgba(252,97,0,0.45)] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book Call</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -136,23 +165,23 @@ export default function Navbar() {
           <a
             href="#contact-us"
             onClick={(e) => handleNavClick(e, "#contact-us")}
-            className="px-3 py-1.5 text-xs font-semibold text-white bg-[#FC6100] rounded-full shadow-sm"
+            className="px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] rounded-full shadow-sm"
           >
-            Contact
+            Book Call
           </a>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
-            className="p-2 rounded-lg bg-white/90 backdrop-blur-md text-slate-700 hover:text-slate-900 border border-slate-200 shadow-sm"
+            className="p-2 rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 transition-colors"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </nav>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#FC6100]/30 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="lg:hidden mt-2 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="grid grid-cols-2 gap-2">
             {NAV_ITEMS.map((item) => {
               const sectionId = item.href.replace("#", "");
@@ -164,24 +193,24 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`px-3 py-2.5 rounded-xl text-xs font-medium flex items-center justify-between transition-colors ${
                     isActive
-                      ? "bg-[#FC6100]/10 text-[#FC6100] border border-[#FC6100]/30 font-semibold"
+                      ? "bg-[#FC6100]/10 text-[#FC6100] border border-[#FC6100]/30 font-bold"
                       : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
                   <span>{item.label}</span>
-                  {isActive && <div className="w-2 h-2 rounded-full bg-[#FC6100]" />}
+                  {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#FC6100]" />}
                 </a>
               );
             })}
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-            <span>origamistudio.in</span>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end text-xs">
             <a
               href="#contact-us"
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="text-[#FC6100] font-semibold underline underline-offset-4"
+              className="text-[#FC6100] font-semibold flex items-center gap-1 hover:underline"
             >
-              Get Custom Quote →
+              <span>Get Custom Quote</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
