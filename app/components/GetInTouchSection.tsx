@@ -71,16 +71,9 @@ export default function GetInTouchSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FC6100]/10 border border-[#FC6100]/30 text-[#FC6100] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Calculator className="w-3.5 h-3.5" />
-            <span>INTERACTIVE ESTIMATOR</span>
-          </div>
           <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
-            ESTIMATE YOUR <span className="text-[#FC6100]">PROJECT SCOPE</span>
+            <span className="text-[#FC6100]">Get In Touch</span>
           </h2>
-          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            Select your desired solutions to estimate timeline, deliverables, and lock in a 1-on-1 strategy call with our founders.
-          </p>
         </div>
 
         {/* Estimator Card Grid */}

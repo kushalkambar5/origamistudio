@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, HelpCircle, Sparkles } from "lucide-react";
+import { Plus } from "lucide-react";
+import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 
 interface FaqItem {
   question: string;
@@ -55,78 +56,83 @@ const FAQS: FaqItem[] = [
 ];
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <section
       id="faqs"
-      className="relative py-24 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
+      className="relative py-24 sm:py-32 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
     >
-      {/* Background Lighting */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#FC6100]/10 blur-[150px] rounded-full pointer-events-none" />
+      {/* Background Decorative Glows */}
+      <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#FC6100]/10 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-[20%] -left-[10%] w-[400px] h-[400px] bg-[#FC6100]/8 rounded-full blur-[80px] pointer-events-none z-0" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FC6100]/10 border border-[#FC6100]/30 text-[#FC6100] text-xs font-semibold uppercase tracking-wider mb-4">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>FREQUENTLY ASKED QUESTIONS</span>
-          </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
-            GOT QUESTIONS? <span className="text-[#FC6100]">WE HAVE ANSWERS</span>
-          </h2>
-          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            Everything you need to know about partnering with Origami Studio.
-          </p>
-        </div>
+        <h2 className="font-changa text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-center text-slate-900 mb-12 sm:mb-16">
+          <span className="text-[#FC6100]">FAQS</span>
+        </h2>
 
-        {/* Accordion List */}
-        <div className="space-y-4">
-          {FAQS.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={faq.question}
-                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                  isOpen
-                    ? "bg-slate-50 border-[#FC6100]/50 shadow-md"
-                    : "bg-slate-50/50 border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <button
-                  onClick={() => toggleFaq(index)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 focus:outline-none"
+        {/* Accordion Container matching Horyn2 layout */}
+        <LayoutGroup>
+          <motion.div
+            layout
+            className="border border-slate-200 rounded-3xl p-4 sm:p-6 bg-slate-50/50 backdrop-blur-md shadow-lg"
+            onMouseLeave={() => setActiveIndex(null)}
+          >
+            {FAQS.map((faq, index) => {
+              const isActive = activeIndex === index;
+              return (
+                <motion.div
+                  key={faq.question}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  className={`overflow-hidden cursor-pointer transition-colors ${
+                    index !== FAQS.length - 1 ? "border-b border-slate-200" : ""
+                  }`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onClick={() => setActiveIndex(isActive ? null : index)}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="px-2.5 py-0.5 rounded-full bg-white border border-slate-200 text-[10px] font-mono text-[#FC6100] font-bold uppercase shadow-xs">
-                      {faq.category}
-                    </span>
-                    <span className="font-changa text-base sm:text-lg font-bold text-slate-900">
-                      {faq.question}
-                    </span>
-                  </div>
-                  <div
-                    className={`w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-[#FC6100] shrink-0 transition-transform duration-300 shadow-xs ${
-                      isOpen ? "rotate-180 bg-[#FC6100] text-white border-[#FC6100]" : ""
-                    }`}
+                  <button
+                    type="button"
+                    className="w-full py-5 px-3 flex items-center gap-4 text-left font-changa font-bold text-slate-900 text-base sm:text-xl bg-transparent border-none outline-none cursor-pointer"
                   >
-                    <ChevronDown className="w-4 h-4" />
-                  </div>
-                </button>
+                    <Plus
+                      size={20}
+                      className={`shrink-0 transition-transform duration-300 ${
+                        isActive
+                          ? "rotate-45 text-[#FC6100]"
+                          : "rotate-0 text-slate-400"
+                      }`}
+                    />
+                    <span>{faq.question}</span>
+                  </button>
 
-                {isOpen && (
-                  <div className="px-6 pb-6 pt-2 text-slate-600 text-sm sm:text-base font-normal leading-relaxed border-t border-slate-200/80 animate-in fade-in duration-200">
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{
+                          duration: 0.2,
+                          ease: "easeOut",
+                        }}
+                      >
+                        <p className="text-slate-600 pl-11 sm:pl-12 pr-4 pb-6 pt-1 text-sm sm:text-base leading-relaxed max-w-3xl font-normal">
+                          {faq.answer}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </LayoutGroup>
 
         {/* Still have questions banner */}
         <div className="mt-12 text-center p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
@@ -144,3 +150,4 @@ export default function FaqSection() {
     </section>
   );
 }
+

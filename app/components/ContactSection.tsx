@@ -62,10 +62,6 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FC6100]/10 border border-[#FC6100]/30 text-[#FC6100] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Mail className="w-3.5 h-3.5" />
-            <span>CONTACT US</span>
-          </div>
           <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             LET'S FOLD YOUR <span className="text-[#FC6100]">NEXT MOVEMENT</span>
           </h2>
