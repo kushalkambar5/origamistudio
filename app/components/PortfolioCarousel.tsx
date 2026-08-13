@@ -99,19 +99,24 @@ const CAROUSEL_ITEMS: ProcessCard[] = [
 export default function PortfolioCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState<ProcessCard | null>(null);
-  const [spacing, setSpacing] = useState(270);
+  const [spacing, setSpacing] = useState(240);
+
+  // Smooth drag sliding state
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
 
   const total = CAROUSEL_ITEMS.length;
 
-  // Responsive dynamic spacing for full viewport coverage
+  // Responsive dynamic spacing for card overlapping
   React.useEffect(() => {
     const updateSpacing = () => {
       const w = window.innerWidth;
-      if (w < 640) setSpacing(150);
-      else if (w < 768) setSpacing(200);
-      else if (w < 1024) setSpacing(240);
-      else if (w < 1440) setSpacing(280);
-      else setSpacing(320);
+      if (w < 640) setSpacing(110);
+      else if (w < 768) setSpacing(140);
+      else if (w < 1024) setSpacing(170);
+      else if (w < 1440) setSpacing(200);
+      else setSpacing(220);
     };
     updateSpacing();
     window.addEventListener("resize", updateSpacing);
@@ -132,6 +137,33 @@ export default function PortfolioCarousel() {
     if (diff < -total / 2) diff += total;
     return diff;
   };
+
+  // Drag & Swipe Handlers
+  const handleDragStart = (clientX: number) => {
+    setIsDragging(true);
+    setStartX(clientX);
+    setDragOffset(0);
+  };
+
+  const handleDragMove = (clientX: number) => {
+    if (!isDragging) return;
+    const deltaX = clientX - startX;
+    setDragOffset(deltaX);
+  };
+
+  const handleDragEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const draggedCards = dragOffset / spacing;
+    if (Math.abs(draggedCards) > 0.15) {
+      const shift = Math.round(-draggedCards) || (dragOffset < 0 ? 1 : -1);
+      setActiveIndex((prev) => (prev + shift + total * 100) % total);
+    }
+    setDragOffset(0);
+  };
+
+  const dragRatio = dragOffset / spacing;
 
   return (
     <section
@@ -175,41 +207,60 @@ export default function PortfolioCarousel() {
           </div>
         </div>
 
-        {/* CURVED 3D PERSPECTIVE GALLERY ARC SLIDER (Matching Reference Image 2) */}
-        <div className="relative w-full overflow-hidden my-8 py-6 select-none">
+        {/* CURVED 3D PERSPECTIVE GALLERY ARC SLIDER (Matching Reference Image) */}
+        <div
+          className="relative w-full overflow-hidden my-8 py-6 select-none cursor-grab active:cursor-grabbing"
+          onMouseDown={(e) => handleDragStart(e.clientX)}
+          onMouseMove={(e) => handleDragMove(e.clientX)}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+          onTouchEnd={handleDragEnd}
+        >
           <div
             className="relative min-h-[380px] sm:min-h-[460px] md:min-h-[500px] flex items-center justify-center overflow-hidden py-4"
-            style={{ perspective: "1200px" }}
+            style={{ perspective: "1100px", transformStyle: "preserve-3d" }}
           >
             {CAROUSEL_ITEMS.map((item, idx) => {
-              const offset = getOffset(idx);
-              const absOffset = Math.abs(offset);
+              const baseOffset = getOffset(idx);
+              const continuousOffset = baseOffset + dragRatio;
+              const absOffset = Math.abs(continuousOffset);
 
-              if (absOffset > 3) return null;
+              if (absOffset > 3.5) return null;
 
-              const rotateY = offset * -16;
-              const scale = Math.max(0.72, 1 - absOffset * 0.1);
-              const translateX = offset * spacing;
-              const translateY = Math.pow(absOffset, 1.5) * 14;
-              const zIndex = 40 - absOffset * 10;
-              const opacity = Math.max(0.4, 1 - absOffset * 0.2);
+              // 3D Inward Ring Math:
+              // Middle goes INWARDS into screen (smaller scale 0.72, deeper Z -220px)
+              // Sides go OUTWARDS towards viewer (larger scale 1.15+, higher Z, overlapping cards in front!)
+              const translateX = continuousOffset * spacing;
+              const translateZ = -220 + Math.pow(absOffset, 1.35) * 80;
+              const translateY = Math.pow(absOffset, 1.4) * 6;
+              const scale = Math.min(1.18, 0.72 + absOffset * 0.12);
+              const rotateY = continuousOffset * -16;
 
-              const isActive = offset === 0;
+              // Outer cards have higher Z-index so they overlap inner cards in front!
+              const zIndex = 10 + Math.round(absOffset * 10);
+              const opacity = Math.max(0.6, 1 - absOffset * 0.1);
+              const isActive = Math.abs(continuousOffset) < 0.5;
 
               return (
                 <div
                   key={item.id}
                   onClick={() => {
-                    setActiveIndex(idx);
-                    setSelectedItem(item);
+                    if (Math.abs(dragOffset) < 5) {
+                      setActiveIndex(idx);
+                      setSelectedItem(item);
+                    }
                   }}
                   style={{
-                    transform: `translateX(${translateX}px) translateY(${translateY}px) rotateY(${rotateY}deg) scale(${scale})`,
+                    transform: `translateX(${translateX.toFixed(2)}px) translateY(${translateY.toFixed(2)}px) translateZ(${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`,
                     zIndex,
                     opacity,
-                    transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease, z-index 0.6s ease",
+                    transition: isDragging
+                      ? "none"
+                      : "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, z-index 0.5s ease",
                   }}
-                  className={`absolute cursor-pointer rounded-3xl overflow-hidden border transition-all duration-300 group shadow-xl bg-white ${
+                  className={`absolute cursor-pointer rounded-3xl overflow-hidden border transition-all duration-300 group shadow-2xl bg-white ${
                     isActive
                       ? "border-[#FC6100] shadow-[0_12px_40px_rgba(252,97,0,0.3)] ring-2 ring-[#FC6100]/20"
                       : "border-slate-200 hover:border-slate-300"
@@ -220,22 +271,22 @@ export default function PortfolioCarousel() {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 pointer-events-none"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-80 pointer-events-none" />
 
                     {/* Step Badge */}
-                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-[#FC6100]/40 text-[#FC6100] font-changa text-xs font-bold shadow-xs">
+                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-[#FC6100]/40 text-[#FC6100] font-changa text-xs font-bold shadow-xs pointer-events-none">
                       {item.stepNumber}
                     </div>
 
-                    <div className="absolute top-4 right-4 p-2 rounded-full bg-white/90 backdrop-blur-md text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity shadow-xs">
+                    <div className="absolute top-4 right-4 p-2 rounded-full bg-white/90 backdrop-blur-md text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity shadow-xs pointer-events-none">
                       <ExternalLink className="w-4 h-4" />
                     </div>
                   </div>
 
                   {/* Card Label Content matching Reference Image */}
-                  <div className="p-4 sm:p-5 text-center bg-white h-[35%] flex flex-col justify-center items-center">
+                  <div className="p-4 sm:p-5 text-center bg-white h-[35%] flex flex-col justify-center items-center pointer-events-none">
                     <span className="font-changa text-sm sm:text-base font-bold text-[#FC6100] block mb-0.5">
                       {item.stepNumber}
                     </span>

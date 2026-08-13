@@ -86,7 +86,8 @@ const CLIENT_VIDEOS: ClientVideo[] = [
 export default function ClientVideoCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [cardDimensions, setCardDimensions] = useState({ width: 270, height: 420 });
+  const [spacing, setSpacing] = useState(170);
+  const [cardDimensions, setCardDimensions] = useState({ width: 240, height: 360 });
 
   // Smooth drag/swipe sliding state
   const [isDragging, setIsDragging] = useState(false);
@@ -96,18 +97,22 @@ export default function ClientVideoCarousel() {
 
   const total = CLIENT_VIDEOS.length;
 
-  // Responsive card dimension updates
+  // Responsive card dimensions & overlapping spacing
   useEffect(() => {
     const updateDimensions = () => {
       const w = window.innerWidth;
       if (w < 640) {
-        setCardDimensions({ width: 160, height: 260 });
+        setCardDimensions({ width: 140, height: 220 });
+        setSpacing(95);
       } else if (w < 768) {
-        setCardDimensions({ width: 200, height: 320 });
+        setCardDimensions({ width: 180, height: 280 });
+        setSpacing(125);
       } else if (w < 1024) {
-        setCardDimensions({ width: 230, height: 360 });
+        setCardDimensions({ width: 210, height: 320 });
+        setSpacing(145);
       } else {
-        setCardDimensions({ width: 270, height: 420 });
+        setCardDimensions({ width: 250, height: 370 });
+        setSpacing(175);
       }
     };
     updateDimensions();
@@ -115,7 +120,7 @@ export default function ClientVideoCarousel() {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  // Auto-advance loop when not actively dragging or hovered
+  // Auto-advance loop when not dragging or hovered
   useEffect(() => {
     if (isPaused || isDragging) return;
     const timer = setInterval(() => {
@@ -132,12 +137,7 @@ export default function ClientVideoCarousel() {
     return diff;
   };
 
-  // Cylinder Arc Trigonometry for Zero-Gap Touching Sides
-  const thetaDeg = 14;
-  const thetaHalfRad = ((thetaDeg / 2) * Math.PI) / 180;
-  const radius = cardDimensions.width / (2 * Math.sin(thetaHalfRad));
-
-  // Drag & Swipe Interaction Handlers
+  // Drag & Swipe Handlers
   const handleDragStart = (clientX: number) => {
     setIsDragging(true);
     setStartX(clientX);
@@ -154,7 +154,7 @@ export default function ClientVideoCarousel() {
     if (!isDragging) return;
     setIsDragging(false);
 
-    const draggedCards = dragOffset / cardDimensions.width;
+    const draggedCards = dragOffset / spacing;
     if (Math.abs(draggedCards) > 0.15) {
       const shift = Math.round(-draggedCards) || (dragOffset < 0 ? 1 : -1);
       setActiveIndex((prev) => (prev + shift + total * 100) % total);
@@ -162,8 +162,8 @@ export default function ClientVideoCarousel() {
     setDragOffset(0);
   };
 
-  // Drag ratio (-1 to 1 per card width)
-  const dragRatio = dragOffset / cardDimensions.width;
+  // Drag ratio (-1 to 1 per card spacing)
+  const dragRatio = dragOffset / spacing;
 
   return (
     <div
@@ -183,27 +183,31 @@ export default function ClientVideoCarousel() {
       {/* Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] bg-[#FC6100]/10 blur-[140px] rounded-full pointer-events-none" />
 
-      {/* 3D Curved Continuous Video Ribbon Stage */}
-      <div className="relative z-10 w-full min-h-[300px] sm:min-h-[380px] md:min-h-[460px] flex items-center justify-center overflow-hidden py-4">
+      {/* 3D Inward Concave Ring Video Stage */}
+      <div className="relative z-10 w-full min-h-[320px] sm:min-h-[400px] md:min-h-[460px] flex items-center justify-center overflow-hidden py-4">
         <div
           className="relative w-full flex items-center justify-center"
-          style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+          style={{ perspective: "1100px", transformStyle: "preserve-3d" }}
         >
           {CLIENT_VIDEOS.map((video, idx) => {
             const baseOffset = getOffset(idx);
             const continuousOffset = baseOffset + dragRatio;
             const absOffset = Math.abs(continuousOffset);
 
-            // Render visible cards across screen
-            if (absOffset > 4.5) return null;
+            // Render visible cards across viewport
+            if (absOffset > 4) return null;
 
-            // Compute exact 3D positioning where adjacent edges touch with 0 gap
-            const angleKRad = (continuousOffset * thetaDeg * Math.PI) / 180;
-            const translateX = radius * Math.sin(angleKRad);
-            const translateZ = -radius * (1 - Math.cos(angleKRad));
-            const rotateY = -continuousOffset * thetaDeg;
-            const zIndex = 50 - Math.round(absOffset);
+            // 3D Inward Ring Trigonometry & Depth Scaling Math:
+            // Middle is pushed INWARDS (smaller scale, deeper in Z)
+            // Sides extend OUTWARDS towards camera (larger scale, higher Z, overlapping cards in front!)
+            const translateX = continuousOffset * spacing;
+            const translateZ = -220 + Math.pow(absOffset, 1.35) * 80;
+            const translateY = Math.pow(absOffset, 1.4) * 6;
+            const scale = Math.min(1.18, 0.72 + absOffset * 0.12);
+            const rotateY = continuousOffset * -16;
 
+            // Outer cards have higher Z-index so they overlap inner cards in front!
+            const zIndex = 10 + Math.round(absOffset * 10);
             const isActive = Math.abs(continuousOffset) < 0.5;
 
             return (
@@ -215,7 +219,7 @@ export default function ClientVideoCarousel() {
                   }
                 }}
                 style={{
-                  transform: `translate3d(${translateX.toFixed(2)}px, 0px, ${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg)`,
+                  transform: `translateX(${translateX.toFixed(2)}px) translateY(${translateY.toFixed(2)}px) translateZ(${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`,
                   width: `${cardDimensions.width}px`,
                   height: `${cardDimensions.height}px`,
                   zIndex,
@@ -223,11 +227,11 @@ export default function ClientVideoCarousel() {
                     ? "none"
                     : "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), z-index 0.5s ease",
                 }}
-                className={`absolute cursor-pointer rounded-none border border-slate-900/10 bg-slate-900 overflow-hidden shadow-xl transition-all duration-300 group ${
-                  isActive ? "brightness-105" : "brightness-90 hover:brightness-100"
+                className={`absolute cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden border border-white/20 bg-slate-900 shadow-2xl transition-shadow duration-300 group ${
+                  isActive ? "ring-2 ring-[#FC6100]/50 shadow-[0_12px_40px_rgba(252,97,0,0.3)]" : "hover:border-slate-300"
                 }`}
               >
-                {/* HTML5 Video Element with Zero Border Radius */}
+                {/* HTML5 Video Element with Rounded Corners */}
                 <video
                   ref={(el) => {
                     videoRefs.current[video.id] = el;
@@ -238,11 +242,11 @@ export default function ClientVideoCarousel() {
                   muted
                   playsInline
                   preload="metadata"
-                  className="w-full h-full object-cover rounded-none pointer-events-none"
+                  className="w-full h-full object-cover pointer-events-none rounded-2xl sm:rounded-3xl"
                 />
 
-                {/* Subtle Bottom Ambient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                {/* Ambient Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none" />
 
                 {/* Minimal Overlay Tag */}
                 <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
@@ -261,4 +265,5 @@ export default function ClientVideoCarousel() {
     </div>
   );
 }
+
 
