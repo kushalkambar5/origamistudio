@@ -85,7 +85,7 @@ const BASE_VIDEOS: ClientVideo[] = [
   },
 ];
 
-// Duplicate base videos to create 20 panels around the 360-degree cylinder ring (18 deg step)
+// 20 items in total (18° step per card)
 const RING_ITEMS = [...BASE_VIDEOS, ...BASE_VIDEOS].map((item, idx) => ({
   ...item,
   uniqueKey: `${item.id}-${idx}`,
@@ -98,6 +98,37 @@ export default function ClientVideoCarousel() {
   const cardInnerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const autoRotateTween = useRef<gsap.core.Tween | null>(null);
+
+  // Dynamic dimensions for 0-gap, 0-overlap full viewport width arc
+  const [dimensions, setDimensions] = useState({
+    radius: 900,
+    cardWidth: 280,
+    cardHeight: 420,
+  });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const vw = window.innerWidth;
+      // Calculate radius R to span full viewport width edge-to-edge
+      // R * sin(52 deg) = vw / 2 => R = vw / (2 * sin(52 deg))
+      const sin52 = Math.sin((52 * Math.PI) / 180);
+      const r = Math.max(480, Math.round(vw / (2 * sin52)));
+
+      // Exact mathematical card width W for 0 gap and 0 overlap between adjacent 18-degree panels:
+      // W = 2 * R * sin(9 deg)
+      const sin9 = Math.sin((9 * Math.PI) / 180);
+      const w = Math.round(2 * r * sin9);
+
+      // Card height maintaining sleek aspect ratio
+      const h = Math.round(w * 1.45);
+
+      setDimensions({ radius: r, cardWidth: w, cardHeight: h });
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -113,20 +144,11 @@ export default function ClientVideoCarousel() {
     const ctx = gsap.context(() => {
       let xPos = 0;
 
-      // Responsive radius for cylinder ring
-      const getRadius = () => {
-        const w = window.innerWidth;
-        if (w < 640) return 260;
-        if (w < 1024) return 360;
-        return 500; // Exact match to user snippet's 500px radius
-      };
-
-      const radius = getRadius();
-      const numItems = RING_ITEMS.length; // 20 items
+      const { radius } = dimensions;
+      const numItems = RING_ITEMS.length; // 20
       const angleStep = 360 / numItems; // 18 degrees
 
-      // Parallax calculator matching original snippet:
-      // -gsap.utils.wrap(0,360,gsap.getProperty(ring, 'rotationY')-180-i*18)/360*400
+      // Parallax offset matching original formula
       const getBgPos = (i: number) => {
         const ringRotation = (gsap.getProperty(ring, "rotationY") as number) || 0;
         const wrapped = gsap.utils.wrap(
@@ -134,7 +156,7 @@ export default function ClientVideoCarousel() {
           360,
           ringRotation - 180 - i * angleStep
         );
-        return (-wrapped / 360) * 300;
+        return (-wrapped / 360) * 350;
       };
 
       const updateParallax = () => {
@@ -146,7 +168,7 @@ export default function ClientVideoCarousel() {
         });
       };
 
-      // Set initial GSAP state & animation matching original snippet
+      // Set initial GSAP timeline
       const tl = gsap.timeline();
 
       tl.set(dragger, { opacity: 0 })
@@ -159,17 +181,16 @@ export default function ClientVideoCarousel() {
           opacity: 1,
         })
         .from(".ring-img-card", {
-          duration: 1.5,
-          y: 150,
+          duration: 1.4,
+          y: 120,
           opacity: 0,
-          stagger: 0.08,
+          stagger: 0.06,
           ease: "power3.out",
           onUpdate: updateParallax,
           onComplete: () => {
-            // Gentle continuous auto-spin when idle
             autoRotateTween.current = gsap.to(ring, {
               rotationY: "+=360",
-              duration: 45,
+              duration: 50,
               ease: "none",
               repeat: -1,
               onUpdate: updateParallax,
@@ -177,7 +198,7 @@ export default function ClientVideoCarousel() {
           },
         });
 
-      // Draggable creation matching exact snippet logic
+      // Draggable setup matching exact snippet logic
       Draggable.create(dragger, {
         type: "x,y",
         onDragStart: (e) => {
@@ -228,9 +249,9 @@ export default function ClientVideoCarousel() {
     return () => {
       ctx.revert();
     };
-  }, []);
+  }, [dimensions]);
 
-  // Ensure all videos auto-play reliably
+  // Ensure all HTML5 videos auto-play
   useEffect(() => {
     videoRefs.current.forEach((vid) => {
       if (vid) {
@@ -263,7 +284,7 @@ export default function ClientVideoCarousel() {
               360,
               ringRotation - 180 - idx * angleStep
             );
-            const shiftX = (-wrapped / 360) * 300;
+            const shiftX = (-wrapped / 360) * 350;
             gsap.set(el, { x: shiftX });
           }
         });
@@ -279,27 +300,32 @@ export default function ClientVideoCarousel() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[380px] sm:h-[440px] md:h-[480px] flex items-center justify-center overflow-hidden select-none bg-transparent"
+      className="relative w-full overflow-hidden select-none bg-transparent py-4"
+      style={{
+        height: `${dimensions.cardHeight + 40}px`,
+      }}
     >
-      {/* Invisible Dragger Layer matching #dragger */}
+      {/* Invisible Dragger Layer */}
       <div
         ref={draggerRef}
         className="absolute inset-0 z-30 cursor-grab active:cursor-grabbing w-full h-full opacity-0"
       />
 
-      {/* Main 3D Container matching .container */}
+      {/* Full Viewport 3D Stage Container */}
       <div
-        className="relative z-10 w-[200px] sm:w-[240px] md:w-[280px] h-[280px] sm:h-[330px] md:h-[370px]"
+        className="relative z-10 w-full h-full flex items-center justify-center"
         style={{
-          perspective: "2000px",
+          perspective: "1800px",
           transformStyle: "preserve-3d",
         }}
       >
-        {/* Ring Container matching #ring */}
+        {/* Ring Container centered horizontally */}
         <div
           ref={ringRef}
-          className="w-full h-full relative"
+          className="relative"
           style={{
+            width: `${dimensions.cardWidth}px`,
+            height: `${dimensions.cardHeight}px`,
             transformStyle: "preserve-3d",
           }}
         >
@@ -307,8 +333,10 @@ export default function ClientVideoCarousel() {
             <div
               key={video.uniqueKey}
               onClick={() => rotateToCard(i)}
-              className="ring-img-card absolute top-0 left-0 w-full h-full rounded-2xl overflow-hidden border border-slate-300 shadow-xl bg-slate-900 cursor-pointer"
+              className="ring-img-card absolute top-0 left-0 overflow-hidden bg-slate-950 border-x border-white/10 shadow-2xl cursor-pointer"
               style={{
+                width: `${dimensions.cardWidth}px`,
+                height: `${dimensions.cardHeight}px`,
                 transformStyle: "preserve-3d",
               }}
             >
@@ -317,7 +345,7 @@ export default function ClientVideoCarousel() {
                 ref={(el) => {
                   cardInnerRefs.current[i] = el;
                 }}
-                className="w-[160%] h-full relative left-[-30%] pointer-events-none"
+                className="w-[180%] h-full relative left-[-40%] pointer-events-none"
               >
                 <video
                   ref={(el) => {
@@ -333,22 +361,22 @@ export default function ClientVideoCarousel() {
                 />
               </div>
 
-              {/* Minimal Dark Gradient for Text Visibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+              {/* Gradient overlay for subtitle readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none" />
 
-              {/* Category Badge */}
-              <div className="absolute top-2.5 left-2.5 pointer-events-none">
-                <span className="px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono text-[#FC6100] font-semibold border border-white/10">
+              {/* Category Pill Tag */}
+              <div className="absolute top-3 left-3 pointer-events-none">
+                <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-[10px] sm:text-xs font-mono font-semibold text-[#FC6100] border border-white/10">
                   {video.category}
                 </span>
               </div>
 
-              {/* Title & Client Name Tag */}
-              <div className="absolute bottom-2.5 left-2.5 right-2.5 text-left pointer-events-none">
-                <p className="text-[10px] font-mono text-[#FC6100] font-bold uppercase tracking-wider mb-0.5 truncate">
+              {/* Client Title Tag */}
+              <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
+                <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-bold uppercase tracking-wider mb-0.5 truncate">
                   {video.client}
                 </p>
-                <h4 className="font-changa text-xs font-bold text-white truncate">
+                <h4 className="font-changa text-xs sm:text-sm font-bold text-white truncate">
                   {video.title}
                 </h4>
               </div>
