@@ -12,7 +12,6 @@ const NAV_ITEMS = [
   { label: "Products", href: "#products" },
   { label: "Team", href: "#team" },
   { label: "FAQs", href: "#faqs" },
-  { label: "Get In Touch", href: "#get-in-touch" },
   { label: "Contact Us", href: "#contact-us" },
 ];
 
@@ -123,8 +122,8 @@ export default function Navbar() {
         {/* Right CTA Button (Desktop) */}
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href="#get-in-touch"
-            onClick={(e) => handleNavClick(e, "#get-in-touch")}
+            href="#contact-us"
+            onClick={(e) => handleNavClick(e, "#contact-us")}
             className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] hover:brightness-110 shadow-[0_4px_15px_rgba(252,97,0,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book Call</span>
@@ -178,8 +177,8 @@ export default function Navbar() {
           <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
             <span>origamistudio.in</span>
             <a
-              href="#get-in-touch"
-              onClick={(e) => handleNavClick(e, "#get-in-touch")}
+              href="#contact-us"
+              onClick={(e) => handleNavClick(e, "#contact-us")}
               className="text-[#FC6100] font-semibold underline underline-offset-4"
             >
               Get Custom Quote →

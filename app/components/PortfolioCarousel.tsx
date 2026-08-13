@@ -196,7 +196,7 @@ export default function PortfolioCarousel() {
           {/* See More Projects CTA Button matching reference image */}
           <div className="flex justify-center">
             <a
-              href="#get-in-touch"
+              href="#contact-us"
               className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition-all duration-300 shadow-md hover:scale-105 active:scale-95 group"
             >
               <span>See more Projects</span>
@@ -406,7 +406,7 @@ export default function PortfolioCarousel() {
                   Close
                 </button>
                 <a
-                  href="#get-in-touch"
+                  href="#contact-us"
                   onClick={() => setSelectedItem(null)}
                   className="px-6 py-2.5 rounded-full text-xs font-changa font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-md hover:brightness-110"
                 >

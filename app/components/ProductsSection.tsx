@@ -206,7 +206,7 @@ export default function ProductsSection() {
 
             <div className="flex flex-wrap items-center gap-4">
               <a
-                href="#get-in-touch"
+                href="#contact-us"
                 className="px-6 py-3 rounded-full font-changa text-sm font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-md hover:brightness-110 flex items-center gap-2"
               >
                 <span>REQUEST PRODUCT DEMO</span>

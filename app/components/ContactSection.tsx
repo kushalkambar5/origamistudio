@@ -30,17 +30,46 @@ const InstagramIcon = () => (
   </svg>
 );
 
+const CONTACT_SERVICES = [
+  "Social Media Marketing",
+  "Fullstack Web & SEO",
+  "Google Maps & GBP Ranking",
+  "Offline Shoot & Video Editing",
+  "Custom AI & WhatsApp Agents",
+];
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  services: string[];
+  message: string;
+}
+
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     phone: "",
     company: "",
-    service: "Fullstack Web & SEO",
+    services: ["Social Media Marketing", "Fullstack Web & SEO"],
     message: "",
   });
+
+  const toggleService = (serviceName: string) => {
+    setFormData((prev) => {
+      const exists = prev.services.includes(serviceName);
+      return {
+        ...prev,
+        services: exists
+          ? prev.services.filter((s) => s !== serviceName)
+          : [...prev.services, serviceName],
+      };
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,30 +92,13 @@ export default function ContactSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
-            LET'S FOLD YOUR <span className="text-[#FC6100]">NEXT MOVEMENT</span>
+            <span className="text-[#FC6100]">Contact Us</span>
           </h2>
-          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            Ready to scale your business with fullstack digital marketing, high-performance web apps, and automated AI systems? Get in touch with us today.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Direct Contact & Agency Info */}
           <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-lg space-y-8">
-            {/* Live Availability Status */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-xs font-semibold">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-              <span>ACCEPTING NEW CLIENTS FOR Q3/Q4</span>
-            </div>
-
-            <div>
-              <h3 className="font-changa text-2xl font-bold text-slate-900 mb-2 uppercase">
-                ORIGAMI STUDIO HEADQUARTERS
-              </h3>
-              <p className="text-slate-600 text-xs leading-relaxed font-normal">
-                We partner with high-growth startups, ambitious founders, and established enterprises globally.
-              </p>
-            </div>
 
             <div className="space-y-4">
               <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
@@ -118,7 +130,7 @@ export default function ContactSection() {
                     href="tel:+919876543210"
                     className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#FC6100] transition-colors"
                   >
-                    +91 98765 43210
+                    +91 8919300467
                   </a>
                 </div>
               </div>
@@ -132,7 +144,7 @@ export default function ContactSection() {
                     LOCATION
                   </span>
                   <span className="block text-sm font-semibold text-slate-900">
-                    Bangalore, India • Remote Worldwide
+                    NITK Surathkal, Mangalore, Karnataka 575025
                   </span>
                 </div>
               </div>
@@ -211,7 +223,7 @@ export default function ContactSection() {
                       email: "",
                       phone: "",
                       company: "",
-                      service: "Fullstack Web & SEO",
+                      services: ["Social Media Marketing", "Fullstack Web & SEO"],
                       message: "",
                     });
                   }}
@@ -289,35 +301,35 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
-                    PRIMARY SERVICE OF INTEREST
+                  <label className="block text-[11px] font-mono text-slate-600 uppercase mb-2 font-semibold">
+                    SERVICES NEEDED
                   </label>
-                  <select
-                    value={formData.service}
-                    onChange={(e) =>
-                      setFormData({ ...formData, service: e.target.value })
-                    }
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none"
-                  >
-                    <option value="Social Media Management">
-                      Social Media Management & Strategy
-                    </option>
-                    <option value="Fullstack Web & SEO">
-                      Fullstack Next.js Website & SEO
-                    </option>
-                    <option value="Google Business Ranking">
-                      Google Business Profile (GBP) Local Ranking
-                    </option>
-                    <option value="Offline Shoots & Video">
-                      Offline Shoots & Motion Video Editing
-                    </option>
-                    <option value="AI & WhatsApp Agents">
-                      AI Agents & WhatsApp Automation
-                    </option>
-                    <option value="Full Digital Retainer">
-                      Full 360° Digital Agency Retainer
-                    </option>
-                  </select>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {CONTACT_SERVICES.map((svc) => {
+                      const isChecked = formData.services.includes(svc);
+                      return (
+                        <div
+                          key={svc}
+                          onClick={() => toggleService(svc)}
+                          className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
+                            isChecked
+                              ? "bg-[#FC6100]/10 border-[#FC6100] text-slate-900 shadow-xs"
+                              : "bg-white border-slate-200 text-slate-700 hover:border-slate-300"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => {}}
+                            className="w-4 h-4 rounded border-slate-300 text-[#FC6100] accent-[#FC6100] cursor-pointer"
+                          />
+                          <span className="text-xs font-semibold select-none">
+                            {svc}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div>

@@ -7,7 +7,6 @@ import PortfolioCarousel from "./components/PortfolioCarousel";
 import ProductsSection from "./components/ProductsSection";
 import TeamSection from "./components/TeamSection";
 import FaqSection from "./components/FaqSection";
-import GetInTouchSection from "./components/GetInTouchSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
@@ -38,10 +37,7 @@ export default function Home() {
       {/* 7. FAQs Section */}
       <FaqSection />
 
-      {/* 8. Get In Touch Section (Interactive Scope Estimator) */}
-      <GetInTouchSection />
-
-      {/* 9. Contact Us Section */}
+      {/* 8. Contact Us Section */}
       <ContactSection />
 
       {/* 10. Footer Section */}

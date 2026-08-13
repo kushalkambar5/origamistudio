@@ -12,7 +12,6 @@ const FOOTER_LINKS = [
   { label: "Tech Products", href: "#products" },
   { label: "Our Team", href: "#team" },
   { label: "FAQs", href: "#faqs" },
-  { label: "Project Estimator", href: "#get-in-touch" },
   { label: "Contact Us", href: "#contact-us" },
 ];
 

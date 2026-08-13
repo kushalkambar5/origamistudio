@@ -252,7 +252,7 @@ export default function ServicesSection() {
                 Close
               </button>
               <a
-                href="#get-in-touch"
+                href="#contact-us"
                 onClick={() => setSelectedService(null)}
                 className="px-6 py-2.5 rounded-full text-xs font-changa font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-md hover:brightness-110"
               >
