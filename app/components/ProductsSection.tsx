@@ -127,7 +127,7 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="relative py-24 bg-[#0A0E17] text-white border-t border-slate-800 overflow-hidden"
+      className="relative py-24 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
     >
       {/* Background Lighting */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#FC6100]/10 blur-[150px] rounded-full pointer-events-none" />
@@ -139,10 +139,10 @@ export default function ProductsSection() {
             <Zap className="w-3.5 h-3.5" />
             <span>PROPRIETARY PRODUCTS & SOLUTIONS</span>
           </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             PROPRIETARY <span className="text-[#FC6100]">TECH PRODUCTS</span>
           </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
             We don't just use existing tools — we engineer our own internal marketing software and AI automation systems to give our clients an unbeatable advantage.
           </p>
         </div>
@@ -158,8 +158,8 @@ export default function ProductsSection() {
                 onClick={() => setActiveTab(prod.id)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
                   isSelected
-                    ? "bg-[#FC6100] text-white shadow-[0_0_20px_rgba(252,97,0,0.4)] scale-105"
-                    : "bg-[#0F1420] text-slate-300 hover:text-white border border-white/10 hover:border-[#FC6100]/40"
+                    ? "bg-[#FC6100] text-white shadow-[0_4px_15px_rgba(252,97,0,0.35)] scale-105"
+                    : "bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-[#FC6100]/40"
                 }`}
               >
                 <IconComp className="w-4 h-4" />
@@ -170,34 +170,34 @@ export default function ProductsSection() {
         </div>
 
         {/* Selected Product Card Showcase */}
-        <div className="relative p-6 sm:p-10 rounded-3xl bg-[#0F1420] border border-[#FC6100]/30 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="relative p-6 sm:p-10 rounded-3xl bg-slate-50 border border-[#FC6100]/30 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="absolute top-0 right-0 p-8 opacity-5 text-[#FC6100] pointer-events-none hidden lg:block">
             {React.createElement(activeProduct.icon, { className: "w-64 h-64" })}
           </div>
 
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-4">
-              <span className="px-3 py-1 rounded-full bg-[#FC6100]/20 text-[#FC6100] border border-[#FC6100]/40 text-xs font-mono font-bold uppercase">
+              <span className="px-3 py-1 rounded-full bg-[#FC6100]/10 text-[#FC6100] border border-[#FC6100]/30 text-xs font-mono font-bold uppercase">
                 {activeProduct.category}
               </span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-500 font-mono">
                 {activeProduct.version}
               </span>
             </div>
 
-            <h3 className="font-changa text-2xl sm:text-4xl font-extrabold text-white mb-2">
+            <h3 className="font-changa text-2xl sm:text-4xl font-extrabold text-slate-900 mb-2">
               {activeProduct.name}
             </h3>
             <p className="text-sm font-semibold text-[#FC6100] mb-4">
               {activeProduct.tagline}
             </p>
-            <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed mb-6">
+            <p className="text-slate-600 text-sm sm:text-base font-normal leading-relaxed mb-6">
               {activeProduct.description}
             </p>
 
             <div className="space-y-3 mb-8">
               {activeProduct.features.map((feature) => (
-                <div key={feature} className="flex items-center gap-3 text-sm text-slate-200">
+                <div key={feature} className="flex items-center gap-3 text-sm text-slate-700 font-medium">
                   <CheckCircle className="w-4 h-4 text-[#FC6100] shrink-0" />
                   <span>{feature}</span>
                 </div>
@@ -207,29 +207,29 @@ export default function ProductsSection() {
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href="#get-in-touch"
-                className="px-6 py-3 rounded-full font-changa text-sm font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-lg hover:brightness-110 flex items-center gap-2"
+                className="px-6 py-3 rounded-full font-changa text-sm font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-md hover:brightness-110 flex items-center gap-2"
               >
                 <span>REQUEST PRODUCT DEMO</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
-              <div className="text-xs font-mono text-slate-400">
+              <div className="text-xs font-mono text-slate-500 font-medium">
                 ⚡ Included in Enterprise retainers
               </div>
             </div>
           </div>
 
           {/* Metric Highlight Box */}
-          <div className="lg:col-span-5 p-6 rounded-2xl bg-black/60 border border-white/10 flex flex-col justify-center items-center text-center">
-            <div className="w-16 h-16 rounded-2xl bg-[#FC6100]/20 border border-[#FC6100] flex items-center justify-center text-[#FC6100] mb-4">
+          <div className="lg:col-span-5 p-6 rounded-2xl bg-white border border-slate-200 flex flex-col justify-center items-center text-center shadow-sm">
+            <div className="w-16 h-16 rounded-2xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] mb-4">
               {React.createElement(activeProduct.icon, { className: "w-8 h-8" })}
             </div>
-            <span className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
+            <span className="text-xs font-mono text-slate-500 uppercase tracking-widest mb-1 font-semibold">
               PROVEN PERFORMANCE METRIC
             </span>
-            <div className="font-changa text-2xl sm:text-3xl font-extrabold text-white text-gradient-orange mb-2">
+            <div className="font-changa text-2xl sm:text-3xl font-extrabold text-[#FC6100] mb-2">
               {activeProduct.metric}
             </div>
-            <p className="text-xs text-slate-400 font-light">
+            <p className="text-xs text-slate-500 font-normal">
               Continuous updates & dedicated technical support included.
             </p>
           </div>

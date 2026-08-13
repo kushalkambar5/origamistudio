@@ -75,7 +75,7 @@ export default function Navbar() {
           onClick={(e) => handleNavClick(e, "#home")}
           className="flex items-center gap-2.5 group transition-transform duration-300 hover:scale-105"
         >
-          <div className="relative w-9 h-9 flex items-center justify-center rounded-lg bg-black/40 backdrop-blur-md p-1 border border-[#FC6100]/30 shadow-[0_0_15px_rgba(252,97,0,0.25)]">
+          <div className="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/80 backdrop-blur-md p-1 border border-[#FC6100]/30 shadow-[0_2px_15px_rgba(252,97,0,0.15)]">
             <Image
               src="/logo.png"
               alt="Origami Studio Logo"
@@ -86,17 +86,17 @@ export default function Navbar() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-changa text-lg font-bold tracking-wider text-white uppercase flex items-center gap-1">
+            <span className="font-changa text-lg font-bold tracking-wider text-slate-900 uppercase flex items-center gap-1">
               ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
             </span>
-            <span className="text-[9px] tracking-widest text-slate-400 font-mono -mt-1 hidden sm:block">
+            <span className="text-[9px] tracking-widest text-slate-500 font-mono -mt-1 hidden sm:block">
               origamistudio.in
             </span>
           </div>
         </a>
 
         {/* Center Nav Links (Desktop) - No background, transparent, no border */}
-        <div className="hidden lg:flex items-center gap-1 bg-transparent border-none px-2 py-1">
+        <div className="hidden lg:flex items-center gap-1 bg-white/70 backdrop-blur-md border border-slate-200/80 shadow-sm px-3 py-1.5 rounded-full">
           {NAV_ITEMS.map((item) => {
             const sectionId = item.href.replace("#", "");
             const isActive = activeSection === sectionId;
@@ -108,7 +108,7 @@ export default function Navbar() {
                 className={`relative px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-full ${
                   isActive
                     ? "text-[#FC6100] font-semibold"
-                    : "text-slate-300 hover:text-white hover:bg-white/5"
+                    : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
                 }`}
               >
                 {item.label}
@@ -125,9 +125,8 @@ export default function Navbar() {
           <a
             href="#get-in-touch"
             onClick={(e) => handleNavClick(e, "#get-in-touch")}
-            className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] hover:brightness-110 shadow-[0_0_20px_rgba(252,97,0,0.35)] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] hover:brightness-110 shadow-[0_4px_15px_rgba(252,97,0,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            <Sparkles className="w-3.5 h-3.5 text-white animate-spin-slow" />
             <span>Book Call</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
@@ -145,7 +144,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
-            className="p-2 rounded-lg bg-black/60 backdrop-blur-md text-slate-200 hover:text-white border border-white/10"
+            className="p-2 rounded-lg bg-white/90 backdrop-blur-md text-slate-700 hover:text-slate-900 border border-slate-200 shadow-sm"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -154,7 +153,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 p-4 rounded-2xl bg-[#0A0E17]/95 backdrop-blur-xl border border-[#FC6100]/30 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="lg:hidden mt-2 p-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#FC6100]/30 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="grid grid-cols-2 gap-2">
             {NAV_ITEMS.map((item) => {
               const sectionId = item.href.replace("#", "");
@@ -166,8 +165,8 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`px-3 py-2.5 rounded-xl text-xs font-medium flex items-center justify-between transition-colors ${
                     isActive
-                      ? "bg-[#FC6100]/20 text-[#FC6100] border border-[#FC6100]/40 font-semibold"
-                      : "text-slate-300 hover:bg-white/5 hover:text-white"
+                      ? "bg-[#FC6100]/10 text-[#FC6100] border border-[#FC6100]/30 font-semibold"
+                      : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
                   <span>{item.label}</span>
@@ -176,7 +175,7 @@ export default function Navbar() {
               );
             })}
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+          <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
             <span>origamistudio.in</span>
             <a
               href="#get-in-touch"

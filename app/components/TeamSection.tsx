@@ -110,7 +110,7 @@ export default function TeamSection() {
   return (
     <section
       id="team"
-      className="relative py-24 bg-[#07090E] text-white border-t border-slate-800 overflow-hidden"
+      className="relative py-24 bg-slate-50 text-slate-900 border-t border-slate-200 overflow-hidden"
     >
       {/* Ambient Lighting */}
       <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-[#FC6100]/10 blur-[160px] rounded-full pointer-events-none" />
@@ -122,10 +122,10 @@ export default function TeamSection() {
             <Users className="w-3.5 h-3.5" />
             <span>OUR TEAM</span>
           </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             THE MINDS BEHIND <span className="text-[#FC6100]">THE FOLDS</span>
           </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
             A passionate collective of digital strategists, fullstack engineers, creative directors, and growth hackers dedicated to your success.
           </p>
         </div>
@@ -135,14 +135,14 @@ export default function TeamSection() {
           {TEAM.map((member) => (
             <div
               key={member.name}
-              className="group relative p-6 rounded-3xl bg-[#0F1420] border border-white/10 hover:border-[#FC6100]/60 transition-all duration-300 hover:-translate-y-2 shadow-xl flex flex-col justify-between overflow-hidden"
+              className="group relative p-6 rounded-3xl bg-white border border-slate-200 hover:border-[#FC6100]/60 transition-all duration-300 hover:-translate-y-2 shadow-sm hover:shadow-xl flex flex-col justify-between overflow-hidden"
             >
               {/* Top Accent Fold */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#FC6100]/20 to-transparent rounded-bl-full pointer-events-none group-hover:from-[#FC6100]/40 transition-colors" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#FC6100]/15 to-transparent rounded-bl-full pointer-events-none group-hover:from-[#FC6100]/30 transition-colors" />
 
               <div>
                 {/* Photo Frame */}
-                <div className="relative w-28 h-28 mx-auto mb-6 rounded-2xl overflow-hidden border-2 border-[#FC6100]/40 group-hover:border-[#FC6100] transition-colors shadow-lg">
+                <div className="relative w-28 h-28 mx-auto mb-6 rounded-2xl overflow-hidden border-2 border-[#FC6100]/30 group-hover:border-[#FC6100] transition-colors shadow-md">
                   <img
                     src={member.image}
                     alt={member.name}
@@ -151,29 +151,29 @@ export default function TeamSection() {
                 </div>
 
                 <div className="text-center mb-4">
-                  <h3 className="font-changa text-xl font-bold text-white group-hover:text-[#FC6100] transition-colors">
+                  <h3 className="font-changa text-xl font-bold text-slate-900 group-hover:text-[#FC6100] transition-colors">
                     {member.name}
                   </h3>
-                  <p className="text-xs text-[#FC6100] font-mono font-semibold uppercase mt-0.5">
+                  <p className="text-xs text-[#FC6100] font-mono font-bold uppercase mt-0.5">
                     {member.role}
                   </p>
-                  <p className="text-[11px] text-slate-400 font-mono mt-1">
+                  <p className="text-[11px] text-slate-500 font-mono mt-1">
                     {member.expertise}
                   </p>
                 </div>
 
-                <p className="text-slate-300 text-xs leading-relaxed text-center mb-6 font-light">
+                <p className="text-slate-600 text-xs leading-relaxed text-center mb-6 font-normal">
                   {member.bio}
                 </p>
               </div>
 
               {/* Social Links */}
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-center gap-3">
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
                 {member.socials.linkedin && (
                   <a
                     href={member.socials.linkedin}
                     aria-label={`${member.name} LinkedIn`}
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-[#FC6100] text-slate-400 hover:text-white transition-colors"
+                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
                   >
                     <LinkedInIcon />
                   </a>
@@ -182,7 +182,7 @@ export default function TeamSection() {
                   <a
                     href={member.socials.twitter}
                     aria-label={`${member.name} Twitter`}
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-[#FC6100] text-slate-400 hover:text-white transition-colors"
+                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
                   >
                     <TwitterXIcon />
                   </a>
@@ -191,7 +191,7 @@ export default function TeamSection() {
                   <a
                     href={member.socials.instagram}
                     aria-label={`${member.name} Instagram`}
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-[#FC6100] text-slate-400 hover:text-white transition-colors"
+                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
                   >
                     <InstagramIcon />
                   </a>
@@ -200,7 +200,7 @@ export default function TeamSection() {
                   <a
                     href={member.socials.github}
                     aria-label={`${member.name} GitHub`}
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-[#FC6100] text-slate-400 hover:text-white transition-colors"
+                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
                   >
                     <GitHubIcon />
                   </a>

@@ -164,24 +164,20 @@ export default function ServicesSection() {
   return (
     <section
       id="what-we-do"
-      className="relative py-24 bg-[#07090E] border-t border-slate-800 text-white overflow-hidden"
+      className="relative py-24 bg-slate-50 border-t border-slate-200 text-slate-900 overflow-hidden"
     >
       {/* Background Accent Gradients */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#FC6100]/10 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-600/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FC6100]/10 border border-[#FC6100]/30 text-[#FC6100] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Layers className="w-3.5 h-3.5" />
-            <span>WHAT WE DO</span>
-          </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             FULL-SERVICE <span className="text-[#FC6100]">SOLUTIONS</span> FOR
             EXPONENTIAL GROWTH
           </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
             We combine strategic marketing, cutting-edge fullstack technology, and
             high-converting visual media to scale your brand across all digital touchpoints.
           </p>
@@ -195,35 +191,35 @@ export default function ServicesSection() {
               <div
                 key={service.id}
                 onClick={() => setSelectedService(service)}
-                className="group relative p-6 sm:p-8 rounded-3xl bg-[#0F1420]/90 backdrop-blur-md border border-white/10 hover:border-[#FC6100]/60 shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col justify-between"
+                className="group relative p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 hover:border-[#FC6100]/60 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col justify-between"
               >
                 {/* Glow Hover Accent */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[#FC6100]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[#FC6100]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-black/60 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] group-hover:scale-110 group-hover:border-[#FC6100] group-hover:bg-[#FC6100] group-hover:text-white transition-all duration-300 shadow-md">
+                    <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] group-hover:scale-110 group-hover:border-[#FC6100] group-hover:bg-[#FC6100] group-hover:text-white transition-all duration-300 shadow-xs">
                       <IconComponent className="w-7 h-7" />
                     </div>
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-300 group-hover:border-[#FC6100]/40 group-hover:text-[#FC6100]">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-slate-100 border border-slate-200 text-slate-600 group-hover:border-[#FC6100]/40 group-hover:text-[#FC6100]">
                       {service.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-changa text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-[#FC6100] transition-colors">
+                  <h3 className="font-changa text-xl sm:text-2xl font-bold text-slate-900 mb-2 group-hover:text-[#FC6100] transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-xs text-[#FC6100] font-medium tracking-wide uppercase mb-3">
+                  <p className="text-xs text-[#FC6100] font-semibold tracking-wide uppercase mb-3">
                     {service.subtitle}
                   </p>
-                  <p className="text-slate-400 text-sm font-normal line-clamp-3 leading-relaxed mb-6">
+                  <p className="text-slate-600 text-sm font-normal line-clamp-3 leading-relaxed mb-6">
                     {service.description}
                   </p>
                 </div>
 
                 <div>
-                  <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                    <span className="text-slate-400 font-mono">
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span className="text-slate-500 font-mono font-medium">
                       {service.metrics}
                     </span>
                     <span className="inline-flex items-center gap-1 font-semibold text-[#FC6100] group-hover:translate-x-1 transition-transform">
@@ -239,37 +235,37 @@ export default function ServicesSection() {
 
       {/* Service Detail Modal */}
       {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-[#0F1420] border border-[#FC6100]/50 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-2xl bg-white border border-[#FC6100]/40 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setSelectedService(null)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 text-slate-300 hover:text-white hover:bg-[#FC6100] transition-colors"
+              className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-[#FC6100] hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#FC6100]/20 border border-[#FC6100] flex items-center justify-center text-[#FC6100]">
+              <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-[#FC6100]/40 flex items-center justify-center text-[#FC6100]">
                 {React.createElement(selectedService.icon, {
                   className: "w-7 h-7",
                 })}
               </div>
               <div>
-                <span className="text-xs font-mono text-[#FC6100] uppercase tracking-wider font-semibold">
+                <span className="text-xs font-mono text-[#FC6100] uppercase tracking-wider font-bold">
                   {selectedService.badge}
                 </span>
-                <h3 className="font-changa text-2xl sm:text-3xl font-extrabold text-white">
+                <h3 className="font-changa text-2xl sm:text-3xl font-extrabold text-slate-900">
                   {selectedService.title}
                 </h3>
               </div>
             </div>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
               {selectedService.description}
             </p>
 
-            <div className="mb-6 p-4 rounded-2xl bg-black/50 border border-slate-800">
-              <span className="text-xs font-mono text-slate-400 uppercase tracking-widest block mb-1">
+            <div className="mb-6 p-4 rounded-2xl bg-orange-50/60 border border-orange-200">
+              <span className="text-xs font-mono text-slate-500 uppercase tracking-widest block mb-1">
                 EXPECTED IMPACT
               </span>
               <span className="text-base sm:text-lg font-changa font-bold text-[#FC6100]">
@@ -278,7 +274,7 @@ export default function ServicesSection() {
             </div>
 
             <div className="mb-8">
-              <h4 className="font-changa text-lg font-bold text-white uppercase mb-4 flex items-center gap-2">
+              <h4 className="font-changa text-lg font-bold text-slate-900 uppercase mb-4 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#FC6100]" />
                 WHAT'S INCLUDED IN DELIVERABLES:
               </h4>
@@ -286,7 +282,7 @@ export default function ServicesSection() {
                 {selectedService.deliverables.map((item) => (
                   <div
                     key={item}
-                    className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300"
+                    className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium"
                   >
                     <CheckCircle2 className="w-4 h-4 text-[#FC6100] shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -295,17 +291,17 @@ export default function ServicesSection() {
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
               <button
                 onClick={() => setSelectedService(null)}
-                className="px-5 py-2.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white"
+                className="px-5 py-2.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900"
               >
                 Close
               </button>
               <a
                 href="#get-in-touch"
                 onClick={() => setSelectedService(null)}
-                className="px-6 py-2.5 rounded-full text-xs font-changa font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-lg hover:brightness-110"
+                className="px-6 py-2.5 rounded-full text-xs font-changa font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-md hover:brightness-110"
               >
                 GET CUSTOM PROPOSAL →
               </a>

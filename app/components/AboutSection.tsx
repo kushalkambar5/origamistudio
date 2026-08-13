@@ -51,7 +51,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative py-24 bg-[#0A0E17] border-t border-slate-800 text-white overflow-hidden"
+      className="relative py-24 bg-white border-t border-slate-200 text-slate-900 overflow-hidden"
     >
       {/* Ambient Radial Lighting */}
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#FC6100]/10 blur-[140px] rounded-full pointer-events-none" />
@@ -67,11 +67,11 @@ export default function AboutSection() {
 
         {/* Headline & Main Paragraph */}
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase leading-tight tracking-tight">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase leading-tight tracking-tight text-slate-900">
             ELEVATING BRANDS IN THE{" "}
             <span className="text-[#FC6100]">DIGITAL AGE</span>
           </h2>
-          <p className="mt-6 text-slate-300 text-lg sm:text-xl font-light leading-relaxed">
+          <p className="mt-6 text-slate-600 text-lg sm:text-xl font-light leading-relaxed">
             Origami Studio is a full-service digital marketing & tech agency crafted to
             elevate brands in the digital age. We combine strategy, creativity and
             technology to deliver measurable results and unforgettable brand experiences.
@@ -79,22 +79,22 @@ export default function AboutSection() {
         </div>
 
         {/* Statement Banner: WE DON'T JUST MARKET. WE CRAFT MOVEMENTS. */}
-        <div className="relative mb-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#0F1420] via-[#161D2B] to-[#0F1420] border border-[#FC6100]/30 shadow-2xl text-center overflow-hidden">
-          <div className="absolute -right-10 -bottom-10 w-60 h-60 bg-[#FC6100]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative mb-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-[#FC6100]/30 shadow-2xl text-center overflow-hidden">
+          <div className="absolute -right-10 -bottom-10 w-60 h-60 bg-[#FC6100]/15 rounded-full blur-3xl pointer-events-none" />
           <h3 className="font-changa text-2xl sm:text-4xl md:text-5xl font-extrabold uppercase text-white tracking-wide">
             WE DON'T JUST MARKET.{" "}
-            <span className="text-[#FC6100] glow-text-orange block sm:inline">
+            <span className="text-[#FC6100] block sm:inline">
               WE CRAFT MOVEMENTS.
             </span>
           </h3>
 
           <div className="mt-6 flex flex-wrap justify-center items-center gap-4 text-xs sm:text-sm font-mono tracking-widest text-slate-300">
             <span className="text-[#FC6100] font-bold">STRATEGY</span>
-            <span className="text-slate-600">•</span>
+            <span className="text-slate-500">•</span>
             <span className="text-[#FC6100] font-bold">CREATIVITY</span>
-            <span className="text-slate-600">•</span>
+            <span className="text-slate-500">•</span>
             <span className="text-[#FC6100] font-bold">TECHNOLOGY</span>
-            <span className="text-slate-600">•</span>
+            <span className="text-slate-500">•</span>
             <span className="text-[#FC6100] font-bold">RESULTS</span>
           </div>
         </div>
@@ -102,10 +102,10 @@ export default function AboutSection() {
         {/* 4-Stage Origami Crafting Process */}
         <div className="mb-16">
           <div className="text-center mb-12">
-            <h3 className="font-changa text-2xl sm:text-3xl font-extrabold uppercase">
+            <h3 className="font-changa text-2xl sm:text-3xl font-extrabold uppercase text-slate-900">
               THE ORIGAMI <span className="text-[#FC6100]">PROCESS</span>
             </h3>
-            <p className="text-slate-400 text-sm mt-2 font-mono">
+            <p className="text-slate-500 text-sm mt-2 font-mono">
               HOW RAW IDEAS ARE FOLDED INTO HIGH-IMPACT MOVEMENTS
             </p>
           </div>
@@ -116,24 +116,24 @@ export default function AboutSection() {
               return (
                 <div
                   key={stage.step}
-                  className="relative p-6 sm:p-8 rounded-3xl bg-[#0F1420]/80 border border-white/10 hover:border-[#FC6100]/60 transition-all duration-300 group hover:-translate-y-2"
+                  className="relative p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:border-[#FC6100]/60 shadow-xs hover:shadow-md transition-all duration-300 group hover:-translate-y-2"
                 >
                   <div className="flex items-center justify-between mb-6">
                     <span className="font-changa text-3xl font-extrabold text-[#FC6100]/40 group-hover:text-[#FC6100] transition-colors">
                       #{stage.step}
                     </span>
-                    <div className="w-12 h-12 rounded-xl bg-black/60 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] group-hover:bg-[#FC6100] group-hover:text-white transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] group-hover:bg-[#FC6100] group-hover:text-white transition-all shadow-xs">
                       <IconComp className="w-6 h-6" />
                     </div>
                   </div>
 
-                  <h4 className="font-changa text-xl font-bold text-white mb-1">
+                  <h4 className="font-changa text-xl font-bold text-slate-900 mb-1">
                     {stage.title}
                   </h4>
-                  <p className="text-xs text-[#FC6100] font-mono mb-3">
+                  <p className="text-xs text-[#FC6100] font-mono mb-3 font-semibold">
                     {stage.subtitle}
                   </p>
-                  <p className="text-slate-400 text-sm font-light leading-relaxed">
+                  <p className="text-slate-600 text-sm font-normal leading-relaxed">
                     {stage.description}
                   </p>
                 </div>
@@ -143,31 +143,31 @@ export default function AboutSection() {
         </div>
 
         {/* Core Pillars Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 border-t border-slate-800">
-          <div className="p-6 rounded-2xl bg-black/40 border border-white/5 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 border-t border-slate-200">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-xs">
             <ShieldCheck className="w-8 h-8 mx-auto text-[#FC6100] mb-3" />
-            <h4 className="font-changa text-lg font-bold text-white uppercase mb-1">
+            <h4 className="font-changa text-lg font-bold text-slate-900 uppercase mb-1">
               DATA-DRIVEN PRECISION
             </h4>
-            <p className="text-slate-400 text-xs font-light">
+            <p className="text-slate-600 text-xs font-normal">
               No guessing games. Every strategy is backed by real-time analytics and market metrics.
             </p>
           </div>
-          <div className="p-6 rounded-2xl bg-black/40 border border-white/5 text-center">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-xs">
             <Sparkles className="w-8 h-8 mx-auto text-[#FC6100] mb-3" />
-            <h4 className="font-changa text-lg font-bold text-white uppercase mb-1">
+            <h4 className="font-changa text-lg font-bold text-slate-900 uppercase mb-1">
               CUTTING-EDGE TECH
             </h4>
-            <p className="text-slate-400 text-xs font-light">
+            <p className="text-slate-600 text-xs font-normal">
               Fullstack Next.js web applications, custom AI response agents, and automated WhatsApp CRM funnels.
             </p>
           </div>
-          <div className="p-6 rounded-2xl bg-black/40 border border-white/5 text-center">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-xs">
             <Target className="w-8 h-8 mx-auto text-[#FC6100] mb-3" />
-            <h4 className="font-changa text-lg font-bold text-white uppercase mb-1">
+            <h4 className="font-changa text-lg font-bold text-slate-900 uppercase mb-1">
               TRANSPARENT SCALING
             </h4>
-            <p className="text-slate-400 text-xs font-light">
+            <p className="text-slate-600 text-xs font-normal">
               Clear weekly performance reporting, direct Slack/WhatsApp access, and guaranteed milestone tracking.
             </p>
           </div>

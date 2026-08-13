@@ -137,7 +137,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${changaOne.variable} ${plusJakartaSans.variable} ${geistMono.variable} scroll-smooth dark h-full antialiased`}
+      className={`${changaOne.variable} ${plusJakartaSans.variable} ${geistMono.variable} scroll-smooth light h-full antialiased`}
     >
       <head>
         <script
@@ -145,7 +145,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full bg-[#07090E] text-[#F1F5F9] font-sans overflow-x-hidden selection:bg-[#FC6100] selection:text-white flex flex-col">
+      <body className="min-h-full bg-[#F8FAFC] text-slate-900 font-sans overflow-x-hidden selection:bg-[#FC6100] selection:text-white flex flex-col">
         {children}
       </body>
     </html>

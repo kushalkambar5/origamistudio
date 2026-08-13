@@ -13,7 +13,7 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#07090E] text-slate-100 relative">
+    <main className="min-h-screen bg-[#F8FAFC] text-slate-900 relative">
       {/* Top-Middle Transparent Navbar */}
       <Navbar />
 

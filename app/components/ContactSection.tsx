@@ -54,7 +54,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact-us"
-      className="relative py-24 bg-[#0A0E17] text-white border-t border-slate-800 overflow-hidden"
+      className="relative py-24 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
     >
       {/* Background Radial Glow */}
       <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-[#FC6100]/10 blur-[160px] rounded-full pointer-events-none" />
@@ -66,76 +66,76 @@ export default function ContactSection() {
             <Mail className="w-3.5 h-3.5" />
             <span>CONTACT US</span>
           </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             LET'S FOLD YOUR <span className="text-[#FC6100]">NEXT MOVEMENT</span>
           </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
             Ready to scale your business with fullstack digital marketing, high-performance web apps, and automated AI systems? Get in touch with us today.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Direct Contact & Agency Info */}
-          <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-[#0F1420] border border-white/10 shadow-xl space-y-8">
+          <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-lg space-y-8">
             {/* Live Availability Status */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-xs font-semibold">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               <span>ACCEPTING NEW CLIENTS FOR Q3/Q4</span>
             </div>
 
             <div>
-              <h3 className="font-changa text-2xl font-bold text-white mb-2 uppercase">
+              <h3 className="font-changa text-2xl font-bold text-slate-900 mb-2 uppercase">
                 ORIGAMI STUDIO HEADQUARTERS
               </h3>
-              <p className="text-slate-400 text-xs leading-relaxed">
+              <p className="text-slate-600 text-xs leading-relaxed font-normal">
                 We partner with high-growth startups, ambitious founders, and established enterprises globally.
               </p>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-black/40 border border-white/5">
-                <div className="w-10 h-10 rounded-xl bg-[#FC6100]/20 border border-[#FC6100] flex items-center justify-center text-[#FC6100] shrink-0">
+              <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono text-slate-400 uppercase">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold">
                     EMAIL DIRECTLY
                   </span>
                   <a
                     href="mailto:hello@origamistudio.in"
-                    className="block text-sm sm:text-base font-semibold text-white hover:text-[#FC6100] transition-colors"
+                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#FC6100] transition-colors"
                   >
                     hello@origamistudio.in
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-black/40 border border-white/5">
-                <div className="w-10 h-10 rounded-xl bg-[#FC6100]/20 border border-[#FC6100] flex items-center justify-center text-[#FC6100] shrink-0">
+              <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono text-slate-400 uppercase">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold">
                     CALL / WHATSAPP
                   </span>
                   <a
                     href="tel:+919876543210"
-                    className="block text-sm sm:text-base font-semibold text-white hover:text-[#FC6100] transition-colors"
+                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#FC6100] transition-colors"
                   >
                     +91 98765 43210
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-black/40 border border-white/5">
-                <div className="w-10 h-10 rounded-xl bg-[#FC6100]/20 border border-[#FC6100] flex items-center justify-center text-[#FC6100] shrink-0">
+              <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono text-slate-400 uppercase">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold">
                     LOCATION
                   </span>
-                  <span className="block text-sm font-semibold text-white">
+                  <span className="block text-sm font-semibold text-slate-900">
                     Bangalore, India • Remote Worldwide
                   </span>
                 </div>
@@ -143,8 +143,8 @@ export default function ContactSection() {
             </div>
 
             {/* Social Handles */}
-            <div className="pt-4 border-t border-slate-800">
-              <span className="text-xs font-mono text-slate-400 uppercase block mb-3">
+            <div className="pt-4 border-t border-slate-200">
+              <span className="text-xs font-mono text-slate-500 uppercase block mb-3 font-semibold">
                 CONNECT WITH US ON SOCIAL:
               </span>
               <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Instagram"
-                  className="p-3 rounded-xl bg-white/5 hover:bg-[#FC6100] text-white transition-colors"
+                  className="p-3 rounded-xl bg-white border border-slate-200 hover:bg-[#FC6100] hover:border-[#FC6100] text-slate-700 hover:text-white transition-colors shadow-xs"
                 >
                   <InstagramIcon />
                 </a>
@@ -162,7 +162,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="p-3 rounded-xl bg-white/5 hover:bg-[#FC6100] text-white transition-colors"
+                  className="p-3 rounded-xl bg-white border border-slate-200 hover:bg-[#FC6100] hover:border-[#FC6100] text-slate-700 hover:text-white transition-colors shadow-xs"
                 >
                   <LinkedInIcon />
                 </a>
@@ -171,7 +171,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Twitter"
-                  className="p-3 rounded-xl bg-white/5 hover:bg-[#FC6100] text-white transition-colors"
+                  className="p-3 rounded-xl bg-white border border-slate-200 hover:bg-[#FC6100] hover:border-[#FC6100] text-slate-700 hover:text-white transition-colors shadow-xs"
                 >
                   <TwitterXIcon />
                 </a>
@@ -180,29 +180,29 @@ export default function ContactSection() {
           </div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-[#0F1420] border border-white/10 shadow-xl">
-            <h3 className="font-changa text-2xl font-bold uppercase text-white mb-2">
+          <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-lg">
+            <h3 className="font-changa text-2xl font-bold uppercase text-slate-900 mb-2">
               SEND US A MESSAGE
             </h3>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-slate-500 mb-6 font-normal">
               Fill in your details below and our team will get back to you within 4 business hours.
             </p>
 
             {submitted ? (
-              <div className="p-8 rounded-2xl bg-[#FC6100]/15 border border-[#FC6100] text-center animate-in fade-in duration-300">
-                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#FC6100] text-white flex items-center justify-center shadow-lg">
+              <div className="p-8 rounded-2xl bg-orange-50 border border-[#FC6100] text-center animate-in fade-in duration-300">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#FC6100] text-white flex items-center justify-center shadow-md">
                   <CheckCircle className="w-7 h-7" />
                 </div>
-                <h4 className="font-changa text-2xl font-bold text-white uppercase">
+                <h4 className="font-changa text-2xl font-bold text-slate-900 uppercase">
                   MESSAGE RECEIVED!
                 </h4>
-                <p className="text-sm text-slate-300 mt-2 max-w-md mx-auto">
+                <p className="text-sm text-slate-600 mt-2 max-w-md mx-auto">
                   Thank you,{" "}
-                  <span className="text-[#FC6100] font-semibold">
+                  <span className="text-[#FC6100] font-bold">
                     {formData.name}
                   </span>
                   . Our team at Origami Studio has received your message and will reach out to{" "}
-                  <span className="text-white font-semibold">
+                  <span className="text-slate-900 font-bold">
                     {formData.email}
                   </span>{" "}
                   shortly.
@@ -219,7 +219,7 @@ export default function ContactSection() {
                       message: "",
                     });
                   }}
-                  className="mt-6 px-6 py-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white bg-white/10"
+                  className="mt-6 px-6 py-2.5 rounded-full text-xs font-semibold text-slate-700 hover:text-slate-950 bg-white border border-slate-200 shadow-xs"
                 >
                   Send Another Message
                 </button>
@@ -228,7 +228,7 @@ export default function ContactSection() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-mono text-slate-400 uppercase mb-1">
+                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
                       FULL NAME *
                     </label>
                     <input
@@ -239,12 +239,12 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-sm focus:border-[#FC6100] focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-mono text-slate-400 uppercase mb-1">
+                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
                       WORK EMAIL *
                     </label>
                     <input
@@ -255,14 +255,14 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-sm focus:border-[#FC6100] focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-mono text-slate-400 uppercase mb-1">
+                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
                       PHONE NUMBER
                     </label>
                     <input
@@ -272,12 +272,12 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, phone: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-sm focus:border-[#FC6100] focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-mono text-slate-400 uppercase mb-1">
+                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
                       COMPANY / BRAND NAME
                     </label>
                     <input
@@ -287,13 +287,13 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, company: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-sm focus:border-[#FC6100] focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-400 uppercase mb-1">
+                  <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
                     PRIMARY SERVICE OF INTEREST
                   </label>
                   <select
@@ -301,7 +301,7 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, service: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-sm focus:border-[#FC6100] focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none"
                   >
                     <option value="Social Media Management">
                       Social Media Management & Strategy
@@ -325,7 +325,7 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-slate-400 uppercase mb-1">
+                  <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
                     YOUR PROJECT DETAILS & GOALS *
                   </label>
                   <textarea
@@ -336,14 +336,14 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-sm focus:border-[#FC6100] focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#FC6100] focus:outline-none placeholder:text-slate-400"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-full font-changa text-lg font-bold text-white bg-gradient-to-r from-[#FC6100] via-[#FF7A18] to-[#FC6100] shadow-[0_0_25px_rgba(252,97,0,0.35)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-full font-changa text-lg font-bold text-white bg-gradient-to-r from-[#FC6100] via-[#FF7A18] to-[#FC6100] shadow-[0_4px_20px_rgba(252,97,0,0.35)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <span>SENDING MESSAGE...</span>

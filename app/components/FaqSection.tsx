@@ -64,7 +64,7 @@ export default function FaqSection() {
   return (
     <section
       id="faqs"
-      className="relative py-24 bg-[#0A0E17] text-white border-t border-slate-800 overflow-hidden"
+      className="relative py-24 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
     >
       {/* Background Lighting */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#FC6100]/10 blur-[150px] rounded-full pointer-events-none" />
@@ -76,10 +76,10 @@ export default function FaqSection() {
             <HelpCircle className="w-3.5 h-3.5" />
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             GOT QUESTIONS? <span className="text-[#FC6100]">WE HAVE ANSWERS</span>
           </h2>
-          <p className="mt-4 text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
             Everything you need to know about partnering with Origami Studio.
           </p>
         </div>
@@ -93,8 +93,8 @@ export default function FaqSection() {
                 key={faq.question}
                 className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
                   isOpen
-                    ? "bg-[#0F1420] border-[#FC6100]/50 shadow-[0_0_25px_rgba(252,97,0,0.15)]"
-                    : "bg-[#0F1420]/60 border-white/10 hover:border-white/20"
+                    ? "bg-slate-50 border-[#FC6100]/50 shadow-md"
+                    : "bg-slate-50/50 border-slate-200 hover:border-slate-300"
                 }`}
               >
                 <button
@@ -102,16 +102,16 @@ export default function FaqSection() {
                   className="w-full p-6 text-left flex items-center justify-between gap-4 focus:outline-none"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-[#FC6100] uppercase">
+                    <span className="px-2.5 py-0.5 rounded-full bg-white border border-slate-200 text-[10px] font-mono text-[#FC6100] font-bold uppercase shadow-xs">
                       {faq.category}
                     </span>
-                    <span className="font-changa text-base sm:text-lg font-bold text-white">
+                    <span className="font-changa text-base sm:text-lg font-bold text-slate-900">
                       {faq.question}
                     </span>
                   </div>
                   <div
-                    className={`w-8 h-8 rounded-full bg-black/40 border border-white/10 flex items-center justify-center text-[#FC6100] shrink-0 transition-transform duration-300 ${
-                      isOpen ? "rotate-180 bg-[#FC6100] text-white" : ""
+                    className={`w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-[#FC6100] shrink-0 transition-transform duration-300 shadow-xs ${
+                      isOpen ? "rotate-180 bg-[#FC6100] text-white border-[#FC6100]" : ""
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -119,7 +119,7 @@ export default function FaqSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-2 text-slate-300 text-sm sm:text-base font-light leading-relaxed border-t border-slate-800/60 animate-in fade-in duration-200">
+                  <div className="px-6 pb-6 pt-2 text-slate-600 text-sm sm:text-base font-normal leading-relaxed border-t border-slate-200/80 animate-in fade-in duration-200">
                     {faq.answer}
                   </div>
                 )}
@@ -129,8 +129,8 @@ export default function FaqSection() {
         </div>
 
         {/* Still have questions banner */}
-        <div className="mt-12 text-center p-6 rounded-2xl bg-black/40 border border-slate-800">
-          <p className="text-slate-300 text-sm font-medium">
+        <div className="mt-12 text-center p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+          <p className="text-slate-700 text-sm font-medium">
             Have a custom query or complex technical requirement?
           </p>
           <a
