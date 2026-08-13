@@ -118,15 +118,11 @@ export default function TeamSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FC6100]/10 border border-[#FC6100]/30 text-[#FC6100] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Users className="w-3.5 h-3.5" />
-            <span>OUR TEAM</span>
-          </div>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
-            THE MINDS BEHIND <span className="text-[#FC6100]">THE FOLDS</span>
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#FC6100]">
+            Team
           </h2>
           <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            A passionate collective of digital strategists, fullstack engineers, creative directors, and growth hackers dedicated to your success.
+            All three members of the team are from NITK Surathkal, Manglore and pursuing Mechanical Engineering degree.
           </p>
         </div>
 

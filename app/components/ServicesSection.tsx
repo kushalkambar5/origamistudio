@@ -168,15 +168,9 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-mono font-bold text-[#FC6100] uppercase tracking-widest bg-orange-100/80 px-4 py-1.5 rounded-full inline-block mb-3 border border-orange-200">
-            Interactive Experience
-          </span>
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
-            WHAT WE DO?
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#FC6100]">
+            What We Do?
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base mt-3 max-w-xl mx-auto font-medium">
-            Hover over any service to reveal the interactive flow. Click to view complete deliverables and expected outcomes.
-          </p>
         </div>
 
         {/* Flowing Menu Component */}

@@ -61,13 +61,11 @@ export default function AboutSection() {
         {/* Headline & Main Paragraph */}
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase leading-tight tracking-tight text-slate-900">
-            ELEVATING BRANDS IN THE{" "}
-            <span className="text-[#FC6100]">DIGITAL AGE</span>
+            <span className="text-[#FC6100]">About US</span>
           </h2>
           <p className="mt-6 text-slate-600 text-lg sm:text-xl font-light leading-relaxed">
-            Origami Studio is a full-service digital marketing & tech agency crafted to
-            elevate brands in the digital age. We combine strategy, creativity and
-            technology to deliver measurable results and unforgettable brand experiences.
+            Origami Studio is a full-service digital marketing & tech agency which will be the end to end solution for your brand's digital needs.
+            
           </p>
         </div>
 
