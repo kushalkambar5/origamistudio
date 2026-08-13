@@ -36,68 +36,70 @@ const STATS = [
 
 export default function HeroSection() {
   return (
-    <section
-      id="home"
-      className="relative min-h-screen pt-28 pb-16 flex flex-col justify-center items-center overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white text-slate-900"
-    >
-      {/* Background Decorative Origami Facets & Glow Effects */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FC6100]/10 blur-[140px] rounded-full" />
-        <div className="absolute top-1/3 left-10 w-96 h-96 bg-orange-400/10 blur-[100px] rounded-full" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-amber-400/10 blur-[100px] rounded-full" />
+    <>
+      <section
+        id="home"
+        className="relative w-full h-screen min-h-[640px] pt-24 pb-6 flex flex-col justify-between items-center overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white text-slate-900"
+      >
+        {/* Background Decorative Origami Facets & Glow Effects */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FC6100]/10 blur-[140px] rounded-full" />
+          <div className="absolute top-1/3 left-10 w-96 h-96 bg-orange-400/10 blur-[100px] rounded-full" />
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-amber-400/10 blur-[100px] rounded-full" />
 
-        {/* Origami Polygon Wireframe Background Overlay */}
-        <svg
-          className="absolute inset-0 w-full h-full opacity-20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern
-              id="origami-grid"
-              width="80"
-              height="80"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 80 0 L 0 0 0 80 Z M 80 80 L 80 0 0 80 Z"
-                fill="none"
-                stroke="rgba(252,97,0,0.3)"
-                strokeWidth="0.5"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#origami-grid)" />
-        </svg>
-      </div>
+          {/* Origami Polygon Wireframe Background Overlay */}
+          <svg
+            className="absolute inset-0 w-full h-full opacity-20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern
+                id="origami-grid"
+                width="80"
+                height="80"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 80 0 L 0 0 0 80 Z M 80 80 L 80 0 0 80 Z"
+                  fill="none"
+                  stroke="rgba(252,97,0,0.3)"
+                  strokeWidth="0.5"
+                />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#origami-grid)" />
+          </svg>
+        </div>
 
-      {/* Brand Logo Heading - Above Video Carousel */}
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 mb-4">
-        <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase text-slate-900">
-          ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
-        </h1>
-      </div>
+        {/* Brand Logo Heading - Above Video Carousel */}
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pt-2">
+          <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase text-slate-900">
+            ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
+          </h1>
+        </div>
 
-      {/* Full Viewport Width 3D Video Carousel Container */}
-      <div className="w-full relative z-10 overflow-hidden mb-6">
-        <ClientVideoCarousel />
-      </div>
+        {/* Full Viewport Width 3D Video Carousel Container */}
+        <div className="w-full relative z-10 overflow-hidden my-auto">
+          <ClientVideoCarousel />
+        </div>
 
-      {/* Subtitle - Remains Below Video Carousel */}
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10">
-        <p className="max-w-3xl text-lg sm:text-2xl text-slate-600 font-light leading-relaxed mb-8">
-          A digital marketing studio that helps brands{" "}
-          <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">
-            stand out
-          </span>
-          ,{" "}
-          <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">
-            scale up
-          </span>{" "}
-          and stay ahead.
-        </p>
-      </div>
+        {/* Subtitle - Below Video Carousel */}
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pb-4">
+          <p className="max-w-3xl text-lg sm:text-2xl text-slate-600 font-light leading-relaxed">
+            A digital marketing studio that helps brands{" "}
+            <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">
+              stand out
+            </span>
+            ,{" "}
+            <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">
+              scale up
+            </span>{" "}
+            and stay ahead.
+          </p>
+        </div>
+      </section>
 
-      {/* "WHO WE WORK WITH" Strip */}
+      {/* "WHO WE WORK WITH" Strip - Appears on Scroll */}
       <div className="w-full bg-slate-100/90 border-y border-[#FC6100]/20 py-8 px-4 relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
@@ -127,6 +129,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 }

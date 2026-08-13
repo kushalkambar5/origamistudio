@@ -133,7 +133,8 @@ export default function ClientVideoCarousel() {
       const r = Math.max(480, Math.round(vw / (2 * sin52)));
       const sin9 = Math.sin((9 * Math.PI) / 180);
       const w = Math.round(2 * r * sin9);
-      const h = Math.round(w * 1.5);
+      // Larger video card dimensions for prominent hero display
+      const h = Math.round(w * 1.38);
       setDimensions({ radius: r, cardWidth: w, cardHeight: h });
     };
 
@@ -297,9 +298,9 @@ export default function ClientVideoCarousel() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-hidden select-none bg-transparent py-4"
+      className="relative w-full overflow-hidden select-none bg-transparent py-1"
       style={{
-        height: `${dimensions.cardHeight + 40}px`,
+        height: `${dimensions.cardHeight + 10}px`,
       }}
     >
       {/* Invisible Dragger Layer */}
