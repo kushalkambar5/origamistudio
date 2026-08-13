@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import ClientVideoCarousel from "./ClientVideoCarousel";
 import {
   ArrowRight,
   TrendingUp,
@@ -70,11 +71,12 @@ export default function HeroSection() {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10">
+        {/* Infinite 3D Video Carousel placed above ORIGAMI STUDIO */}
+        <ClientVideoCarousel />
+
         {/* Brand Logo & Origami Emblem */}
         <div className="mb-6 flex flex-col items-center">
-          
-
-          <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mt-6 uppercase text-slate-900">
+          <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mt-2 uppercase text-slate-900">
             ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
           </h1>
         </div>
