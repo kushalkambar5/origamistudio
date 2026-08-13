@@ -10,30 +10,19 @@ import {
   Bot,
   MessageSquare,
   CheckCircle2,
-  ArrowRight,
   Sparkles,
   X,
-  Layers,
 } from "lucide-react";
+import FlowingMenu, { FlowingMenuItem } from "./FlowingMenu";
 
-interface ServiceItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  icon: React.ElementType;
-  description: string;
-  deliverables: string[];
-  metrics: string;
-  badge: string;
-}
-
-const SERVICES: ServiceItem[] = [
+const SERVICES: FlowingMenuItem[] = [
   {
     id: "social-media",
     title: "Social Media Management",
     subtitle: "Viral Content & Brand Positioning",
     icon: Share2,
     badge: "Core Service",
+    image: "/what_we_do/social_media_management.jpg",
     description:
       "We design end-to-end social media strategies that turn passive scrollers into passionate brand advocates. From visual aesthetic feeds to viral short-form video calendars.",
     deliverables: [
@@ -52,6 +41,7 @@ const SERVICES: ServiceItem[] = [
     subtitle: "Next-Gen Web Apps Built for Speed & Conversion",
     icon: Globe,
     badge: "Tech Solution",
+    image: "/what_we_do/websites.jpg",
     description:
       "We build ultra-fast, high-performing websites and web applications with Next.js, tailored CSS design systems, and deep search engine optimization engineered into every line of code.",
     deliverables: [
@@ -70,6 +60,7 @@ const SERVICES: ServiceItem[] = [
     subtitle: "Dominate Local Google Maps & Search",
     icon: TrendingUp,
     badge: "Local SEO",
+    image: "/what_we_do/google_business_profile.png",
     description:
       "Claim top positions in the coveted Google Local 3-Pack. We optimize your business profile, automate customer review flows, and establish local map dominance.",
     deliverables: [
@@ -88,6 +79,7 @@ const SERVICES: ServiceItem[] = [
     subtitle: "Cinematic Brand & Commercial Photography",
     icon: Camera,
     badge: "Creative Studio",
+    image: "/what_we_do/offline_shoots.jpg",
     description:
       "High-end commercial shoots tailored for products, founder portraits, and corporate facilities. We bring studio lighting, professional cameras, and creative direction to your location.",
     deliverables: [
@@ -106,6 +98,7 @@ const SERVICES: ServiceItem[] = [
     subtitle: "High-Retention Reels, Shorts & Brand Films",
     icon: Video,
     badge: "High Impact",
+    image: "/what_we_do/video_editing.jpg",
     description:
       "We edit raw footage into captivating short-form videos designed to maximize watch time, retention, and viral reach across Instagram, YouTube Shorts, and TikTok.",
     deliverables: [
@@ -124,6 +117,7 @@ const SERVICES: ServiceItem[] = [
     subtitle: "24/7 Lead Qualification & Auto-Support",
     icon: Bot,
     badge: "AI Powered",
+    image: "/what_we_do/ai_agents.png",
     description:
       "Deploy custom AI agents trained on your business knowledge base. Qualify leads instantly, schedule appointments, and provide instant customer support around the clock.",
     deliverables: [
@@ -142,6 +136,7 @@ const SERVICES: ServiceItem[] = [
     subtitle: "Direct Broadcasts & Conversational Funnels",
     icon: MessageSquare,
     badge: "Automation",
+    image: "/what_we_do/whatsapp.jpg",
     description:
       "Turn WhatsApp into your highest-converting sales channel. Broadcast promotions, automate cart recovery, and deliver 1-on-1 customer journeys right inside WhatsApp.",
     deliverables: [
@@ -157,7 +152,7 @@ const SERVICES: ServiceItem[] = [
 ];
 
 export default function ServicesSection() {
-  const [selectedService, setSelectedService] = useState<ServiceItem | null>(
+  const [selectedService, setSelectedService] = useState<FlowingMenuItem | null>(
     null
   );
 
@@ -173,59 +168,28 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="text-xs font-mono font-bold text-[#FC6100] uppercase tracking-widest bg-orange-100/80 px-4 py-1.5 rounded-full inline-block mb-3 border border-orange-200">
+            Interactive Experience
+          </span>
           <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
             WHAT WE DO?
           </h2>
+          <p className="text-slate-600 text-sm sm:text-base mt-3 max-w-xl mx-auto font-medium">
+            Hover over any service to reveal the interactive flow. Click to view complete deliverables and expected outcomes.
+          </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((service) => {
-            const IconComponent = service.icon;
-            return (
-              <div
-                key={service.id}
-                onClick={() => setSelectedService(service)}
-                className="group relative p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 hover:border-[#FC6100]/60 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col justify-between"
-              >
-                {/* Glow Hover Accent */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[#FC6100]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-[#FC6100]/30 flex items-center justify-center text-[#FC6100] group-hover:scale-110 group-hover:border-[#FC6100] group-hover:bg-[#FC6100] group-hover:text-white transition-all duration-300 shadow-xs">
-                      <IconComponent className="w-7 h-7" />
-                    </div>
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-slate-100 border border-slate-200 text-slate-600 group-hover:border-[#FC6100]/40 group-hover:text-[#FC6100]">
-                      {service.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="font-changa text-xl sm:text-2xl font-bold text-slate-900 mb-2 group-hover:text-[#FC6100] transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-xs text-[#FC6100] font-semibold tracking-wide uppercase mb-3">
-                    {service.subtitle}
-                  </p>
-                  <p className="text-slate-600 text-sm font-normal line-clamp-3 leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-                </div>
-
-                <div>
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                    <span className="text-slate-500 font-mono font-medium">
-                      {service.metrics}
-                    </span>
-                    <span className="inline-flex items-center gap-1 font-semibold text-[#FC6100] group-hover:translate-x-1 transition-transform">
-                      Details <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* Flowing Menu Component */}
+        <FlowingMenu
+          items={SERVICES}
+          onSelectService={setSelectedService}
+          speed={18}
+          textColor="#0f172a"
+          bgColor="#ffffff"
+          marqueeBgColor="#FC6100"
+          marqueeTextColor="#ffffff"
+          borderColor="#e2e8f0"
+        />
       </div>
 
       {/* Service Detail Modal */}
