@@ -88,12 +88,35 @@ const CLIENT_VIDEOS: ClientVideo[] = [
   },
 ];
 
+const PROCESS_STEPS = [
+  { step: "#01", title: "Strategy & Planning" },
+  { step: "#02", title: "Design & Development" },
+  { step: "#03", title: "Launch & Growth" },
+  { step: "#04", title: "Ongoing Support" },
+];
+
 export default function ClientVideoCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [spacing, setSpacing] = useState(260);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
 
   const total = CLIENT_VIDEOS.length;
+
+  // Dynamically calculate horizontal spacing to ensure edge-to-edge screen coverage
+  useEffect(() => {
+    const updateSpacing = () => {
+      const w = window.innerWidth;
+      if (w < 640) setSpacing(145);
+      else if (w < 768) setSpacing(195);
+      else if (w < 1024) setSpacing(235);
+      else if (w < 1440) setSpacing(270);
+      else setSpacing(300);
+    };
+    updateSpacing();
+    window.addEventListener("resize", updateSpacing);
+    return () => window.removeEventListener("resize", updateSpacing);
+  }, []);
 
   // Auto-advance loop for infinite carousel
   useEffect(() => {
@@ -121,8 +144,7 @@ export default function ClientVideoCarousel() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 mb-8 pt-4">
-
+    <div className="w-full overflow-hidden mb-6 pt-2 select-none">
       {/* 3D Arc Infinite Video Carousel Container */}
       <div
         className="relative min-h-[320px] sm:min-h-[420px] md:min-h-[460px] flex items-center justify-center overflow-hidden py-6 select-none"
@@ -138,17 +160,16 @@ export default function ClientVideoCarousel() {
             const offset = getOffset(idx);
             const absOffset = Math.abs(offset);
 
-            // Hide cards beyond visible range for clean rendering
-            if (absOffset > 3) return null;
+            // Render up to 4 cards on each side so cards reach all the way to screen boundaries
+            if (absOffset > 4) return null;
 
             // 3D Curved Perspective Transformation Math
-            // Parabolic curve: translateY goes down on edges or creates arc curve
-            const rotateY = offset * -14; // degree tilt
-            const scale = Math.max(0.72, 1 - absOffset * 0.1);
-            const translateX = offset * 190; // spacing horizontally (in px on desktop)
+            const rotateY = offset * -15; // degree tilt
+            const scale = Math.max(0.68, 1 - absOffset * 0.1);
+            const translateX = offset * spacing; // spacing dynamically calculated for screen width
             const translateY = Math.pow(absOffset, 1.6) * 12; // curved arch effect
             const zIndex = 50 - absOffset * 10;
-            const opacity = Math.max(0.3, 1 - absOffset * 0.25);
+            const opacity = Math.max(0.35, 1 - absOffset * 0.18);
 
             const isActive = offset === 0;
 
@@ -164,13 +185,14 @@ export default function ClientVideoCarousel() {
                   transform: `translateX(${translateX}px) translateY(${translateY}px) rotateY(${rotateY}deg) scale(${scale})`,
                   zIndex,
                   opacity,
-                  transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease, z-index 0.6s ease",
+                  transition:
+                    "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease, z-index 0.6s ease",
                 }}
                 className={`absolute cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden border-2 transition-all duration-300 group shadow-xl ${
                   isActive
                     ? "border-[#FC6100] shadow-[0_12px_40px_rgba(252,97,0,0.35)] ring-4 ring-[#FC6100]/20"
                     : "border-slate-200/80 hover:border-slate-300 bg-slate-900"
-                } w-[180px] h-[260px] sm:w-[240px] sm:h-[340px] md:w-[270px] md:h-[380px]`}
+                } w-[170px] h-[250px] sm:w-[230px] sm:h-[330px] md:w-[260px] md:h-[380px]`}
               >
                 {/* HTML5 Video Element */}
                 <video
@@ -219,7 +241,7 @@ export default function ClientVideoCarousel() {
         <button
           onClick={handlePrev}
           aria-label="Previous Video"
-          className="absolute left-2 sm:left-6 z-50 p-2.5 sm:p-3.5 rounded-full bg-white/90 hover:bg-[#FC6100] text-slate-800 hover:text-white border border-slate-200 hover:border-[#FC6100] transition-all shadow-lg backdrop-blur-md active:scale-95"
+          className="absolute left-3 sm:left-8 md:left-12 z-50 p-2.5 sm:p-3.5 rounded-full bg-white/90 hover:bg-[#FC6100] text-slate-800 hover:text-white border border-slate-200 hover:border-[#FC6100] transition-all shadow-lg backdrop-blur-md active:scale-95"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
@@ -227,7 +249,7 @@ export default function ClientVideoCarousel() {
         <button
           onClick={handleNext}
           aria-label="Next Video"
-          className="absolute right-2 sm:right-6 z-50 p-2.5 sm:p-3.5 rounded-full bg-white/90 hover:bg-[#FC6100] text-slate-800 hover:text-white border border-slate-200 hover:border-[#FC6100] transition-all shadow-lg backdrop-blur-md active:scale-95"
+          className="absolute right-3 sm:right-8 md:right-12 z-50 p-2.5 sm:p-3.5 rounded-full bg-white/90 hover:bg-[#FC6100] text-slate-800 hover:text-white border border-slate-200 hover:border-[#FC6100] transition-all shadow-lg backdrop-blur-md active:scale-95"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
@@ -246,6 +268,20 @@ export default function ClientVideoCarousel() {
                 : "w-2 bg-slate-300 hover:bg-slate-400"
             }`}
           />
+        ))}
+      </div>
+
+      {/* 4 Process Step Labels matching reference image & image 1 */}
+      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12 md:gap-16 mt-8 px-4">
+        {PROCESS_STEPS.map((item) => (
+          <div key={item.step} className="flex flex-col items-center text-center">
+            <span className="font-changa text-[#FC6100] text-sm sm:text-base font-bold">
+              {item.step}
+            </span>
+            <span className="text-xs sm:text-sm text-slate-700 font-semibold uppercase tracking-tight">
+              {item.title}
+            </span>
+          </div>
         ))}
       </div>
     </div>

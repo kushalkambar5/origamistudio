@@ -70,10 +70,12 @@ export default function HeroSection() {
         </svg>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10">
-        {/* Infinite 3D Video Carousel placed above ORIGAMI STUDIO */}
+      {/* Full Viewport Width 3D Video Carousel Container (No max-w constraint) */}
+      <div className="w-full relative z-10 overflow-hidden mb-6">
         <ClientVideoCarousel />
+      </div>
 
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10">
         {/* Brand Logo & Origami Emblem */}
         <div className="mb-6 flex flex-col items-center">
           <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mt-2 uppercase text-slate-900">

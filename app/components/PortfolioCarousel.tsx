@@ -99,16 +99,38 @@ const CAROUSEL_ITEMS: ProcessCard[] = [
 export default function PortfolioCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState<ProcessCard | null>(null);
-  const [filterCategory, setFilterCategory] = useState("All");
+  const [spacing, setSpacing] = useState(270);
+
+  const total = CAROUSEL_ITEMS.length;
+
+  // Responsive dynamic spacing for full viewport coverage
+  React.useEffect(() => {
+    const updateSpacing = () => {
+      const w = window.innerWidth;
+      if (w < 640) setSpacing(150);
+      else if (w < 768) setSpacing(200);
+      else if (w < 1024) setSpacing(240);
+      else if (w < 1440) setSpacing(280);
+      else setSpacing(320);
+    };
+    updateSpacing();
+    window.addEventListener("resize", updateSpacing);
+    return () => window.removeEventListener("resize", updateSpacing);
+  }, []);
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % CAROUSEL_ITEMS.length);
+    setActiveIndex((prev) => (prev + 1) % total);
   };
 
   const handlePrev = () => {
-    setActiveIndex(
-      (prev) => (prev - 1 + CAROUSEL_ITEMS.length) % CAROUSEL_ITEMS.length
-    );
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  const getOffset = (index: number) => {
+    let diff = index - activeIndex;
+    if (diff > total / 2) diff -= total;
+    if (diff < -total / 2) diff += total;
+    return diff;
   };
 
   return (
@@ -119,11 +141,11 @@ export default function PortfolioCarousel() {
       {/* Background Radial Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#FC6100]/10 blur-[160px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full relative z-10">
         {/* HEADER matching uploaded reference image */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-10 px-4">
           {/* Subtag: Behind the Designs */}
-          <div className="inline-block mb-3">
+          <div className="inline-block mb-2">
             <span className="font-changa text-base sm:text-lg text-[#FC6100] tracking-wide font-bold">
               Behind the Designs
             </span>
@@ -153,36 +175,26 @@ export default function PortfolioCarousel() {
           </div>
         </div>
 
-        {/* CURVED 3D PERSPECTIVE GALLERY ARC SLIDER (Matching Reference Image) */}
-        <div className="relative my-12 py-8">
-          {/* 3D Perspective Card Layout Grid */}
-          <div className="flex justify-center items-center gap-3 sm:gap-6 max-w-6xl mx-auto overflow-x-auto pb-6 scrollbar-none snap-x">
+        {/* CURVED 3D PERSPECTIVE GALLERY ARC SLIDER (Matching Reference Image 2) */}
+        <div className="relative w-full overflow-hidden my-8 py-6 select-none">
+          <div
+            className="relative min-h-[380px] sm:min-h-[460px] md:min-h-[500px] flex items-center justify-center overflow-hidden py-4"
+            style={{ perspective: "1200px" }}
+          >
             {CAROUSEL_ITEMS.map((item, idx) => {
-              const isActive = idx === activeIndex;
-              const offset = idx - activeIndex;
+              const offset = getOffset(idx);
+              const absOffset = Math.abs(offset);
 
-              // Compute perspective curve tilt & scale for 3D arc effect
-              let rotateY = 0;
-              let scale = 0.9;
-              let translateY = 0;
+              if (absOffset > 3) return null;
 
-              if (offset === -1 || (activeIndex === 0 && idx === CAROUSEL_ITEMS.length - 1)) {
-                rotateY = 18;
-                scale = 0.92;
-                translateY = 10;
-              } else if (offset === 1 || (activeIndex === CAROUSEL_ITEMS.length - 1 && idx === 0)) {
-                rotateY = -18;
-                scale = 0.92;
-                translateY = 10;
-              } else if (offset === 0) {
-                rotateY = 0;
-                scale = 1.05;
-                translateY = -10;
-              } else {
-                rotateY = offset < 0 ? 25 : -25;
-                scale = 0.82;
-                translateY = 25;
-              }
+              const rotateY = offset * -16;
+              const scale = Math.max(0.72, 1 - absOffset * 0.1);
+              const translateX = offset * spacing;
+              const translateY = Math.pow(absOffset, 1.5) * 14;
+              const zIndex = 40 - absOffset * 10;
+              const opacity = Math.max(0.4, 1 - absOffset * 0.2);
+
+              const isActive = offset === 0;
 
               return (
                 <div
@@ -192,17 +204,19 @@ export default function PortfolioCarousel() {
                     setSelectedItem(item);
                   }}
                   style={{
-                    transform: `perspective(1000px) rotateY(${rotateY}deg) scale(${scale}) translateY(${translateY}px)`,
-                    transition: "all 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
+                    transform: `translateX(${translateX}px) translateY(${translateY}px) rotateY(${rotateY}deg) scale(${scale})`,
+                    zIndex,
+                    opacity,
+                    transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease, z-index 0.6s ease",
                   }}
-                  className={`snap-center shrink-0 w-64 sm:w-72 md:w-80 cursor-pointer rounded-3xl overflow-hidden border transition-all duration-500 group ${
+                  className={`absolute cursor-pointer rounded-3xl overflow-hidden border transition-all duration-300 group shadow-xl bg-white ${
                     isActive
-                      ? "border-[#FC6100] shadow-[0_10px_30px_rgba(252,97,0,0.25)] z-30"
-                      : "border-slate-200 hover:border-slate-300 opacity-90 hover:opacity-100 z-10"
-                  } bg-white`}
+                      ? "border-[#FC6100] shadow-[0_12px_40px_rgba(252,97,0,0.3)] ring-2 ring-[#FC6100]/20"
+                      : "border-slate-200 hover:border-slate-300"
+                  } w-[220px] h-[300px] sm:w-[280px] sm:h-[380px] md:w-[320px] md:h-[420px]`}
                 >
                   {/* Image Frame */}
-                  <div className="relative h-80 sm:h-96 w-full overflow-hidden bg-slate-100">
+                  <div className="relative h-[65%] w-full overflow-hidden bg-slate-100">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -221,14 +235,14 @@ export default function PortfolioCarousel() {
                   </div>
 
                   {/* Card Label Content matching Reference Image */}
-                  <div className="p-5 text-center bg-white">
-                    <span className="font-changa text-base font-bold text-[#FC6100] block mb-1">
+                  <div className="p-4 sm:p-5 text-center bg-white h-[35%] flex flex-col justify-center items-center">
+                    <span className="font-changa text-sm sm:text-base font-bold text-[#FC6100] block mb-0.5">
                       {item.stepNumber}
                     </span>
-                    <h3 className="font-changa text-lg font-bold text-slate-900 uppercase tracking-tight">
+                    <h3 className="font-changa text-base sm:text-lg font-bold text-slate-900 uppercase tracking-tight truncate w-full">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-slate-500 font-mono mt-1 truncate">
+                    <p className="text-[11px] sm:text-xs text-slate-500 font-mono mt-0.5 truncate w-full">
                       {item.subtitle}
                     </p>
                   </div>
@@ -242,7 +256,7 @@ export default function PortfolioCarousel() {
             <button
               onClick={handlePrev}
               aria-label="Previous portfolio card"
-              className="p-3 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#FC6100] hover:text-white hover:border-[#FC6100] transition-colors shadow-sm"
+              className="p-3 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#FC6100] hover:text-white hover:border-[#FC6100] transition-colors shadow-sm active:scale-95"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -265,7 +279,7 @@ export default function PortfolioCarousel() {
             <button
               onClick={handleNext}
               aria-label="Next portfolio card"
-              className="p-3 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#FC6100] hover:text-white hover:border-[#FC6100] transition-colors shadow-sm"
+              className="p-3 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-[#FC6100] hover:text-white hover:border-[#FC6100] transition-colors shadow-sm active:scale-95"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
