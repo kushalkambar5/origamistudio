@@ -3,29 +3,35 @@
 import React from "react";
 import Image from "next/image";
 import ClientVideoCarousel from "./ClientVideoCarousel";
+import LogoLoop, { LogoItem } from "./LogoLoop";
 import {
   ArrowRight,
   TrendingUp,
   Award,
   Users,
-  Building2,
-  Utensils,
-  ShoppingBag,
-  GraduationCap,
   Sparkles,
-  Zap,
-  CheckCircle2,
 } from "lucide-react";
 
-const TARGET_AUDIENCE = [
-  { label: "STARTUP FOUNDERS", icon: Zap },
-  { label: "REAL ESTATE BUSINESSES", icon: Building2 },
-  { label: "RESTAURANT OWNERS", icon: Utensils },
-  { label: "E-COMMERCE BRANDS", icon: ShoppingBag },
-  { label: "COACHES & CONSULTANTS", icon: GraduationCap },
+const CLIENT_LOGOS: LogoItem[] = [
+  {
+    src: "/clients_logo/sim_racing_hq.jpg",
+    alt: "Sim Racing HQ",
+    title: "Sim Racing HQ",
+    href: "https://www.instagram.com/simracing.hq?igsh=cjl6NG40MG90MDVl",
+  },
+  {
+    src: "/clients_logo/xylon.jpg",
+    alt: "Xylon Bar",
+    title: "Xylon Bar",
+    href: "https://www.instagram.com/xylon.bar?igsh=MWJzMjAxYzd5aXU0Yg==",
+  },
+  {
+    src: "/clients_logo/0.5_show.jpg",
+    alt: "0.5 Show",
+    title: "0.5 Show",
+    href: "https://www.instagram.com/zeropointfiveshow?igsh=MTkxeXM3Y250bGE1aQ==",
+  },
 ];
-
-
 
 const STATS = [
   { value: "150+", label: "Campaigns Folded", icon: Award },
@@ -99,34 +105,19 @@ export default function HeroSection() {
         </div>
       </section>
 
-      {/* "WHO WE WORK WITH" Strip - Appears on Scroll */}
-      <div className="w-full bg-slate-100/90 border-y border-[#FC6100]/20 py-8 px-4 relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <span className="w-3 h-3 rounded-full bg-[#FC6100] animate-pulse" />
-            <span className="font-changa text-lg text-slate-900 uppercase tracking-wider">
-              WHO WE WORK WITH:
-            </span>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            {TARGET_AUDIENCE.map((audience) => {
-              const IconComp = audience.icon;
-              return (
-                <div
-                  key={audience.label}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-700 font-medium hover:border-[#FC6100]/50 hover:text-slate-950 hover:bg-[#FC6100]/10 transition-all duration-200 shadow-xs"
-                >
-                  <IconComp className="w-4 h-4 text-[#FC6100]" />
-                  <span>{audience.label}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-xs font-mono text-[#FC6100] tracking-widest uppercase font-semibold hidden lg:block">
-            YOUR BRAND. FOLDED TO PERFECTION.
-          </div>
+      {/* Client Logos Loop Strip */}
+      <div className="w-full bg-slate-100/90 border-y border-[#FC6100]/20 py-4 relative z-10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <LogoLoop
+            logos={CLIENT_LOGOS}
+            speed={60}
+            pauseOnHover={true}
+            scaleOnHover={true}
+            fadeOut={true}
+            fadeOutColor="#f1f5f9"
+            logoHeight={48}
+            gap={56}
+          />
         </div>
       </div>
     </>

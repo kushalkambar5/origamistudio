@@ -57,13 +57,6 @@ export default function AboutSection() {
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#FC6100]/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Top Tagline Badge */}
-        <div className="text-center mb-6">
-          <span className="px-3.5 py-1 rounded-full bg-[#FC6100]/10 border border-[#FC6100]/30 text-[#FC6100] text-xs font-semibold uppercase tracking-widest inline-flex items-center gap-1.5">
-            <Target className="w-3.5 h-3.5" />
-            <span>ABOUT THE BRAND</span>
-          </span>
-        </div>
 
         {/* Headline & Main Paragraph */}
         <div className="max-w-4xl mx-auto text-center mb-16">

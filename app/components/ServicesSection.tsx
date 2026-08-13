@@ -174,13 +174,8 @@ export default function ServicesSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
-            FULL-SERVICE <span className="text-[#FC6100]">SOLUTIONS</span> FOR
-            EXPONENTIAL GROWTH
+            WHAT WE DO?
           </h2>
-          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            We combine strategic marketing, cutting-edge fullstack technology, and
-            high-converting visual media to scale your brand across all digital touchpoints.
-          </p>
         </div>
 
         {/* Services Grid */}
