@@ -1,11 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-} from "lucide-react";
 
 interface ClientVideo {
   id: string;
@@ -88,54 +83,48 @@ const CLIENT_VIDEOS: ClientVideo[] = [
   },
 ];
 
-const PROCESS_STEPS = [
-  { step: "#01", title: "Strategy & Planning" },
-  { step: "#02", title: "Design & Development" },
-  { step: "#03", title: "Launch & Growth" },
-  { step: "#04", title: "Ongoing Support" },
-];
-
 export default function ClientVideoCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [spacing, setSpacing] = useState(260);
+  const [cardDimensions, setCardDimensions] = useState({ width: 270, height: 420 });
+
+  // Smooth drag/swipe sliding state
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
 
   const total = CLIENT_VIDEOS.length;
 
-  // Dynamically calculate horizontal spacing to ensure edge-to-edge screen coverage
+  // Responsive card dimension updates
   useEffect(() => {
-    const updateSpacing = () => {
+    const updateDimensions = () => {
       const w = window.innerWidth;
-      if (w < 640) setSpacing(145);
-      else if (w < 768) setSpacing(195);
-      else if (w < 1024) setSpacing(235);
-      else if (w < 1440) setSpacing(270);
-      else setSpacing(300);
+      if (w < 640) {
+        setCardDimensions({ width: 160, height: 260 });
+      } else if (w < 768) {
+        setCardDimensions({ width: 200, height: 320 });
+      } else if (w < 1024) {
+        setCardDimensions({ width: 230, height: 360 });
+      } else {
+        setCardDimensions({ width: 270, height: 420 });
+      }
     };
-    updateSpacing();
-    window.addEventListener("resize", updateSpacing);
-    return () => window.removeEventListener("resize", updateSpacing);
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  // Auto-advance loop for infinite carousel
+  // Auto-advance loop when not actively dragging or hovered
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isDragging) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % total);
     }, 2800);
     return () => clearInterval(timer);
-  }, [isPaused, total]);
+  }, [isPaused, isDragging, total]);
 
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % total);
-  };
-
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
-  };
-
-  // Helper to calculate circular offset (-total/2 to total/2)
+  // Circular offset calculation (-total/2 to total/2)
   const getOffset = (index: number) => {
     let diff = index - activeIndex;
     if (diff > total / 2) diff -= total;
@@ -143,58 +132,102 @@ export default function ClientVideoCarousel() {
     return diff;
   };
 
+  // Cylinder Arc Trigonometry for Zero-Gap Touching Sides
+  const thetaDeg = 14;
+  const thetaHalfRad = ((thetaDeg / 2) * Math.PI) / 180;
+  const radius = cardDimensions.width / (2 * Math.sin(thetaHalfRad));
+
+  // Drag & Swipe Interaction Handlers
+  const handleDragStart = (clientX: number) => {
+    setIsDragging(true);
+    setStartX(clientX);
+    setDragOffset(0);
+  };
+
+  const handleDragMove = (clientX: number) => {
+    if (!isDragging) return;
+    const deltaX = clientX - startX;
+    setDragOffset(deltaX);
+  };
+
+  const handleDragEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const draggedCards = dragOffset / cardDimensions.width;
+    if (Math.abs(draggedCards) > 0.15) {
+      const shift = Math.round(-draggedCards) || (dragOffset < 0 ? 1 : -1);
+      setActiveIndex((prev) => (prev + shift + total * 100) % total);
+    }
+    setDragOffset(0);
+  };
+
+  // Drag ratio (-1 to 1 per card width)
+  const dragRatio = dragOffset / cardDimensions.width;
+
   return (
-    <div className="w-full overflow-hidden mb-6 pt-2 select-none">
-      {/* 3D Arc Infinite Video Carousel Container */}
-      <div
-        className="relative min-h-[320px] sm:min-h-[420px] md:min-h-[460px] flex items-center justify-center overflow-hidden py-6 select-none"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        {/* Curved Arch 3D Stage */}
+    <div
+      className="relative w-full py-8 overflow-hidden select-none cursor-grab active:cursor-grabbing"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => {
+        setIsPaused(false);
+        if (isDragging) handleDragEnd();
+      }}
+      onMouseDown={(e) => handleDragStart(e.clientX)}
+      onMouseMove={(e) => handleDragMove(e.clientX)}
+      onMouseUp={handleDragEnd}
+      onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+      onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+      onTouchEnd={handleDragEnd}
+    >
+      {/* Background Radial Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] bg-[#FC6100]/10 blur-[140px] rounded-full pointer-events-none" />
+
+      {/* 3D Curved Continuous Video Ribbon Stage */}
+      <div className="relative z-10 w-full min-h-[300px] sm:min-h-[380px] md:min-h-[460px] flex items-center justify-center overflow-hidden py-4">
         <div
           className="relative w-full flex items-center justify-center"
-          style={{ perspective: "1200px" }}
+          style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
         >
           {CLIENT_VIDEOS.map((video, idx) => {
-            const offset = getOffset(idx);
-            const absOffset = Math.abs(offset);
+            const baseOffset = getOffset(idx);
+            const continuousOffset = baseOffset + dragRatio;
+            const absOffset = Math.abs(continuousOffset);
 
-            // Render up to 4 cards on each side so cards reach all the way to screen boundaries
-            if (absOffset > 4) return null;
+            // Render visible cards across screen
+            if (absOffset > 4.5) return null;
 
-            // 3D Curved Perspective Transformation Math
-            const rotateY = offset * -15; // degree tilt
-            const scale = Math.max(0.68, 1 - absOffset * 0.1);
-            const translateX = offset * spacing; // spacing dynamically calculated for screen width
-            const translateY = Math.pow(absOffset, 1.6) * 12; // curved arch effect
-            const zIndex = 50 - absOffset * 10;
-            const opacity = Math.max(0.35, 1 - absOffset * 0.18);
+            // Compute exact 3D positioning where adjacent edges touch with 0 gap
+            const angleKRad = (continuousOffset * thetaDeg * Math.PI) / 180;
+            const translateX = radius * Math.sin(angleKRad);
+            const translateZ = -radius * (1 - Math.cos(angleKRad));
+            const rotateY = -continuousOffset * thetaDeg;
+            const zIndex = 50 - Math.round(absOffset);
 
-            const isActive = offset === 0;
+            const isActive = Math.abs(continuousOffset) < 0.5;
 
             return (
               <div
                 key={video.id}
                 onClick={() => {
-                  if (!isActive) {
+                  if (Math.abs(dragOffset) < 5) {
                     setActiveIndex(idx);
                   }
                 }}
                 style={{
-                  transform: `translateX(${translateX}px) translateY(${translateY}px) rotateY(${rotateY}deg) scale(${scale})`,
+                  transform: `translate3d(${translateX.toFixed(2)}px, 0px, ${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg)`,
+                  width: `${cardDimensions.width}px`,
+                  height: `${cardDimensions.height}px`,
                   zIndex,
-                  opacity,
-                  transition:
-                    "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease, z-index 0.6s ease",
+                  transition: isDragging
+                    ? "none"
+                    : "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), z-index 0.5s ease",
                 }}
-                className={`absolute cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden border-2 transition-all duration-300 group shadow-xl ${
-                  isActive
-                    ? "border-[#FC6100] shadow-[0_12px_40px_rgba(252,97,0,0.35)] ring-4 ring-[#FC6100]/20"
-                    : "border-slate-200/80 hover:border-slate-300 bg-slate-900"
-                } w-[170px] h-[250px] sm:w-[230px] sm:h-[330px] md:w-[260px] md:h-[380px]`}
+                className={`absolute cursor-pointer rounded-none border border-slate-900/10 bg-slate-900 overflow-hidden shadow-xl transition-all duration-300 group ${
+                  isActive ? "brightness-105" : "brightness-90 hover:brightness-100"
+                }`}
               >
-                {/* HTML5 Video Element */}
+                {/* HTML5 Video Element with Zero Border Radius */}
                 <video
                   ref={(el) => {
                     videoRefs.current[video.id] = el;
@@ -205,30 +238,18 @@ export default function ClientVideoCarousel() {
                   muted
                   playsInline
                   preload="metadata"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover rounded-none pointer-events-none"
                 />
 
-                {/* Ambient Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                {/* Subtle Bottom Ambient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
-                {/* Top Badge / Client Name Tag */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                  <span className="px-2.5 py-1 rounded-full bg-slate-950/70 backdrop-blur-md text-[10px] sm:text-xs font-mono font-bold text-white border border-white/10">
+                {/* Minimal Overlay Tag */}
+                <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
+                  <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-semibold uppercase tracking-wider mb-0.5 truncate">
                     {video.client}
-                  </span>
-                  {isActive && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#FC6100] text-white text-[9px] font-bold uppercase tracking-wider animate-pulse">
-                      PLAYING
-                    </span>
-                  )}
-                </div>
-
-                {/* Bottom Content Info */}
-                <div className="absolute bottom-3 left-3 right-3 text-left">
-                  <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-semibold uppercase tracking-wider mb-0.5">
-                    {video.category}
                   </p>
-                  <h4 className="font-changa text-xs sm:text-base font-bold text-white truncate drop-shadow-sm">
+                  <h4 className="font-changa text-xs sm:text-sm font-bold text-white truncate">
                     {video.title}
                   </h4>
                 </div>
@@ -236,54 +257,8 @@ export default function ClientVideoCarousel() {
             );
           })}
         </div>
-
-        {/* Carousel Navigation Buttons */}
-        <button
-          onClick={handlePrev}
-          aria-label="Previous Video"
-          className="absolute left-3 sm:left-8 md:left-12 z-50 p-2.5 sm:p-3.5 rounded-full bg-white/90 hover:bg-[#FC6100] text-slate-800 hover:text-white border border-slate-200 hover:border-[#FC6100] transition-all shadow-lg backdrop-blur-md active:scale-95"
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-
-        <button
-          onClick={handleNext}
-          aria-label="Next Video"
-          className="absolute right-3 sm:right-8 md:right-12 z-50 p-2.5 sm:p-3.5 rounded-full bg-white/90 hover:bg-[#FC6100] text-slate-800 hover:text-white border border-slate-200 hover:border-[#FC6100] transition-all shadow-lg backdrop-blur-md active:scale-95"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-      </div>
-
-      {/* Pagination Indicator Dots */}
-      <div className="flex items-center justify-center gap-1.5 mt-2">
-        {CLIENT_VIDEOS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveIndex(i)}
-            aria-label={`Jump to video ${i + 1}`}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === activeIndex
-                ? "w-8 bg-[#FC6100]"
-                : "w-2 bg-slate-300 hover:bg-slate-400"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* 4 Process Step Labels matching reference image & image 1 */}
-      <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12 md:gap-16 mt-8 px-4">
-        {PROCESS_STEPS.map((item) => (
-          <div key={item.step} className="flex flex-col items-center text-center">
-            <span className="font-changa text-[#FC6100] text-sm sm:text-base font-bold">
-              {item.step}
-            </span>
-            <span className="text-xs sm:text-sm text-slate-700 font-semibold uppercase tracking-tight">
-              {item.title}
-            </span>
-          </div>
-        ))}
       </div>
     </div>
   );
 }
+
