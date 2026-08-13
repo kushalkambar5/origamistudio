@@ -1,118 +1,122 @@
 "use client";
 
-import React from "react";
-import { Users, Sparkles, Globe, Mail } from "lucide-react";
+import React, { type MouseEvent, useRef, useState } from "react";
+import { motion, useSpring } from "framer-motion";
+import { Globe, ArrowUpRight } from "lucide-react";
 
 // Social SVG Icons
-const LinkedInIcon = () => (
-  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+const LinkedInIcon = ({ className = "w-4 h-4 fill-current" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24">
     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
   </svg>
 );
 
-const TwitterXIcon = () => (
-  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
-
-const InstagramIcon = () => (
-  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-  </svg>
-);
-
-const GitHubIcon = () => (
-  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-  </svg>
-);
+interface SocialLink {
+  label: string;
+  url: string;
+  icon: "linkedin" | "website";
+}
 
 interface TeamMember {
   name: string;
   role: string;
-  expertise: string;
   image: string;
-  bio: string;
-  socials: {
-    linkedin?: string;
-    twitter?: string;
-    instagram?: string;
-    github?: string;
-  };
+  links: SocialLink[];
 }
 
-const TEAM: TeamMember[] = [
+const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: "Aarav Sharma",
-    role: "Co-Founder & Creative Director",
-    expertise: "Brand Positioning & Changa Design Systems",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80",
-    bio: "Ex-agency design strategist with 10+ years crafting visual identities and multi-million dollar brand movements.",
-    socials: {
-      linkedin: "#",
-      twitter: "#",
-      instagram: "#",
-    },
+    name: "Rudra Prathap",
+    role: "video editting & marketting",
+    image: "/team/rudra.jpg",
+    links: [
+      {
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/rudra-prathap-a84402395/",
+        icon: "linkedin",
+      },
+    ],
   },
   {
-    name: "Vikramaditya Rao",
-    role: "Co-Founder & Head of Growth",
-    expertise: "Performance Marketing & Funnel Architecture",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80",
-    bio: "Data wizard who has scaled 120+ DTC brands and B2B startups with hyper-targeted ad campaigns and high ROAS funnels.",
-    socials: {
-      linkedin: "#",
-      twitter: "#",
-    },
+    name: "Shrujan Satish",
+    role: "shoots & marketing",
+    image: "/team/shrujan.jpg",
+    links: [
+      {
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/shrujan-satish-a087ab303/",
+        icon: "linkedin",
+      },
+    ],
   },
   {
-    name: "Neha Kulkarni",
-    role: "Lead Fullstack & AI Architect",
-    expertise: "Next.js 16, Technical SEO & AI Bot Engines",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80",
-    bio: "Fullstack engineer specializing in sub-100ms web app architectures, custom LLM fine-tuning, and WhatsApp API automation.",
-    socials: {
-      linkedin: "#",
-      github: "#",
-    },
-  },
-  {
-    name: "Rohan Mehta",
-    role: "Senior Video & Motion Producer",
-    expertise: "Commercial Shoots & Viral Reels Editing",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80",
-    bio: "Commercial director who has produced 500+ viral short videos generating over 50M organic views across platforms.",
-    socials: {
-      instagram: "#",
-      linkedin: "#",
-    },
-  },
-  {
-    name: "Ananya Verma",
-    role: "Google Business & Local SEO Lead",
-    expertise: "GBP Rank Boosting & Geo-Targeted Dominance",
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=80",
-    bio: "Local search authority who has ranked 200+ brick-and-mortar businesses in the top 3 Google Local Map Pack.",
-    socials: {
-      linkedin: "#",
-      twitter: "#",
-    },
+    name: "Kushal B K",
+    role: "tech (web & ai agents)",
+    image: "/team/kushal.jpg",
+    links: [
+      {
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/kushalbk/",
+        icon: "linkedin",
+      },
+      {
+        label: "Website",
+        url: "https://kushalbk.vercel.app/",
+        icon: "website",
+      },
+    ],
   },
 ];
 
 export default function TeamSection() {
+  const [img, setImg] = useState<{ src: string | null; alt: string; opacity: number }>({
+    src: null,
+    alt: "",
+    opacity: 0,
+  });
+
+  const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const spring = {
+    stiffness: 150,
+    damping: 15,
+    mass: 0.1,
+  };
+
+  const imagePos = {
+    x: useSpring(0, spring),
+    y: useSpring(0, spring),
+  };
+
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!imageRef.current || !containerRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const { clientX, clientY } = e;
+    const relativeX = clientX - containerRect.left;
+    const relativeY = clientY - containerRect.top;
+
+    imagePos.x.set(relativeX - imageRef.current.offsetWidth / 2);
+    imagePos.y.set(relativeY - imageRef.current.offsetHeight / 2);
+  };
+
+  const handleImageInteraction = (member: TeamMember, opacity: number) => {
+    setImg({ src: member.image, alt: member.name, opacity });
+  };
+
+  const hideImageInteraction = () => {
+    setImg((prev) => ({ ...prev, opacity: 0 }));
+  };
+
   return (
     <section
       id="team"
+      ref={containerRef}
+      onMouseMove={handleMove}
       className="relative py-24 bg-slate-50 text-slate-900 border-t border-slate-200 overflow-hidden"
     >
-      {/* Ambient Lighting */}
+      {/* Ambient Lighting Background */}
       <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-[#FC6100]/10 blur-[160px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -126,86 +130,92 @@ export default function TeamSection() {
           </p>
         </div>
 
-        {/* Team Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {TEAM.map((member) => (
+        {/* Team Image Reveal List */}
+        <div className="w-full max-w-7xl mx-auto border-t border-slate-200">
+          {TEAM_MEMBERS.map((member) => (
             <div
               key={member.name}
-              className="group relative p-6 rounded-3xl bg-white border border-slate-200 hover:border-[#FC6100]/60 transition-all duration-300 hover:-translate-y-2 shadow-sm hover:shadow-xl flex flex-col justify-between overflow-hidden"
+              onMouseEnter={() => handleImageInteraction(member, 1)}
+              onMouseMove={() => handleImageInteraction(member, 1)}
+              onMouseLeave={() => handleImageInteraction(member, 0)}
+              className="group relative py-7 sm:py-9 px-2 sm:px-6 grid grid-cols-1 md:grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-8 cursor-pointer border-b border-slate-200 hover:bg-white/80 transition-colors duration-200"
             >
-              {/* Top Accent Fold */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#FC6100]/15 to-transparent rounded-bl-full pointer-events-none group-hover:from-[#FC6100]/30 transition-colors" />
-
-              <div>
-                {/* Photo Frame */}
-                <div className="relative w-28 h-28 mx-auto mb-6 rounded-2xl overflow-hidden border-2 border-[#FC6100]/30 group-hover:border-[#FC6100] transition-colors shadow-md">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-
-                <div className="text-center mb-4">
-                  <h3 className="font-changa text-xl font-bold text-slate-900 group-hover:text-[#FC6100] transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-xs text-[#FC6100] font-mono font-bold uppercase mt-0.5">
-                    {member.role}
-                  </p>
-                  <p className="text-[11px] text-slate-500 font-mono mt-1">
-                    {member.expertise}
-                  </p>
-                </div>
-
-                <p className="text-slate-600 text-xs leading-relaxed text-center mb-6 font-normal">
-                  {member.bio}
-                </p>
+              {/* Column 1: Left - Name (Single line) */}
+              <div className="flex items-center gap-4 justify-start whitespace-nowrap">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-12 h-12 rounded-full object-cover border border-[#FC6100]/40 md:hidden flex-shrink-0"
+                />
+                <h3 className="font-changa text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 group-hover:text-[#FC6100] transition-colors duration-200 whitespace-nowrap">
+                  {member.name}
+                </h3>
               </div>
 
-              {/* Social Links */}
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
-                {member.socials.linkedin && (
+              {/* Column 2: Middle - Role (Centered in remaining space) */}
+              <div className="flex items-center justify-start md:justify-center px-2">
+                <span className="text-sm sm:text-base text-slate-600 font-medium font-mono capitalize flex items-center gap-2 text-left md:text-center">
+                  {member.role}
+                  <span className="w-3 h-3 bg-[#FC6100] inline-block rounded-sm group-hover:scale-125 transition-transform duration-200 flex-shrink-0"></span>
+                </span>
+              </div>
+
+              {/* Column 3: Right - Links */}
+              <div
+                className="flex items-center justify-start md:justify-end gap-2 z-20 whitespace-nowrap"
+                onMouseEnter={(e) => {
+                  e.stopPropagation();
+                  hideImageInteraction();
+                }}
+                onMouseMove={(e) => {
+                  e.stopPropagation();
+                  hideImageInteraction();
+                }}
+                onMouseLeave={(e) => {
+                  e.stopPropagation();
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {member.links.map((link) => (
                   <a
-                    href={member.socials.linkedin}
-                    aria-label={`${member.name} LinkedIn`}
-                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-white hover:bg-[#FC6100] hover:border-[#FC6100] text-xs font-semibold shadow-sm transition-all duration-200 group/link"
+                    title={link.label}
                   >
-                    <LinkedInIcon />
+                    {link.icon === "linkedin" ? (
+                      <LinkedInIcon className="w-3.5 h-3.5 fill-current" />
+                    ) : (
+                      <Globe className="w-3.5 h-3.5" />
+                    )}
+                    <span>{link.label}</span>
+                    <ArrowUpRight className="w-3 h-3 opacity-60 group-hover/link:opacity-100 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                   </a>
-                )}
-                {member.socials.twitter && (
-                  <a
-                    href={member.socials.twitter}
-                    aria-label={`${member.name} Twitter`}
-                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
-                  >
-                    <TwitterXIcon />
-                  </a>
-                )}
-                {member.socials.instagram && (
-                  <a
-                    href={member.socials.instagram}
-                    aria-label={`${member.name} Instagram`}
-                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
-                  >
-                    <InstagramIcon />
-                  </a>
-                )}
-                {member.socials.github && (
-                  <a
-                    href={member.socials.github}
-                    aria-label={`${member.name} GitHub`}
-                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-[#FC6100] text-slate-600 hover:text-white transition-colors"
-                  >
-                    <GitHubIcon />
-                  </a>
-                )}
+                ))}
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Floating Reveal Image */}
+      {img.src && (
+        <motion.img
+          ref={imageRef}
+          src={img.src}
+          alt={img.alt}
+          className="w-[260px] sm:w-[300px] h-[320px] sm:h-[360px] rounded-2xl object-cover shadow-2xl border-2 border-[#FC6100]/40 absolute top-0 left-0 transition-opacity duration-200 ease-in-out pointer-events-none z-30 hidden md:block"
+          style={{
+            x: imagePos.x,
+            y: imagePos.y,
+            opacity: img.opacity,
+          }}
+        />
+      )}
     </section>
   );
 }
+
+
