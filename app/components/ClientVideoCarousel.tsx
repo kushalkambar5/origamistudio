@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { Draggable } from "gsap/Draggable";
 
 interface ClientVideo {
   id: string;
@@ -10,7 +12,7 @@ interface ClientVideo {
   src: string;
 }
 
-const CLIENT_VIDEOS: ClientVideo[] = [
+const BASE_VIDEOS: ClientVideo[] = [
   {
     id: "audecy",
     title: "AI Platform Launch",
@@ -83,158 +85,243 @@ const CLIENT_VIDEOS: ClientVideo[] = [
   },
 ];
 
+// Duplicate base videos to create 20 panels around the 360-degree cylinder ring (18 deg step)
+const RING_ITEMS = [...BASE_VIDEOS, ...BASE_VIDEOS].map((item, idx) => ({
+  ...item,
+  uniqueKey: `${item.id}-${idx}`,
+}));
+
 export default function ClientVideoCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [spacing, setSpacing] = useState(170);
-  const [cardDimensions, setCardDimensions] = useState({ width: 240, height: 360 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const draggerRef = useRef<HTMLDivElement>(null);
+  const cardInnerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const autoRotateTween = useRef<gsap.core.Tween | null>(null);
 
-  // Smooth drag/swipe sliding state
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [dragOffset, setDragOffset] = useState(0);
-  const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
-
-  const total = CLIENT_VIDEOS.length;
-
-  // Responsive card dimensions & overlapping spacing
   useEffect(() => {
-    const updateDimensions = () => {
-      const w = window.innerWidth;
-      if (w < 640) {
-        setCardDimensions({ width: 140, height: 220 });
-        setSpacing(95);
-      } else if (w < 768) {
-        setCardDimensions({ width: 180, height: 280 });
-        setSpacing(125);
-      } else if (w < 1024) {
-        setCardDimensions({ width: 210, height: 320 });
-        setSpacing(145);
-      } else {
-        setCardDimensions({ width: 250, height: 370 });
-        setSpacing(175);
-      }
+    if (typeof window === "undefined") return;
+
+    gsap.registerPlugin(Draggable);
+
+    const container = containerRef.current;
+    const ring = ringRef.current;
+    const dragger = draggerRef.current;
+
+    if (!container || !ring || !dragger) return;
+
+    const ctx = gsap.context(() => {
+      let xPos = 0;
+
+      // Responsive radius for cylinder ring
+      const getRadius = () => {
+        const w = window.innerWidth;
+        if (w < 640) return 260;
+        if (w < 1024) return 360;
+        return 500; // Exact match to user snippet's 500px radius
+      };
+
+      const radius = getRadius();
+      const numItems = RING_ITEMS.length; // 20 items
+      const angleStep = 360 / numItems; // 18 degrees
+
+      // Parallax calculator matching original snippet:
+      // -gsap.utils.wrap(0,360,gsap.getProperty(ring, 'rotationY')-180-i*18)/360*400
+      const getBgPos = (i: number) => {
+        const ringRotation = (gsap.getProperty(ring, "rotationY") as number) || 0;
+        const wrapped = gsap.utils.wrap(
+          0,
+          360,
+          ringRotation - 180 - i * angleStep
+        );
+        return (-wrapped / 360) * 300;
+      };
+
+      const updateParallax = () => {
+        cardInnerRefs.current.forEach((el, i) => {
+          if (el) {
+            const shiftX = getBgPos(i);
+            gsap.set(el, { x: shiftX });
+          }
+        });
+      };
+
+      // Set initial GSAP state & animation matching original snippet
+      const tl = gsap.timeline();
+
+      tl.set(dragger, { opacity: 0 })
+        .set(ring, { rotationY: 180 })
+        .set(".ring-img-card", {
+          rotateY: (i: number) => i * -angleStep,
+          transformOrigin: `50% 50% ${radius}px`,
+          z: -radius,
+          backfaceVisibility: "hidden",
+          opacity: 1,
+        })
+        .from(".ring-img-card", {
+          duration: 1.5,
+          y: 150,
+          opacity: 0,
+          stagger: 0.08,
+          ease: "power3.out",
+          onUpdate: updateParallax,
+          onComplete: () => {
+            // Gentle continuous auto-spin when idle
+            autoRotateTween.current = gsap.to(ring, {
+              rotationY: "+=360",
+              duration: 45,
+              ease: "none",
+              repeat: -1,
+              onUpdate: updateParallax,
+            });
+          },
+        });
+
+      // Draggable creation matching exact snippet logic
+      Draggable.create(dragger, {
+        type: "x,y",
+        onDragStart: (e) => {
+          if (autoRotateTween.current) {
+            autoRotateTween.current.pause();
+          }
+          let clientX = 0;
+          if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+          } else if ((e as MouseEvent).clientX !== undefined) {
+            clientX = (e as MouseEvent).clientX;
+          }
+          xPos = Math.round(clientX);
+        },
+
+        onDrag: function (e) {
+          let clientX = 0;
+          if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+          } else if ((e as MouseEvent).clientX !== undefined) {
+            clientX = (e as MouseEvent).clientX;
+          }
+
+          const currentX = Math.round(clientX);
+          const delta = (currentX - xPos) % 360;
+
+          gsap.to(ring, {
+            rotationY: `-=${delta}`,
+            duration: 0.1,
+            ease: "power1.out",
+            onUpdate: updateParallax,
+          });
+
+          xPos = currentX;
+        },
+
+        onDragEnd: function () {
+          gsap.set(dragger, { x: 0, y: 0 });
+          if (autoRotateTween.current) {
+            autoRotateTween.current.resume();
+          }
+        },
+      });
+
+      updateParallax();
+    }, container);
+
+    return () => {
+      ctx.revert();
     };
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  // Auto-advance loop when not dragging or hovered
+  // Ensure all videos auto-play reliably
   useEffect(() => {
-    if (isPaused || isDragging) return;
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % total);
-    }, 2800);
-    return () => clearInterval(timer);
-  }, [isPaused, isDragging, total]);
+    videoRefs.current.forEach((vid) => {
+      if (vid) {
+        vid.play().catch(() => {});
+      }
+    });
+  }, []);
 
-  // Circular offset calculation (-total/2 to total/2)
-  const getOffset = (index: number) => {
-    let diff = index - activeIndex;
-    if (diff > total / 2) diff -= total;
-    if (diff < -total / 2) diff += total;
-    return diff;
-  };
+  const rotateToCard = (i: number) => {
+    const ring = ringRef.current;
+    if (!ring) return;
 
-  // Drag & Swipe Handlers
-  const handleDragStart = (clientX: number) => {
-    setIsDragging(true);
-    setStartX(clientX);
-    setDragOffset(0);
-  };
-
-  const handleDragMove = (clientX: number) => {
-    if (!isDragging) return;
-    const deltaX = clientX - startX;
-    setDragOffset(deltaX);
-  };
-
-  const handleDragEnd = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-
-    const draggedCards = dragOffset / spacing;
-    if (Math.abs(draggedCards) > 0.15) {
-      const shift = Math.round(-draggedCards) || (dragOffset < 0 ? 1 : -1);
-      setActiveIndex((prev) => (prev + shift + total * 100) % total);
+    if (autoRotateTween.current) {
+      autoRotateTween.current.pause();
     }
-    setDragOffset(0);
-  };
 
-  // Drag ratio (-1 to 1 per card spacing)
-  const dragRatio = dragOffset / spacing;
+    const angleStep = 360 / RING_ITEMS.length;
+    const targetAngle = 180 + i * angleStep;
+
+    gsap.to(ring, {
+      rotationY: targetAngle,
+      duration: 1.2,
+      ease: "power2.out",
+      onUpdate: () => {
+        cardInnerRefs.current.forEach((el, idx) => {
+          if (el) {
+            const ringRotation = (gsap.getProperty(ring, "rotationY") as number) || 0;
+            const wrapped = gsap.utils.wrap(
+              0,
+              360,
+              ringRotation - 180 - idx * angleStep
+            );
+            const shiftX = (-wrapped / 360) * 300;
+            gsap.set(el, { x: shiftX });
+          }
+        });
+      },
+      onComplete: () => {
+        if (autoRotateTween.current) {
+          autoRotateTween.current.resume();
+        }
+      },
+    });
+  };
 
   return (
     <div
-      className="relative w-full py-8 overflow-hidden select-none cursor-grab active:cursor-grabbing"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => {
-        setIsPaused(false);
-        if (isDragging) handleDragEnd();
-      }}
-      onMouseDown={(e) => handleDragStart(e.clientX)}
-      onMouseMove={(e) => handleDragMove(e.clientX)}
-      onMouseUp={handleDragEnd}
-      onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-      onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
-      onTouchEnd={handleDragEnd}
+      ref={containerRef}
+      className="relative w-full h-[380px] sm:h-[440px] md:h-[480px] flex items-center justify-center overflow-hidden select-none bg-transparent"
     >
-      {/* Background Radial Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] bg-[#FC6100]/10 blur-[140px] rounded-full pointer-events-none" />
+      {/* Invisible Dragger Layer matching #dragger */}
+      <div
+        ref={draggerRef}
+        className="absolute inset-0 z-30 cursor-grab active:cursor-grabbing w-full h-full opacity-0"
+      />
 
-      {/* 3D Inward Concave Ring Video Stage */}
-      <div className="relative z-10 w-full min-h-[320px] sm:min-h-[400px] md:min-h-[460px] flex items-center justify-center overflow-hidden py-4">
+      {/* Main 3D Container matching .container */}
+      <div
+        className="relative z-10 w-[200px] sm:w-[240px] md:w-[280px] h-[280px] sm:h-[330px] md:h-[370px]"
+        style={{
+          perspective: "2000px",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Ring Container matching #ring */}
         <div
-          className="relative w-full flex items-center justify-center"
-          style={{ perspective: "1100px", transformStyle: "preserve-3d" }}
+          ref={ringRef}
+          className="w-full h-full relative"
+          style={{
+            transformStyle: "preserve-3d",
+          }}
         >
-          {CLIENT_VIDEOS.map((video, idx) => {
-            const baseOffset = getOffset(idx);
-            const continuousOffset = baseOffset + dragRatio;
-            const absOffset = Math.abs(continuousOffset);
-
-            // Render visible cards across viewport
-            if (absOffset > 4) return null;
-
-            // 3D Inward Ring Trigonometry & Depth Scaling Math:
-            // Middle is pushed INWARDS (smaller scale, deeper in Z)
-            // Sides extend OUTWARDS towards camera (larger scale, higher Z, overlapping cards in front!)
-            const translateX = continuousOffset * spacing;
-            const translateZ = -220 + Math.pow(absOffset, 1.35) * 80;
-            const translateY = Math.pow(absOffset, 1.4) * 6;
-            const scale = Math.min(1.18, 0.72 + absOffset * 0.12);
-            const rotateY = continuousOffset * -16;
-
-            // Outer cards have higher Z-index so they overlap inner cards in front!
-            const zIndex = 10 + Math.round(absOffset * 10);
-            const isActive = Math.abs(continuousOffset) < 0.5;
-
-            return (
+          {RING_ITEMS.map((video, i) => (
+            <div
+              key={video.uniqueKey}
+              onClick={() => rotateToCard(i)}
+              className="ring-img-card absolute top-0 left-0 w-full h-full rounded-2xl overflow-hidden border border-slate-300 shadow-xl bg-slate-900 cursor-pointer"
+              style={{
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {/* Inner Parallax Video Wrapper */}
               <div
-                key={video.id}
-                onClick={() => {
-                  if (Math.abs(dragOffset) < 5) {
-                    setActiveIndex(idx);
-                  }
+                ref={(el) => {
+                  cardInnerRefs.current[i] = el;
                 }}
-                style={{
-                  transform: `translateX(${translateX.toFixed(2)}px) translateY(${translateY.toFixed(2)}px) translateZ(${translateZ.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`,
-                  width: `${cardDimensions.width}px`,
-                  height: `${cardDimensions.height}px`,
-                  zIndex,
-                  transition: isDragging
-                    ? "none"
-                    : "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), z-index 0.5s ease",
-                }}
-                className={`absolute cursor-pointer rounded-2xl sm:rounded-3xl overflow-hidden border border-white/20 bg-slate-900 shadow-2xl transition-shadow duration-300 group ${
-                  isActive ? "ring-2 ring-[#FC6100]/50 shadow-[0_12px_40px_rgba(252,97,0,0.3)]" : "hover:border-slate-300"
-                }`}
+                className="w-[160%] h-full relative left-[-30%] pointer-events-none"
               >
-                {/* HTML5 Video Element with Rounded Corners */}
                 <video
                   ref={(el) => {
-                    videoRefs.current[video.id] = el;
+                    videoRefs.current[i] = el;
                   }}
                   src={video.src}
                   autoPlay
@@ -242,28 +329,33 @@ export default function ClientVideoCarousel() {
                   muted
                   playsInline
                   preload="metadata"
-                  className="w-full h-full object-cover pointer-events-none rounded-2xl sm:rounded-3xl"
+                  className="w-full h-full object-cover"
                 />
-
-                {/* Ambient Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none" />
-
-                {/* Minimal Overlay Tag */}
-                <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
-                  <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-semibold uppercase tracking-wider mb-0.5 truncate">
-                    {video.client}
-                  </p>
-                  <h4 className="font-changa text-xs sm:text-sm font-bold text-white truncate">
-                    {video.title}
-                  </h4>
-                </div>
               </div>
-            );
-          })}
+
+              {/* Minimal Dark Gradient for Text Visibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+
+              {/* Category Badge */}
+              <div className="absolute top-2.5 left-2.5 pointer-events-none">
+                <span className="px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono text-[#FC6100] font-semibold border border-white/10">
+                  {video.category}
+                </span>
+              </div>
+
+              {/* Title & Client Name Tag */}
+              <div className="absolute bottom-2.5 left-2.5 right-2.5 text-left pointer-events-none">
+                <p className="text-[10px] font-mono text-[#FC6100] font-bold uppercase tracking-wider mb-0.5 truncate">
+                  {video.client}
+                </p>
+                <h4 className="font-changa text-xs font-bold text-white truncate">
+                  {video.title}
+                </h4>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
-
-
