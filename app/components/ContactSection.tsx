@@ -67,7 +67,7 @@ export default function ContactSection() {
           <div className="lg:col-span-6 flex flex-col justify-between space-y-8">
             <div>
               {/* Giant Heading */}
-              <h2 className="text-6xl sm:text-7xl lg:text-[84px] font-normal tracking-tight text-black leading-[1.04] font-sans mb-8">
+              <h2 className="text-6xl sm:text-7xl lg:text-[84px] font-normal tracking-tight text-[#ff5e00] leading-[1.04] font-sans mb-8">
                 Let&apos;s Work
                 <br />
                 Together

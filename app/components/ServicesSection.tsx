@@ -151,7 +151,7 @@ export default function ServicesSection() {
         {/* Section Header */}
         <div className="text-center max-w-5xl mx-auto mb-8 sm:mb-16">
           <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
-            What We Are Good At?
+            What We Are Good At
           </h2>
         </div>
       </div>
