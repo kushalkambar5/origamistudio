@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import { InteractiveHoverButton } from "@/registry/magicui/interactive-hover-button";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
@@ -106,7 +107,7 @@ export default function Navbar() {
     };
   }, [mobileMenuOpen]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     const targetId = href.replace("#", "");
@@ -212,25 +213,22 @@ export default function Navbar() {
 
           {/* Right CTA Button (Desktop) */}
           <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="#contact-us"
+            <InteractiveHoverButton
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-[#ff5e00] shadow-[0_4px_16px_rgba(255,94,0,0.35)] hover:shadow-[0_6px_22px_rgba(255,94,0,0.5)] transition-all duration-300 hover:scale-105 active:scale-95"
+              className="text-xs font-bold py-2 px-5 bg-white/90 hover:bg-white text-slate-900 shadow-[0_4px_16px_rgba(255,94,0,0.25)] border-white/50"
             >
-              <span>Book Call</span>
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+              Book Call
+            </InteractiveHoverButton>
           </div>
 
           {/* Mobile Actions (Phone & Tablet) */}
           <div className="flex lg:hidden items-center gap-2">
-            <a
-              href="#contact-us"
+            <InteractiveHoverButton
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="px-3.5 py-1.5 min-h-[36px] flex items-center text-xs font-bold text-white bg-[#ff5e00] rounded-full shadow-xs active:scale-95 transition-transform"
+              className="text-xs font-bold py-1.5 px-4 bg-white/90 text-slate-900 border-white/50 min-h-[36px]"
             >
               Book Call
-            </a>
+            </InteractiveHoverButton>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"

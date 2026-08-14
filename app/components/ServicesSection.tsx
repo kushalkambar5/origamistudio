@@ -11,6 +11,8 @@ import {
   MessageSquare,
 } from "lucide-react";
 import FlowingMenu, { FlowingMenuItem } from "./FlowingMenu";
+import { Marquee } from "@/registry/magicui/marquee";
+import { cn } from "@/lib/utils";
 
 const SERVICES: FlowingMenuItem[] = [
   {
@@ -110,6 +112,31 @@ const SERVICES: FlowingMenuItem[] = [
   },
 ];
 
+const NOT_GREAT_ROW_1 = [
+  { text: "Following the rules", bold: false },
+  { text: "Any form of dancing", bold: false },
+  { text: "Rollerskating", bold: false },
+  { text: "Typing with our elbows", bold: false },
+  { text: "Keeping the snack drawer stocked", bold: false },
+  { text: "Saying \"no\" to cake", bold: true },
+  { text: "Limiting screen time", bold: true },
+  { text: "Parallel parking", bold: true },
+  { text: "Being normal about creator stats", bold: true },
+  { text: "Folding fitted sheets", bold: true },
+];
+
+const NOT_GREAT_ROW_2 = [
+  { text: "Replying to emails on Sunday", bold: false },
+  { text: "Switching off when a campaign goes live at 2am", bold: false },
+  { text: "Golf. Nobody here plays golf.", bold: false },
+  { text: "Having opinions about fonts quietly", bold: false },
+  { text: "Picking a favourite creator", bold: true },
+  { text: "Going to bed before checking analytics", bold: true },
+  { text: "Pretending a bad brief is a good brief", bold: true },
+  { text: "Sitting still in meetings", bold: true },
+  { text: "Remembering to eat lunch", bold: true },
+];
+
 export default function ServicesSection() {
   return (
     <section
@@ -140,6 +167,56 @@ export default function ServicesSection() {
           marqueeTextColor="#000000"
           borderColor="#e2e8f0"
         />
+      </div>
+
+      {/* Things We're Not So Great At Section */}
+      <div className="mt-20 sm:mt-28 md:mt-32 relative z-10 w-full">
+        {/* Section Header */}
+        <div className="text-center max-w-5xl mx-auto mb-8 sm:mb-12 px-4">
+          <p className="font-changa text-xs sm:text-sm font-semibold tracking-[0.25em] text-slate-500 uppercase mb-2">
+            THINGS WE'RE...
+          </p>
+          <h3 className="font-changa text-2xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-slate-900 leading-none">
+            AH... NOT SO GREAT AT...
+          </h3>
+        </div>
+
+        {/* Scrolling Marquees */}
+        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden py-2 gap-4">
+          {/* Row 1: Scrolling Left */}
+          <Marquee pauseOnHover={false} className="[--duration:75s] [--gap:4rem] py-1 sm:py-2">
+            {NOT_GREAT_ROW_1.map((item, index) => (
+              <span
+                key={index}
+                className={cn(
+                  "font-changa text-xl sm:text-2xl md:text-3xl whitespace-nowrap text-slate-900 tracking-tight",
+                  item.bold ? "font-extrabold" : "font-normal"
+                )}
+              >
+                {item.text}
+              </span>
+            ))}
+          </Marquee>
+
+          {/* Row 2: Scrolling Right */}
+          <Marquee reverse pauseOnHover={false} className="[--duration:75s] [--gap:4rem] py-1 sm:py-2">
+            {NOT_GREAT_ROW_2.map((item, index) => (
+              <span
+                key={index}
+                className={cn(
+                  "font-changa text-xl sm:text-2xl md:text-3xl whitespace-nowrap text-slate-900 tracking-tight",
+                  item.bold ? "font-extrabold" : "font-normal"
+                )}
+              >
+                {item.text}
+              </span>
+            ))}
+          </Marquee>
+
+          {/* Left and Right Fade overlays */}
+          <div className="from-slate-50 pointer-events-none absolute inset-y-0 left-0 w-1/12 sm:w-1/6 bg-gradient-to-r z-20"></div>
+          <div className="from-slate-50 pointer-events-none absolute inset-y-0 right-0 w-1/12 sm:w-1/6 bg-gradient-to-l z-20"></div>
+        </div>
       </div>
     </section>
   );

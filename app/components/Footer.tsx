@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowUpRight, Globe } from "lucide-react";
+import { InteractiveHoverButton } from "@/registry/magicui/interactive-hover-button";
 
 const NAV_COLUMNS = [
   [
@@ -24,7 +25,7 @@ const NAV_COLUMNS = [
 ];
 
 export default function Footer() {
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     if (href.startsWith("#")) {
       e.preventDefault();
       const targetId = href.replace("#", "");
@@ -129,14 +130,12 @@ export default function Footer() {
 
               {/* Right Column: CTA Button */}
               <div className="shrink-0 w-full sm:w-auto">
-                <a
-                  href="#contact-us"
+                <InteractiveHoverButton
                   onClick={(e) => handleNavClick(e, "#contact-us")}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#ff5e00] hover:bg-[#e05300] text-white text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-200 shadow-[0_4px_20px_rgba(255,94,0,0.4)] hover:scale-105"
+                  className="w-full sm:w-auto text-xs sm:text-sm font-bold tracking-wider uppercase py-3 px-8 bg-white text-[#012437] shadow-[0_4px_20px_rgba(255,94,0,0.3)] border-white/20"
                 >
-                  <span>Book a Call</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </a>
+                  Book a Call
+                </InteractiveHoverButton>
               </div>
             </div>
 

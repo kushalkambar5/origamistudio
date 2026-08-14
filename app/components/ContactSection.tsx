@@ -237,8 +237,12 @@ export default function ContactSection() {
             <div className="text-right space-y-1.5 pt-6 text-black tracking-tight">
               <p className="font-medium text-sm sm:text-base text-black">NITK Surathkal, Manglore</p>
               <div className="text-xs sm:text-sm text-slate-800 space-y-1">
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
                   <span>Rudra -</span>
+                  <a href="mailto:rudra@origamistudio.in" className="hover:underline text-slate-800">
+                    rudra@origamistudio.in
+                  </a>
+                  <span className="text-slate-300">|</span>
                   <a href="tel:+918919300467" className="hover:underline font-semibold text-black">
                     +91 8919300467
                   </a>
@@ -253,8 +257,12 @@ export default function ContactSection() {
                     <WhatsAppIcon />
                   </a>
                 </div>
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
                   <span>Shrujan -</span>
+                  <a href="mailto:shrujan@origamistudio.in" className="hover:underline text-slate-800">
+                    shrujan@origamistudio.in
+                  </a>
+                  <span className="text-slate-300">|</span>
                   <a href="tel:+919008464605" className="hover:underline font-semibold text-black">
                     +91 9008464605
                   </a>
@@ -269,8 +277,12 @@ export default function ContactSection() {
                     <WhatsAppIcon />
                   </a>
                 </div>
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
                   <span>Kushal -</span>
+                  <a href="mailto:kushal@origamistudio.in" className="hover:underline text-slate-800">
+                    kushal@origamistudio.in
+                  </a>
+                  <span className="text-slate-300">|</span>
                   <a href="tel:+919035035884" className="hover:underline font-semibold text-black">
                     +91 9035035884
                   </a>
