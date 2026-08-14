@@ -20,6 +20,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [isDarkText, setIsDarkText] = useState(false);
 
   const prevScrollY = useRef(0);
   const navContainerRef = useRef<HTMLElement>(null);
@@ -49,16 +50,27 @@ export default function Navbar() {
 
         // Active section highlight tracking
         const scrollPosition = currentScrollY + 220;
+        let currentSection = "home";
         for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
           const sectionId = NAV_ITEMS[i].href.replace("#", "");
           const el = document.getElementById(sectionId);
           if (el) {
             const top = el.offsetTop;
             if (scrollPosition >= top) {
+              currentSection = sectionId;
               setActiveSection(sectionId);
               break;
             }
           }
+        }
+
+        // Dark text detection: turn text black when scroll reaches "what-we-do" section
+        const whatWeDoEl = document.getElementById("what-we-do");
+        if (whatWeDoEl) {
+          const whatWeDoTop = whatWeDoEl.offsetTop - 120;
+          setIsDarkText(currentScrollY >= whatWeDoTop);
+        } else {
+          setIsDarkText(currentSection !== "home");
         }
 
         isTicking.current = false;
@@ -66,6 +78,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [mobileMenuOpen]);
 
@@ -97,6 +110,7 @@ export default function Navbar() {
     if (targetId === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       setActiveSection("home");
+      setIsDarkText(false);
       return;
     }
 
@@ -136,7 +150,9 @@ export default function Navbar() {
         <nav
           className={`w-full rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between transition-all duration-300 ${
             scrolled || mobileMenuOpen
-              ? "border-slate-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+              ? isDarkText
+                ? "bg-white/85 backdrop-blur-xl border border-slate-200/90 shadow-md"
+                : "bg-slate-950/60 backdrop-blur-xl border border-white/10 shadow-lg"
               : "shadow-sm"
           }`}
           aria-label="Main Navigation"
@@ -157,7 +173,11 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <span className="font-changa text-base sm:text-lg font-bold tracking-wider text-white uppercase whitespace-nowrap">
+            <span
+              className={`font-changa text-base sm:text-lg font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${
+                isDarkText ? "text-slate-900" : "text-white"
+              }`}
+            >
               ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
             </span>
           </a>
@@ -172,9 +192,11 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
+                  className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${
                     isActive
-                      ? "text-[#ff5e00] shadow-sm"
+                      ? "text-[#ff5e00] shadow-sm font-bold"
+                      : isDarkText
+                      ? "text-slate-900 hover:text-[#ff5e00]"
                       : "text-white hover:text-[#ff5e00]"
                   }`}
                 >
@@ -209,7 +231,11 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
               aria-expanded={mobileMenuOpen}
-              className="w-9 h-9 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 transition-colors active:scale-95"
+              className={`w-9 h-9 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl border transition-colors active:scale-95 ${
+                isDarkText
+                  ? "bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200"
+                  : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+              }`}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
