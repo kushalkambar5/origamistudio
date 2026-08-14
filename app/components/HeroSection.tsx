@@ -45,7 +45,7 @@ export default function HeroSection() {
     <>
       <section
         id="home"
-        className="relative w-full min-h-[100dvh] pt-20 sm:pt-24 pb-4 sm:pb-6 flex flex-col justify-between items-center overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white text-slate-900"
+        className="relative w-full min-h-[100dvh] pt-16 sm:pt-20 pb-3 sm:pb-5 flex flex-col justify-between items-center overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white text-slate-900"
       >
         {/* Background Decorative Origami Facets & Glow Effects */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -78,20 +78,20 @@ export default function HeroSection() {
         </div>
 
         {/* Brand Logo Heading - Above Video Carousel */}
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pt-2 sm:pt-4">
-          <h1 className="font-changa text-3xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase text-slate-900 leading-tight">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pt-1 sm:pt-2">
+          <h1 className="font-changa text-2xl sm:text-5xl md:text-6xl font-extrabold tracking-tight uppercase text-slate-900 leading-tight">
             ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
           </h1>
         </div>
 
         {/* Full Viewport Width 3D Video Carousel Container */}
-        <div className="w-full relative z-10 overflow-hidden my-auto py-2">
+        <div className="w-full relative z-10 overflow-hidden my-auto py-1">
           <ClientVideoCarousel />
         </div>
 
         {/* Subtitle - Below Video Carousel */}
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pb-3 sm:pb-4">
-          <p className="max-w-2xl text-sm sm:text-xl md:text-2xl text-slate-600 font-light leading-relaxed">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pb-2 sm:pb-3">
+          <p className="max-w-2xl text-xs sm:text-lg md:text-xl text-slate-600 font-light leading-relaxed">
             A digital marketing studio that helps brands{" "}
             <span className="text-slate-900 font-semibold underline decoration-[#ff5e00] underline-offset-4">
               stand out

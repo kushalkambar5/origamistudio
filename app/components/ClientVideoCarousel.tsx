@@ -107,11 +107,11 @@ export default function ClientVideoCarousel() {
     (ClientVideo & { uniqueKey: string })[]
   >([]);
 
-  // Dimensions for full viewport 3D arc
+  // Dimensions for full viewport 3D arc (9:16 aspect ratio for Reel videos, tuned for 100vh fit)
   const [dimensions, setDimensions] = useState({
-    radius: 750,
-    cardWidth: 260,
-    cardHeight: 380,
+    radius: 700,
+    cardWidth: 205,
+    cardHeight: 364, // 205 * (16 / 9)
   });
 
   useEffect(() => {
@@ -133,22 +133,22 @@ export default function ClientVideoCarousel() {
       const isTablet = vw >= 640 && vw < 1024;
 
       if (isMobile) {
-        // Mobile-tuned card dimensions & radius for optimal touch readability
-        const cardW = Math.min(210, Math.max(160, Math.round(vw * 0.44)));
-        const cardH = Math.round(cardW * 1.42);
-        const r = Math.max(380, Math.round(vw * 1.05));
+        // Mobile-tuned 9:16 card dimensions
+        const cardW = Math.min(160, Math.max(130, Math.round(vw * 0.38)));
+        const cardH = Math.round((cardW * 16) / 9);
+        const r = Math.max(360, Math.round(vw * 1.0));
         setDimensions({ radius: r, cardWidth: cardW, cardHeight: cardH });
       } else if (isTablet) {
-        const cardW = 230;
-        const cardH = Math.round(cardW * 1.4);
-        const r = 620;
+        const cardW = 180;
+        const cardH = Math.round((cardW * 16) / 9);
+        const r = 580;
         setDimensions({ radius: r, cardWidth: cardW, cardHeight: cardH });
       } else {
         const sin52 = Math.sin((52 * Math.PI) / 180);
-        const r = Math.max(720, Math.round(vw / (2 * sin52)));
+        const r = Math.max(680, Math.round(vw / (2 * sin52)));
         const sin9 = Math.sin((9 * Math.PI) / 180);
-        const w = Math.min(300, Math.max(250, Math.round(2 * r * sin9)));
-        const h = Math.round(w * 1.38);
+        const w = Math.min(215, Math.max(185, Math.round(2 * r * sin9)));
+        const h = Math.round((w * 16) / 9);
         setDimensions({ radius: r, cardWidth: w, cardHeight: h });
       }
     };
