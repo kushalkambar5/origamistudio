@@ -16,32 +16,37 @@ export default function Home() {
       {/* Top-Middle Transparent Navbar */}
       <Navbar />
 
-      {/* 1. Home Section */}
-      <HeroSection />
+      {/* 1. Home Section (Pinned Sticky Hero) */}
+      <div className="sticky top-0 h-[100dvh] w-full z-0 overflow-hidden">
+        <HeroSection />
+      </div>
 
-      {/* 2. What We Do Section */}
-      <ServicesSection />
+      {/* Main Content Overlaying Sticky Hero on Scroll */}
+      <div className="relative z-10 bg-slate-50 shadow-[0_-25px_60px_rgba(0,0,0,0.25)] rounded-t-3xl sm:rounded-t-[2.5rem]">
+        {/* 2. What We Do Section */}
+        <ServicesSection />
 
-      {/* 3. About Section */}
-      <AboutSection />
+        {/* 3. About Section */}
+        <AboutSection />
 
-      {/* 4. Our Work Section ("Behind the Designs" 3D Arc Gallery) */}
-      <PortfolioCarousel />
+        {/* 4. Our Work Section ("Behind the Designs" 3D Arc Gallery) */}
+        <PortfolioCarousel />
 
-      {/* 5. Products Section */}
-      <ProductsSection />
+        {/* 5. Products Section */}
+        <ProductsSection />
 
-      {/* 6. Team Section */}
-      <TeamSection />
+        {/* 6. Team Section */}
+        <TeamSection />
 
-      {/* 7. FAQs Section */}
-      <FaqSection />
+        {/* 7. FAQs Section */}
+        <FaqSection />
 
-      {/* 8. Contact Us Section */}
-      <ContactSection />
+        {/* 8. Contact Us Section */}
+        <ContactSection />
 
-      {/* 10. Footer Section */}
-      <Footer />
+        {/* 10. Footer Section */}
+        <Footer />
+      </div>
     </main>
   );
 }

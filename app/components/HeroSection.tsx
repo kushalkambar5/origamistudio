@@ -9,7 +9,7 @@ export default function HeroSection() {
     <>
       <section
         id="home"
-        className="relative w-full min-h-[100dvh] pt-16 sm:pt-20 pb-3 sm:pb-5 flex flex-col justify-between items-center overflow-hidden bg-white text-slate-900"
+        className="relative w-full h-full pt-16 sm:pt-20 pb-3 sm:pb-5 flex flex-col justify-between items-center overflow-hidden bg-white text-slate-900"
       >
         {/* Background Image */}
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">

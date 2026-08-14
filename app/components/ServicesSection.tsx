@@ -114,7 +114,7 @@ export default function ServicesSection() {
   return (
     <section
       id="what-we-do"
-      className="relative py-16 sm:py-24 bg-slate-50 border-t border-slate-200 text-slate-900 overflow-hidden"
+      className="relative py-16 sm:py-24 bg-slate-50 border-t border-slate-200/80 rounded-t-3xl sm:rounded-t-[2.5rem] text-slate-900 overflow-hidden"
     >
       {/* Background Accent Gradients */}
       <div className="absolute top-1/2 left-0 w-72 sm:w-96 h-72 sm:h-96 bg-[#ff5e00]/10 blur-[100px] sm:blur-[130px] rounded-full pointer-events-none" />

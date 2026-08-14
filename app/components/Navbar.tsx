@@ -20,7 +20,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [isDarkText, setIsDarkText] = useState(false);
+  const [isWhatWeDoFullScreen, setIsWhatWeDoFullScreen] = useState(false);
 
   const prevScrollY = useRef(0);
   const navContainerRef = useRef<HTMLElement>(null);
@@ -64,13 +64,14 @@ export default function Navbar() {
           }
         }
 
-        // Dark text detection: turn text black when scroll reaches "what-we-do" section
+        // Fullscreen detection for "What We Do" section
         const whatWeDoEl = document.getElementById("what-we-do");
         if (whatWeDoEl) {
-          const whatWeDoTop = whatWeDoEl.offsetTop - 120;
-          setIsDarkText(currentScrollY >= whatWeDoTop);
+          const rect = whatWeDoEl.getBoundingClientRect();
+          // When top of What We Do section reaches viewport top area (<= 60px), it has taken full screen
+          setIsWhatWeDoFullScreen(rect.top <= 60);
         } else {
-          setIsDarkText(currentSection !== "home");
+          setIsWhatWeDoFullScreen(currentScrollY >= window.innerHeight - 80);
         }
 
         isTicking.current = false;
@@ -110,7 +111,7 @@ export default function Navbar() {
     if (targetId === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       setActiveSection("home");
-      setIsDarkText(false);
+      setIsWhatWeDoFullScreen(false);
       return;
     }
 
@@ -148,20 +149,18 @@ export default function Navbar() {
         }`}
       >
         <nav
-          className={`w-full rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between transition-all duration-300 ${
-            scrolled || mobileMenuOpen
-              ? isDarkText
-                ? "bg-white/85 backdrop-blur-xl border border-slate-200/90 shadow-md"
-                : "bg-slate-950/60 backdrop-blur-xl border border-white/10 shadow-lg"
-              : "shadow-sm"
-          }`}
+          className="w-full bg-transparent border-none shadow-none px-1 sm:px-2 py-1 flex items-center justify-between transition-all duration-300"
           aria-label="Main Navigation"
         >
           {/* Left: Brand Logo & Title */}
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="flex items-center gap-2 sm:gap-3 group transition-transform duration-200 active:scale-98"
+            className={`flex items-center gap-2 sm:gap-3 group transition-all duration-300 active:scale-98 px-3.5 py-2 rounded-2xl ${
+              isWhatWeDoFullScreen
+                ? "bg-white/75 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.08)] backdrop-saturate-150"
+                : "bg-slate-950/40 backdrop-blur-md border border-white/15 shadow-sm"
+            }`}
           >
             <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-white to-slate-50 p-1 border border-slate-200 shadow-xs group-hover:border-[#ff5e00]/40 transition-colors shrink-0">
               <Image
@@ -175,15 +174,21 @@ export default function Navbar() {
             </div>
             <span
               className={`font-changa text-base sm:text-lg font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${
-                isDarkText ? "text-slate-900" : "text-white"
+                isWhatWeDoFullScreen ? "text-slate-900" : "text-white"
               }`}
             >
               ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
             </span>
           </a>
 
-          {/* Center Nav Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-1 p-1 rounded-full">
+          {/* Center Nav Links (Desktop) - Glassmorphism Liquid Glass background after What We Do is full screen */}
+          <div
+            className={`hidden lg:flex items-center gap-1 p-1.5 rounded-full transition-all duration-300 ${
+              isWhatWeDoFullScreen
+                ? "bg-white/75 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-saturate-150"
+                : "border-white/15 shadow-sm"
+            }`}
+          >
             {NAV_ITEMS.map((item) => {
               const sectionId = item.href.replace("#", "");
               const isActive = activeSection === sectionId;
@@ -194,10 +199,10 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${
                     isActive
-                      ? "text-[#ff5e00] shadow-sm font-bold"
-                      : isDarkText
-                      ? "text-slate-900 hover:text-[#ff5e00]"
-                      : "text-white hover:text-[#ff5e00]"
+                      ? "text-[#ff5e00] font-bold shadow-sm"
+                      : isWhatWeDoFullScreen
+                      ? "text-slate-800 hover:text-[#ff5e00] hover:bg-slate-900/5"
+                      : "text-white hover:text-[#ff5e00] hover:bg-white/10"
                   }`}
                 >
                   {item.label}
@@ -211,7 +216,7 @@ export default function Navbar() {
             <a
               href="#contact-us"
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-white bg-[#ff5e00] shadow-[0_4px_16px_rgba(255,94,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,94,0,0.45)] transition-all duration-300 hover:scale-105 active:scale-95"
+              className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white bg-[#ff5e00] shadow-[0_4px_16px_rgba(255,94,0,0.35)] hover:shadow-[0_6px_22px_rgba(255,94,0,0.5)] transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <span>Book Call</span>
               <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -223,7 +228,7 @@ export default function Navbar() {
             <a
               href="#contact-us"
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="px-3 py-1.5 min-h-[36px] flex items-center text-xs font-bold text-white bg-[#ff5e00] rounded-full shadow-xs active:scale-95 transition-transform"
+              className="px-3.5 py-1.5 min-h-[36px] flex items-center text-xs font-bold text-white bg-[#ff5e00] rounded-full shadow-xs active:scale-95 transition-transform"
             >
               Book Call
             </a>
@@ -231,10 +236,10 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
               aria-expanded={mobileMenuOpen}
-              className={`w-9 h-9 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl border transition-colors active:scale-95 ${
-                isDarkText
-                  ? "bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200"
-                  : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+              className={`w-9 h-9 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl border transition-all active:scale-95 ${
+                isWhatWeDoFullScreen
+                  ? "bg-white/80 text-slate-800 border-white/80 shadow-sm backdrop-blur-xl hover:bg-white"
+                  : "bg-slate-950/40 text-white border-white/20 backdrop-blur-md hover:bg-slate-900/60"
               }`}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
