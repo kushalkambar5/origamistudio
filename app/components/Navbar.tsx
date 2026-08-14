@@ -52,16 +52,18 @@ export default function Navbar() {
         let currentSection = "home";
         for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
           const sectionId = NAV_ITEMS[i].href.replace("#", "");
+          if (sectionId === "home") continue;
+
           const el = document.getElementById(sectionId);
           if (el) {
-            const top = el.offsetTop;
+            const top = el.getBoundingClientRect().top + currentScrollY;
             if (scrollPosition >= top) {
               currentSection = sectionId;
-              setActiveSection(sectionId);
               break;
             }
           }
         }
+        setActiveSection(currentSection);
 
         // Fullscreen detection for "What We Do" section
         const whatWeDoEl = document.getElementById("what-we-do");
