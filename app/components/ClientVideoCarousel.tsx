@@ -311,7 +311,7 @@ export default function ClientVideoCarousel() {
 
   return (
     <div
-      className="scene scene-3d relative w-full overflow-hidden select-none py-6 sm:py-10"
+      className="scene scene-3d relative w-full overflow-visible select-none py-4 sm:py-6"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}

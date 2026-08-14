@@ -77,31 +77,26 @@ export default function HeroSection() {
           </svg>
         </div>
 
-        {/* Brand Logo Heading - Above Video Carousel */}
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pt-1 sm:pt-2">
-          <h1 className="font-changa text-2xl sm:text-5xl md:text-6xl font-extrabold tracking-tight uppercase text-slate-900 leading-tight">
-            ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
-          </h1>
-        </div>
 
         {/* Full Viewport Width 3D Video Carousel Container */}
-        <div className="w-full relative z-10 overflow-hidden my-auto py-1">
+        <div className="w-full relative z-10 overflow-visible my-auto py-2">
           <ClientVideoCarousel />
         </div>
 
-        {/* Subtitle - Below Video Carousel */}
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pb-2 sm:pb-3">
-          <p className="max-w-2xl text-xs sm:text-lg md:text-xl text-slate-600 font-light leading-relaxed">
+        {/* Subtitle / Big Headline - Below Video Carousel */}
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 -mt-6 sm:-mt-10 md:-mt-14 pb-4 sm:pb-8">
+          <h2 className="font-changa text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15] sm:leading-[1.1] max-w-4xl">
             A digital marketing studio that helps brands{" "}
-            <span className="text-slate-900 font-semibold underline decoration-[#ff5e00] underline-offset-4">
-              stand out
-            </span>
-            ,{" "}
-            <span className="text-slate-900 font-semibold underline decoration-[#ff5e00] underline-offset-4">
+            <span className="text-[#ff5e00]">stand out</span>,{" "}
+            <span className="underline decoration-[#ff5e00] decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">
               scale up
             </span>{" "}
-            and stay ahead.
-          </p>
+            and{" "}
+            <span className="underline decoration-[#ff5e00] decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">
+              stay ahead
+            </span>
+            .
+          </h2>
         </div>
       </section>
 

@@ -138,7 +138,7 @@
    ========================================================================== */
 .scene-3d {
   display: grid;
-  overflow: hidden;
+  overflow: visible;
   perspective: 35em;
   width: 100%;
 }
