@@ -11,8 +11,10 @@ const NAV_ITEMS = [
   { label: "Products", href: "#products" },
   { label: "Team", href: "#team" },
   { label: "FAQs", href: "#faqs" },
+  { label: "Testimonials", href: "#testimonials" },
   { label: "Contact Us", href: "#contact-us" },
 ];
+
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");

@@ -14,6 +14,7 @@ const NAV_COLUMNS = [
     { label: "Our Work", href: "#our-work" },
     { label: "Products", href: "#products" },
     { label: "Team", href: "#team" },
+    { label: "Testimonials", href: "#testimonials" },
   ],
   [
     { label: "FAQs", href: "#faqs" },
