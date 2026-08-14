@@ -127,8 +127,10 @@ export default function ServicesSection() {
             What We Do?
           </h2>
         </div>
+      </div>
 
-        {/* Flowing Menu Component */}
+      {/* Flowing Menu Component (Full Width) */}
+      <div className="w-full relative z-10">
         <FlowingMenu
           items={SERVICES}
           speed={18}

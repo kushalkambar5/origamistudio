@@ -166,7 +166,7 @@ export default function Footer() {
                 </a>
                 {/* Instagram */}
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/origamistudioin/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
