@@ -174,7 +174,11 @@ export default function Navbar() {
             </div>
             <span
               className={`font-changa text-base sm:text-lg font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${
-                isWhatWeDoFullScreen ? "text-slate-900" : "text-white"
+                activeSection === "our-work"
+                  ? "text-white"
+                  : isWhatWeDoFullScreen
+                  ? "text-slate-900"
+                  : "text-white"
               }`}
             >
               ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
@@ -184,7 +188,9 @@ export default function Navbar() {
           {/* Center Nav Links (Desktop) - Glassmorphism Liquid Glass background after What We Do is full screen */}
           <div
             className={`hidden lg:flex items-center gap-1 p-1.5 rounded-full transition-all duration-300 ${
-              isWhatWeDoFullScreen
+              activeSection === "our-work"
+                ? "bg-black/55 backdrop-blur-2xl border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
+                : isWhatWeDoFullScreen
                 ? "bg-white/75 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-saturate-150"
                 : "border-white/15 shadow-sm"
             }`}
@@ -200,6 +206,8 @@ export default function Navbar() {
                   className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${
                     isActive
                       ? "text-[#ff5e00] font-bold shadow-sm"
+                      : activeSection === "our-work"
+                      ? "text-white hover:text-[#ff5e00] hover:bg-white/10"
                       : isWhatWeDoFullScreen
                       ? "text-slate-800 hover:text-[#ff5e00] hover:bg-slate-900/5"
                       : "text-white hover:text-[#ff5e00] hover:bg-white/10"
@@ -234,7 +242,9 @@ export default function Navbar() {
               aria-label="Toggle mobile menu"
               aria-expanded={mobileMenuOpen}
               className={`w-9 h-9 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl border transition-all active:scale-95 ${
-                isWhatWeDoFullScreen
+                activeSection === "our-work"
+                  ? "bg-neutral-900/80 text-white border-neutral-800 shadow-sm backdrop-blur-xl hover:bg-neutral-800"
+                  : isWhatWeDoFullScreen
                   ? "bg-white/80 text-slate-800 border-white/80 shadow-sm backdrop-blur-xl hover:bg-white"
                   : "bg-slate-950/40 text-white border-white/20 backdrop-blur-md hover:bg-slate-900/60"
               }`}
