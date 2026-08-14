@@ -143,7 +143,7 @@ export default function ContactSection() {
                   <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden border border-slate-200 shadow-xs mt-2">
                     <iframe
                       title="NITK Surathkal Location Map"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.674906950294!2d74.79222377507675!3d13.005391887312702!2m21!1m5!1m1!1s0x3ba35a1537b8d78f%3A0xa645c1103c8c2273!2sNational%20Institute%20of%20Technology%20Karnataka!4b1!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin"
+                      src="https://maps.google.com/maps?q=National%20Institute%20of%20Technology%20Karnataka%20Surathkal&t=&z=15&ie=UTF8&iwloc=&output=embed"
                       className="w-full h-full border-0"
                       allowFullScreen
                       loading="lazy"
