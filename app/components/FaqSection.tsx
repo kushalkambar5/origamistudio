@@ -134,19 +134,6 @@ export default function FaqSection() {
             })}
           </motion.div>
         </LayoutGroup>
-
-        {/* Still have questions banner */}
-        <div className="mt-12 text-center p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-          <p className="text-slate-700 text-sm font-medium">
-            Have a custom query or complex technical requirement?
-          </p>
-          <a
-            href="#contact-us"
-            className="inline-flex items-center gap-2 mt-3 text-xs font-changa font-bold text-[#ff5e00] hover:underline uppercase tracking-wider"
-          >
-            <span>SPEAK DIRECTLY WITH OUR TEAM →</span>
-          </a>
-        </div>
       </div>
     </section>
   );

@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
-import AboutSection from "./components/AboutSection";
 import PortfolioCarousel from "./components/PortfolioCarousel";
 import ProductsSection from "./components/ProductsSection";
 import TeamSection from "./components/TeamSection";
@@ -25,9 +24,6 @@ export default function Home() {
       <div className="relative z-10 bg-slate-50 shadow-[0_-25px_60px_rgba(0,0,0,0.25)] rounded-t-3xl sm:rounded-t-[2.5rem]">
         {/* 2. What We Do Section */}
         <ServicesSection />
-
-        {/* 3. About Section */}
-        <AboutSection />
 
         {/* 4. Our Work Section ("Behind the Designs" 3D Arc Gallery) */}
         <PortfolioCarousel />

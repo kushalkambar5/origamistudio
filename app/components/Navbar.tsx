@@ -7,7 +7,6 @@ import { Menu, X, ArrowUpRight } from "lucide-react";
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "What We Do", href: "#what-we-do" },
-  { label: "About", href: "#about" },
   { label: "Our Work", href: "#our-work" },
   { label: "Products", href: "#products" },
   { label: "Team", href: "#team" },
@@ -156,13 +155,9 @@ export default function Navbar() {
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, "#home")}
-            className={`flex items-center gap-2 sm:gap-3 group transition-all duration-300 active:scale-98 px-3.5 py-2 rounded-2xl ${
-              isWhatWeDoFullScreen
-                ? "bg-white/75 backdrop-blur-2xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.08)] backdrop-saturate-150"
-                : "bg-slate-950/40 backdrop-blur-md border border-white/15 shadow-sm"
-            }`}
+            className="flex items-center gap-2 sm:gap-3 group transition-all duration-300 active:scale-98 px-2 py-1 rounded-2xl bg-transparent"
           >
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-white to-slate-50 p-1 border border-slate-200 shadow-xs group-hover:border-[#ff5e00]/40 transition-colors shrink-0">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl p-1 transition-transform duration-300 group-hover:scale-105 shrink-0">
               <Image
                 src="/logo.png"
                 alt="Origami Studio Logo"

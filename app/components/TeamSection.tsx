@@ -126,7 +126,7 @@ export default function TeamSection() {
             Team
           </h2>
           <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            All three members of the team are from NITK Surathkal, Manglore and pursuing Mechanical Engineering degree.
+            All team members are from NITK Surathkal, Mangalore.
           </p>
         </div>
 

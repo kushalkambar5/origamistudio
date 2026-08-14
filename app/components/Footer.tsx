@@ -9,7 +9,6 @@ const NAV_COLUMNS = [
   [
     { label: "Home", href: "#home" },
     { label: "What We Do", href: "#what-we-do" },
-    { label: "About Us", href: "#about" },
   ],
   [
     { label: "Our Work", href: "#our-work" },

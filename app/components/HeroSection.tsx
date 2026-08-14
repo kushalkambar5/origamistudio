@@ -56,9 +56,9 @@ export default function HeroSection() {
 
         {/* Subtitle / Big Headline - Below Video Carousel */}
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 -mt-6 sm:-mt-10 md:-mt-14 pb-4 sm:pb-8">
-          <h2 className="font-changa text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] sm:leading-[1.1] max-w-4xl">
-            A digital marketing studio that helps brands{" "}
-            <span className="underline decoration-[#ff5e00] decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">
+          <h2 className="font-changa text-8xl2xl sm:text-6xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] sm:leading-[1.1] max-w-4xl">
+            We help you outgrow the competetion{" "}
+            {/* <span className="underline decoration-[#ff5e00] decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">
               stand out
             </span>,{" "}
             <br />
@@ -68,7 +68,7 @@ export default function HeroSection() {
             and{" "}
             <span className="underline decoration-[#ff5e00] decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">
               stay ahead
-            </span>
+            </span> */}
             .
           </h2>
         </div>
