@@ -14,82 +14,6 @@ import FlowingMenu, { FlowingMenuItem } from "./FlowingMenu";
 
 const SERVICES: FlowingMenuItem[] = [
   {
-    id: "social-media",
-    title: "Social Media Management",
-    subtitle: "Viral Content & Brand Positioning",
-    icon: Share2,
-    badge: "Core Service",
-    image: "/what_we_do/social_media_management.jpg",
-    description:
-      "We design end-to-end social media strategies that turn passive scrollers into passionate brand advocates. From visual aesthetic feeds to viral short-form video calendars.",
-    deliverables: [
-      "Custom Monthly Content Calendars",
-      "High-Conversion Reel & Short Video Scripts",
-      "Aesthetic Grid & Story Design Templates",
-      "24/7 Community & Comment Engagement",
-      "Influencer Outreach & Strategic Partnerships",
-      "In-Depth Analytics & ROI Reporting",
-    ],
-    metrics: "+450% Engagement Boost in 60 Days",
-  },
-  {
-    id: "websites-seo",
-    title: "Fullstack Websites with SEO",
-    subtitle: "Next-Gen Web Apps Built for Speed & Conversion",
-    icon: Globe,
-    badge: "Tech Solution",
-    image: "/what_we_do/websites.jpg",
-    description:
-      "We build ultra-fast, high-performing websites and web applications with Next.js, tailored CSS design systems, and deep search engine optimization engineered into every line of code.",
-    deliverables: [
-      "Custom Next.js & React App Architecture",
-      "100/100 Google PageSpeed & Core Web Vitals",
-      "Technical SEO, Schema & OpenGraph Meta",
-      "Mobile-First Responsive Layouts & Animations",
-      "High-Converting Landing Page Copywriting",
-      "Seamless Analytics & Lead Form Integrations",
-    ],
-    metrics: "Sub-100ms Load Times & 3.4x Higher Conversions",
-  },
-  {
-    id: "gbp-ranking",
-    title: "Google Business Profile Ranking",
-    subtitle: "Dominate Local Google Maps & Search",
-    icon: TrendingUp,
-    badge: "Local SEO",
-    image: "/what_we_do/google_business_profile.png",
-    description:
-      "Claim top positions in the coveted Google Local 3-Pack. We optimize your business profile, automate customer review flows, and establish local map dominance.",
-    deliverables: [
-      "Complete Business Profile Audit & Geo-Optimization",
-      "Local Map Pack Rank Boosting & Citation Building",
-      "Automated Review Request & AI Reply Systems",
-      "Geo-Tagged Local Product & Service Posts",
-      "Competitor Map Spam Removal & Monitoring",
-      "Monthly Local Search Insights & Call Analytics",
-    ],
-    metrics: "Top 3 Map Pack Ranking in 45 Days",
-  },
-  {
-    id: "offline-shoots",
-    title: "Offline Shoots & Studio Production",
-    subtitle: "Cinematic Brand & Commercial Photography",
-    icon: Camera,
-    badge: "Creative Studio",
-    image: "/what_we_do/offline_shoots.jpg",
-    description:
-      "High-end commercial shoots tailored for products, founder portraits, and corporate facilities. We bring studio lighting, professional cameras, and creative direction to your location.",
-    deliverables: [
-      "Commercial Product Photography & Styling",
-      "Founder & Team Executive Headshots",
-      "On-Location Facility & Behind-The-Scenes Shoots",
-      "4K Commercial Videography & B-Roll Capture",
-      "Professional Lighting & Audio Production",
-      "Full Color Grading & Retouching",
-    ],
-    metrics: "Studio Quality Visuals That Command Attention",
-  },
-  {
     id: "video-editing",
     title: "Video Editing & Motion Graphics",
     subtitle: "High-Retention Reels, Shorts & Brand Films",
@@ -109,6 +33,63 @@ const SERVICES: FlowingMenuItem[] = [
     metrics: "2.1M+ Organic Impressions Generated",
   },
   {
+    id: "social-media",
+    title: "Social Media Management",
+    subtitle: "Viral Content & Brand Positioning",
+    icon: Share2,
+    badge: "Core Service",
+    image: "/what_we_do/social_media_management.jpg",
+    description:
+      "We design end-to-end social media strategies that turn passive scrollers into passionate brand advocates. From visual aesthetic feeds to viral short-form video calendars.",
+    deliverables: [
+      "Custom Monthly Content Calendars",
+      "High-Conversion Reel & Short Video Scripts",
+      "Aesthetic Grid & Story Design Templates",
+      "24/7 Community & Comment Engagement",
+      "Influencer Outreach & Strategic Partnerships",
+      "In-Depth Analytics & ROI Reporting",
+    ],
+    metrics: "+450% Engagement Boost in 60 Days",
+  },
+  {
+    id: "media-production",
+    title: "Media Production",
+    subtitle: "Cinematic Brand & Commercial Photography",
+    icon: Camera,
+    badge: "Creative Studio",
+    image: "/what_we_do/offline_shoots.jpg",
+    description:
+      "High-end commercial shoots tailored for products, founder portraits, and corporate facilities. We bring studio lighting, professional cameras, and creative direction to your location.",
+    deliverables: [
+      "Commercial Product Photography & Styling",
+      "Founder & Team Executive Headshots",
+      "On-Location Facility & Behind-The-Scenes Shoots",
+      "4K Commercial Videography & B-Roll Capture",
+      "Professional Lighting & Audio Production",
+      "Full Color Grading & Retouching",
+    ],
+    metrics: "Studio Quality Visuals That Command Attention",
+  },
+  {
+    id: "seo-ready-wesbite",
+    title: "Fullstack Websites",
+    subtitle: "Next-Gen Web Apps Built for Speed & Conversion",
+    icon: Globe,
+    badge: "Tech Solution",
+    image: "/what_we_do/websites.jpg",
+    description:
+      "We build ultra-fast, high-performing websites and web applications with Next.js, tailored CSS design systems, and deep search engine optimization engineered into every line of code.",
+    deliverables: [
+      "Custom Next.js & React App Architecture",
+      "100/100 Google PageSpeed & Core Web Vitals",
+      "Technical SEO, Schema & OpenGraph Meta",
+      "Mobile-First Responsive Layouts & Animations",
+      "High-Converting Landing Page Copywriting",
+      "Seamless Analytics & Lead Form Integrations",
+    ],
+    metrics: "Sub-100ms Load Times & 3.4x Higher Conversions",
+  },
+  {
     id: "ai-agents",
     title: "Custom AI Agents & Bots",
     subtitle: "24/7 Lead Qualification & Auto-Support",
@@ -126,25 +107,6 @@ const SERVICES: FlowingMenuItem[] = [
       "Security & Privacy Compliant Frameworks",
     ],
     metrics: "Zero Missed Leads & 80% Support Automation",
-  },
-  {
-    id: "whatsapp-agents",
-    title: "WhatsApp Marketing & Agents",
-    subtitle: "Direct Broadcasts & Conversational Funnels",
-    icon: MessageSquare,
-    badge: "Automation",
-    image: "/what_we_do/whatsapp.jpg",
-    description:
-      "Turn WhatsApp into your highest-converting sales channel. Broadcast promotions, automate cart recovery, and deliver 1-on-1 customer journeys right inside WhatsApp.",
-    deliverables: [
-      "Official WhatsApp Business API Setup",
-      "Automated Broadcast Campaign Engine",
-      "Interactive Product Catalog & Cart Checkout",
-      "Custom Conversational Chatbot Flow Design",
-      "CRM & Payment Gateway Integrations",
-      "Opt-In Growth & Compliance Management",
-    ],
-    metrics: "98% Open Rate & 35% Direct Click-Through",
   },
 ];
 
@@ -173,7 +135,7 @@ export default function ServicesSection() {
           textColor="#0f172a"
           bgColor="#ffffff"
           marqueeBgColor="#ff5e00"
-          marqueeTextColor="#ffffff"
+          marqueeTextColor="#000000"
           borderColor="#e2e8f0"
         />
       </div>

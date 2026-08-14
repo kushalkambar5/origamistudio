@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { GLTFLoader, type GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -101,10 +101,10 @@ export default function OrigamiCraneExperience() {
 
     loader.load(
       "/origami_crane.glb",
-      (gltf) => {
+      (gltf: GLTF) => {
         const model = gltf.scene;
 
-        model.traverse((child) => {
+        model.traverse((child: THREE.Object3D) => {
           if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
             mesh.castShadow = true;
@@ -147,7 +147,7 @@ export default function OrigamiCraneExperience() {
         setupScrollAnimation();
       },
       undefined,
-      (error) => {
+      (error: unknown) => {
         console.error("Error loading origami crane model:", error);
       }
     );

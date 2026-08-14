@@ -358,16 +358,6 @@ export default function ClientVideoCarousel() {
 
             {/* Gradient Overlay for Sleek Contrast */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
-
-            {/* Client & Project Badge Overlay */}
-            <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-2.5 sm:right-3.5 text-left pointer-events-none">
-              <span className="inline-block px-2 py-0.5 mb-1 rounded-full bg-[#ff5e00]/90 text-[9px] sm:text-[10px] font-mono font-bold text-white uppercase tracking-wider backdrop-blur-sm shadow-sm">
-                {video.client}
-              </span>
-              <p className="text-[10px] sm:text-xs font-semibold text-white/95 truncate leading-tight drop-shadow-sm">
-                {video.title}
-              </p>
-            </div>
           </div>
         ))}
       </div>

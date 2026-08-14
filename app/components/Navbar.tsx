@@ -136,8 +136,8 @@ export default function Navbar() {
         <nav
           className={`w-full rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between transition-all duration-300 ${
             scrolled || mobileMenuOpen
-              ? "bg-white/90 backdrop-blur-xl border border-slate-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
-              : "bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-sm"
+              ? "border-slate-200/90 shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+              : "shadow-sm"
           }`}
           aria-label="Main Navigation"
         >
@@ -157,13 +157,13 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <span className="font-changa text-base sm:text-lg font-bold tracking-wider text-slate-900 uppercase whitespace-nowrap">
+            <span className="font-changa text-base sm:text-lg font-bold tracking-wider text-white uppercase whitespace-nowrap">
               ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
             </span>
           </a>
 
           {/* Center Nav Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-1 bg-slate-100/70 p-1 rounded-full border border-slate-200/50">
+          <div className="hidden lg:flex items-center gap-1 p-1 rounded-full">
             {NAV_ITEMS.map((item) => {
               const sectionId = item.href.replace("#", "");
               const isActive = activeSection === sectionId;
@@ -174,8 +174,8 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
                     isActive
-                      ? "bg-white text-[#ff5e00] shadow-sm"
-                      : "text-slate-600 hover:text-slate-950 hover:bg-white/50"
+                      ? "text-[#ff5e00] shadow-sm"
+                      : "text-white hover:text-[#ff5e00]"
                   }`}
                 >
                   {item.label}
