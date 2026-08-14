@@ -14,74 +14,95 @@ interface ClientVideo {
 
 const BASE_VIDEOS: ClientVideo[] = [
   {
-    id: "audecy",
+    id: "audecy-ai-ai-platform-launch",
     title: "AI Platform Launch",
     client: "Audecy.ai",
-    category: "AI & Tech",
-    src: "/clients/audecy.mp4",
+    category: "Client Project",
+    src: "/clients/Audecy.ai%20-%20AI%20Platform%20Launch.mp4",
   },
   {
-    id: "blender-reel-2",
+    id: "blendr-reels-3d-visual-experience",
     title: "3D Visual Experience",
     client: "Blendr Reels",
-    category: "3D & Motion",
-    src: "/clients/blender-reel-2.mp4",
+    category: "Client Project",
+    src: "/clients/Blendr%20Reels%20-%203D%20Visual%20Experience.mp4",
   },
   {
-    id: "boatigo",
-    title: "Brand Logo Motion",
-    client: "BoaTiGo",
-    category: "Brand Identity",
-    src: "/clients/boatigo-logo-animation.mp4",
-  },
-  {
-    id: "neuroscience",
-    title: "Healthcare Series",
-    client: "Dr. Karthik",
-    category: "EdTech & Health",
-    src: "/clients/neuroscience-video1.mp4",
-  },
-  {
-    id: "levelup-1",
-    title: "Growth Masterclass",
-    client: "Level Up",
-    category: "Personal Brand",
-    src: "/clients/levelup-video1.mp4",
-  },
-  {
-    id: "simracing",
-    title: "Esports Commercial",
-    client: "SimRacing",
-    category: "Commercial Shoot",
-    src: "/clients/simracing.mp4",
-  },
-  {
-    id: "blenderreel-full",
+    id: "blendr-studios-creative-showreel",
     title: "Creative Showreel",
     client: "Blendr Studios",
-    category: "Video Editing",
-    src: "/clients/blenderreel-2.mp4",
+    category: "Client Project",
+    src: "/clients/Blendr%20Studios%20-%20Creative%20Showreel.mp4",
   },
   {
-    id: "levelup-2",
+    id: "dr-karthik-healthcare-series",
+    title: "Healthcare Series",
+    client: "Dr Karthik",
+    category: "Client Project",
+    src: "/clients/Dr%20Karthik%20-%20Healthcare%20Series.mp4",
+  },
+  {
+    id: "level-up-growth-masterclass",
+    title: "Growth Masterclass",
+    client: "Level Up",
+    category: "Client Project",
+    src: "/clients/Level%20Up%20-%20Growth%20Masterclass.mp4",
+  },
+  {
+    id: "level-up-brand-strategy-reel",
     title: "Brand Strategy Reel",
     client: "Level Up",
-    category: "Digital Marketing",
-    src: "/clients/levelup-video2.mp4",
+    category: "Client Project",
+    src: "/clients/Level%20Up%20-%20Brand%20Strategy%20Reel.mp4",
   },
   {
-    id: "levelup-3",
-    title: "Scaling Business Series",
-    client: "Level Up",
-    category: "Growth Hacking",
-    src: "/clients/levelup-video3.mp4",
+    id: "simracing-esports-commercial",
+    title: "Esports Commercial",
+    client: "SimRacing",
+    category: "Client Project",
+    src: "/clients/SimRacing%20-%20Esports%20Commercial.mp4",
   },
   {
-    id: "levelup-4",
-    title: "Executive Keynote",
-    client: "Level Up",
-    category: "Content Creation",
-    src: "/clients/levelup-video4.mp4",
+    id: "simracing-gt-world-challenge",
+    title: "GT World Challenge",
+    client: "SimRacing",
+    category: "Client Project",
+    src: "/clients/SimRacing%20-%20GT%20World%20Challenge.mp4",
+  },
+  {
+    id: "simracing-trackside-dynamics",
+    title: "Trackside Dynamics",
+    client: "SimRacing",
+    category: "Client Project",
+    src: "/clients/SimRacing%20-%20Trackside%20Dynamics.mp4",
+  },
+  {
+    id: "simracing-pitstop-series",
+    title: "Pitstop Series",
+    client: "SimRacing",
+    category: "Client Project",
+    src: "/clients/SimRacing%20-%20Pitstop%20Series.mp4",
+  },
+  {
+    id: "simracing-championship-highlights",
+    title: "Championship Highlights",
+    client: "SimRacing",
+    category: "Client Project",
+    src: "/clients/SimRacing%20-%20Championship%20Highlights.mp4",
+  },
+  {
+    id: "xylon-cyberpunk-concept",
+    title: "Cyberpunk Concept",
+    client: "Xylon",
+    category: "Client Project",
+    src: "/clients/Xylon%20-%20Cyberpunk%20Concept.mp4",
+  },
+  {
+    id: "xylon-futuristic-showcase",
+    title: "Futuristic Showcase",
+    client: "Xylon",
+    category: "Client Project",
+    src: "/clients/Xylon%20-%20Futuristic%20Showcase.mp4",
   },
 ];
 
@@ -102,7 +123,6 @@ export default function ClientVideoCarousel() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const autoRotateTween = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null);
 
-  // Randomized 20 items on client load so videos are not serial
   const [ringItems, setRingItems] = useState<
     (ClientVideo & { uniqueKey: string })[]
   >([]);
@@ -114,18 +134,42 @@ export default function ClientVideoCarousel() {
     cardHeight: 364, // 205 * (16 / 9)
   });
 
+  // Fetch videos dynamically from API or fallback to BASE_VIDEOS
   useEffect(() => {
-    // Generate randomized videos array (20 items)
-    const shuffledPool = [
-      ...shuffleArray(BASE_VIDEOS),
-      ...shuffleArray(BASE_VIDEOS),
-    ];
-    setRingItems(
-      shuffledPool.map((item, idx) => ({
-        ...item,
-        uniqueKey: `${item.id}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
-      }))
-    );
+    let isMounted = true;
+
+    async function loadVideos() {
+      let videosList: ClientVideo[] = BASE_VIDEOS;
+      try {
+        const res = await fetch("/api/clients/videos");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            videosList = data;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load dynamic client videos, using fallback", err);
+      }
+
+      if (!isMounted) return;
+
+      // Duplicate list to ensure ring has at least 18-20 cards for complete 360 degree arc
+      let pool = [...videosList];
+      while (pool.length < 18 && pool.length > 0) {
+        pool = [...pool, ...videosList];
+      }
+
+      const shuffledPool = shuffleArray(pool);
+      setRingItems(
+        shuffledPool.map((item, idx) => ({
+          ...item,
+          uniqueKey: `${item.id}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
+        }))
+      );
+    }
+
+    loadVideos();
 
     const updateDimensions = () => {
       const vw = window.innerWidth;
@@ -155,7 +199,10 @@ export default function ClientVideoCarousel() {
 
     updateDimensions();
     window.addEventListener("resize", updateDimensions, { passive: true });
-    return () => window.removeEventListener("resize", updateDimensions);
+    return () => {
+      isMounted = false;
+      window.removeEventListener("resize", updateDimensions);
+    };
   }, []);
 
   // Selective video playback helper: only play front-facing cards to maintain 60+ FPS on mobile
