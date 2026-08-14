@@ -7,11 +7,16 @@ import {
   MapPin,
   Send,
   CheckCircle,
-  Globe,
   Sparkles,
+  Copy,
+  Check,
+  ExternalLink,
+  MessageCircle,
+  Clock,
+  ArrowRight,
 } from "lucide-react";
 
-// Social SVG Icons
+// Modern Branded Social SVG Icons
 const LinkedInIcon = () => (
   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
@@ -44,6 +49,7 @@ interface ContactFormData {
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -65,6 +71,44 @@ export default function ContactSection() {
     });
   };
 
+  const copyToClipboard = async (text: string, fieldName: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    let success = false;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        success = true;
+      }
+    } catch {
+      // Ignore clipboard API error and fallback below
+    }
+
+    if (!success) {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-999999px";
+        textarea.style.top = "-999999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        success = document.execCommand("copy");
+        textarea.remove();
+      } catch {
+        // Ignored
+      }
+    }
+
+    setCopiedField(fieldName);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -77,291 +121,354 @@ export default function ContactSection() {
   return (
     <section
       id="contact-us"
-      className="relative py-24 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
+      className="relative py-20 sm:py-28 bg-[#FAFAF9] text-slate-900 border-t border-slate-200/80 overflow-hidden"
     >
-      {/* Background Radial Glow */}
-      <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-[#ff5e00]/10 blur-[160px] rounded-full pointer-events-none" />
+      {/* Dynamic Background Ambient Light */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-[#ff5e00]/10 to-amber-500/5 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#ff5e00]/5 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-slate-900">
+        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+
+          <h2 className="font-changa text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight text-slate-900 leading-[1.1]">
             <span className="text-[#ff5e00]">Contact Us</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-          {/* Left Column: Direct Contact & Agency Info */}
-          <div className="lg:col-span-5 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200 shadow-lg space-y-6 sm:space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Direct Info & Location Hub */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Quick Contact Cards */}
+            <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.03)] space-y-6">
+              
 
-            <div className="space-y-3 sm:space-y-4">
-              <div className="flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-xs">
-                <div className="w-10 h-10 rounded-xl bg-[#ff5e00]/5 border border-[#ff5e00]/30 flex items-center justify-center text-[#ff5e00] shrink-0">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold block">
-                    EMAIL DIRECTLY
-                  </span>
-                  <a
-                    href="mailto:hello@origamistudio.in"
-                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#ff5e00] transition-colors truncate"
-                  >
-                    hello@origamistudio.in
-                  </a>
-                </div>
-              </div>
 
-              <div className="flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-xs">
-                <div className="w-10 h-10 rounded-xl bg-[#ff5e00]/5 border border-[#ff5e00]/30 flex items-center justify-center text-[#ff5e00] shrink-0">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold block">
-                    CALL / WHATSAPP
-                  </span>
-                  <a
-                    href="tel:+918919300467"
-                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#ff5e00] transition-colors truncate"
-                  >
-                    +91 8919300467
-                  </a>
-                </div>
-              </div>
+              <div className="space-y-4">
+                {/* Email Direct Card */}
+                <div className="group relative p-4 rounded-2xl bg-slate-50/70 border border-slate-200/80 hover:border-[#ff5e00]/40 hover:bg-white hover:shadow-md transition-all duration-300">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="w-11 h-11 rounded-2xl bg-[#ff5e00]/10 border border-[#ff5e00]/20 flex items-center justify-center text-[#ff5e00] shrink-0 group-hover:scale-105 transition-transform">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider block mb-0.5">
+                          Email Us Directly
+                        </span>
+                        <a
+                          href="mailto:hello@origamistudio.in"
+                          className="text-sm sm:text-base font-bold text-slate-900 hover:text-[#ff5e00] transition-colors truncate block"
+                        >
+                          hello@origamistudio.in
+                        </a>
+                      </div>
+                    </div>
 
-              <div className="flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-xs">
-                <div className="w-10 h-10 rounded-xl bg-[#ff5e00]/5 border border-[#ff5e00]/30 flex items-center justify-center text-[#ff5e00] shrink-0">
-                  <MapPin className="w-5 h-5" />
+                    <button
+                      type="button"
+                      onClick={(e) => copyToClipboard("hello@origamistudio.in", "email", e)}
+                      title="Copy email address"
+                      aria-label="Copy email address"
+                      className="px-2.5 py-1.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-200/60 transition-all shrink-0 flex items-center gap-1.5 cursor-pointer bg-slate-100/70 border border-slate-200/60"
+                    >
+                      {copiedField === "email" ? (
+                        <>
+                          <Check className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
+                          <span className="text-xs font-bold text-emerald-600">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold block">
-                    LOCATION
-                  </span>
-                  <span className="block text-xs sm:text-sm font-semibold text-slate-900 mb-3">
-                    NITK Surathkal, Mangalore, Karnataka 575025
-                  </span>
-                  <div className="w-full h-44 sm:h-56 rounded-xl overflow-hidden border border-slate-200 shadow-xs mt-2">
-                    <iframe
-                      title="NITK Surathkal Location Map"
-                      src="https://maps.google.com/maps?q=National%20Institute%20of%20Technology%20Karnataka%20Surathkal&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                      className="w-full h-full border-0"
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    />
+
+                {/* Call / WhatsApp Card */}
+                <div className="group relative p-4 rounded-2xl bg-slate-50/70 border border-slate-200/80 hover:border-[#ff5e00]/40 hover:bg-white hover:shadow-md transition-all duration-300">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="w-11 h-11 rounded-2xl bg-[#ff5e00]/10 border border-[#ff5e00]/20 flex items-center justify-center text-[#ff5e00] shrink-0 group-hover:scale-105 transition-transform">
+                        <Phone className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider block mb-0.5">
+                          Call / WhatsApp
+                        </span>
+                        <a
+                          href="tel:+918919300467"
+                          className="text-sm sm:text-base font-bold text-slate-900 hover:text-[#ff5e00] transition-colors truncate block"
+                        >
+                          +91 8919300467
+                        </a>
+                      </div>
+                    </div>
+
+                    <a
+                      href="https://wa.me/918919300467"
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Chat on WhatsApp"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 text-xs font-semibold transition-colors shrink-0"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="hidden sm:inline">WhatsApp</span>
+                    </a>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Social Handles */}
-            <div className="pt-3 sm:pt-4 border-t border-slate-200">
-              <span className="text-[11px] font-mono text-slate-500 uppercase block mb-3 font-semibold">
-                CONNECT WITH US ON SOCIAL:
-              </span>
-              <div className="flex items-center gap-3">
-                <a
-                  href="https://www.instagram.com/origamistudioin/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 hover:bg-[#ff5e00] hover:border-[#ff5e00] text-slate-700 hover:text-white transition-colors shadow-xs active:scale-95"
-                >
-                  <InstagramIcon />
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 hover:bg-[#ff5e00] hover:border-[#ff5e00] text-slate-700 hover:text-white transition-colors shadow-xs active:scale-95"
-                >
-                  <LinkedInIcon />
-                </a>
+              {/* Location Card & Embedded Interactive Map */}
+              <div className="pt-2 border-t border-slate-100">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
+                    <MapPin className="w-4 h-4 text-[#ff5e00]" />
+                    <span>Headquarters & Studio</span>
+                  </div>
+                  <a
+                    href="https://maps.google.com/?q=NITK+Surathkal+Mangalore"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#ff5e00] hover:underline"
+                  >
+                    <span>View Map</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+
+                <p className="text-xs font-medium text-slate-600 mb-3">
+                  NITK Surathkal, Mangalore, Karnataka 575025, India
+                </p>
+
+                {/* Map Preview Container */}
+                <div className="relative w-full h-48 sm:h-52 rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs group">
+                  <iframe
+                    title="NITK Surathkal Location Map"
+                    src="https://maps.google.com/maps?q=National%20Institute%20of%20Technology%20Karnataka%20Surathkal&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    className="w-full h-full border-0 grayscale-[20%] contrast-[105%] group-hover:grayscale-0 transition-all duration-500"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-2xl" />
+                </div>
+              </div>
+
+              {/* Social Channels */}
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-xs font-mono text-slate-400 uppercase font-semibold">
+                  Follow Our Work
+                </span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://www.instagram.com/origamistudioin/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Instagram"
+                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-[#ff5e00] hover:text-white text-slate-600 transition-all duration-200 shadow-xs hover:scale-105 active:scale-95"
+                  >
+                    <InstagramIcon />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200 shadow-lg">
-            <h3 className="font-changa text-xl sm:text-2xl font-bold uppercase text-slate-900 mb-1 sm:mb-2">
-              SEND US A MESSAGE
-            </h3>
-            <p className="text-xs text-slate-500 mb-5 sm:mb-6 font-normal">
-              Fill in your details below and our team will get back to you within 4 business hours.
-            </p>
+          {/* Right Column: High-Conversion Form Workspace */}
+          <div className="lg:col-span-7">
+            <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] relative overflow-hidden">
+              {/* Decorative Subtle Accent Bar */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#ff5e00] via-amber-500 to-[#ff5e00]" />
 
-            {submitted ? (
-              <div className="p-6 sm:p-8 rounded-2xl bg-[#ff5e00]/5 border border-[#ff5e00] text-center animate-in fade-in duration-300">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 rounded-full bg-[#ff5e00] text-white flex items-center justify-center shadow-md">
-                  <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7" />
+              {submitted ? (
+                <div className="py-12 sm:py-16 text-center animate-in fade-in zoom-in-95 duration-300">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center shadow-lg shadow-emerald-500/10">
+                    <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-600" />
+                  </div>
+                  <h3 className="font-changa text-2xl sm:text-3xl font-extrabold text-slate-900 uppercase tracking-tight">
+                    Inquiry Received!
+                  </h3>
+                  <p className="text-sm sm:text-base text-slate-600 mt-3 max-w-md mx-auto leading-relaxed">
+                    Thank you,{" "}
+                    <span className="text-[#ff5e00] font-bold">
+                      {formData.name}
+                    </span>
+                    . We&apos;ve received your project details. Our strategic team will review your goals and reach out to{" "}
+                    <span className="text-slate-900 font-bold">
+                      {formData.email}
+                    </span>{" "}
+                    within 4 business hours.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({
+                        name: "",
+                        email: "",
+                        phone: "",
+                        company: "",
+                        services: ["Social Media Marketing", "Fullstack Web & SEO"],
+                        message: "",
+                      });
+                    }}
+                    className="mt-8 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all shadow-xs"
+                  >
+                    Send Another Message
+                  </button>
                 </div>
-                <h4 className="font-changa text-xl sm:text-2xl font-bold text-slate-900 uppercase">
-                  MESSAGE RECEIVED!
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">
-                  Thank you,{" "}
-                  <span className="text-[#ff5e00] font-bold">
-                    {formData.name}
-                  </span>
-                  . Our team at Origami Studio has received your message and will reach out to{" "}
-                  <span className="text-slate-900 font-bold">
-                    {formData.email}
-                  </span>{" "}
-                  shortly.
-                </p>
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setFormData({
-                      name: "",
-                      email: "",
-                      phone: "",
-                      company: "",
-                      services: ["Social Media Marketing", "Fullstack Web & SEO"],
-                      message: "",
-                    });
-                  }}
-                  className="mt-6 px-6 py-2.5 min-h-[44px] rounded-full text-xs font-semibold text-slate-700 hover:text-slate-950 bg-white border border-slate-200 shadow-xs active:scale-95 transition-transform"
-                >
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
-                      FULL NAME *
+                    <h3 className="font-changa text-2xl sm:text-3xl font-extrabold uppercase text-slate-900 tracking-tight">
+                      Send Us a Message
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-500 mt-1 font-normal">
+                      Fill in your requirements and we&apos;ll build a customized growth proposal for your brand.
+                    </p>
+                  </div>
+
+                  {/* Form Inputs Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Full Name <span className="text-[#ff5e00]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Alex Morgan"
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50/60 border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:bg-white focus:ring-4 focus:ring-[#ff5e00]/10 focus:outline-none placeholder:text-slate-400 transition-all"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Work Email <span className="text-[#ff5e00]">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="alex@company.com"
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50/60 border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:bg-white focus:ring-4 focus:ring-[#ff5e00]/10 focus:outline-none placeholder:text-slate-400 transition-all"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="+91 98765 43210"
+                        value={formData.phone}
+                        onChange={(e) =>
+                          setFormData({ ...formData, phone: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50/60 border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:bg-white focus:ring-4 focus:ring-[#ff5e00]/10 focus:outline-none placeholder:text-slate-400 transition-all"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Company / Brand Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Acme Studios"
+                        value={formData.company}
+                        onChange={(e) =>
+                          setFormData({ ...formData, company: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-xl bg-slate-50/60 border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:bg-white focus:ring-4 focus:ring-[#ff5e00]/10 focus:outline-none placeholder:text-slate-400 transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Interactive Services Needed Multi-Select Chips */}
+                  <div className="space-y-2.5">
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Services Needed
                     </label>
-                    <input
-                      type="text"
+                    <div className="flex flex-wrap gap-2.5">
+                      {CONTACT_SERVICES.map((svc) => {
+                        const isChecked = formData.services.includes(svc);
+                        return (
+                          <button
+                            type="button"
+                            key={svc}
+                            onClick={() => toggleService(svc)}
+                            className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer select-none active:scale-95 ${
+                              isChecked
+                                ? "bg-[#ff5e00] text-white shadow-md shadow-[#ff5e00]/25 ring-2 ring-[#ff5e00]/30"
+                                : "bg-slate-100/80 text-slate-700 hover:bg-slate-200/80 border border-slate-200/60"
+                            }`}
+                          >
+                            {isChecked ? (
+                              <Check className="w-3.5 h-3.5 shrink-0 stroke-[3]" />
+                            ) : (
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />
+                            )}
+                            <span>{svc}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Project Details & Goals Textarea */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Project Details &amp; Goals <span className="text-[#ff5e00]">*</span>
+                    </label>
+                    <textarea
                       required
-                      placeholder="John Doe"
-                      value={formData.name}
+                      rows={4}
+                      placeholder="Tell us about your brand, current growth bottlenecks, timeline, and key targets..."
+                      value={formData.message}
                       onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
+                        setFormData({ ...formData, message: e.target.value })
                       }
-                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50/60 border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:bg-white focus:ring-4 focus:ring-[#ff5e00]/10 focus:outline-none placeholder:text-slate-400 transition-all resize-y min-h-[110px]"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
-                      WORK EMAIL *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="john@company.com"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
-                      PHONE NUMBER
-                    </label>
-                    <input
-                      type="tel"
-                      placeholder="+91 98765 43210"
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
-                      COMPANY / BRAND NAME
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Acme Inc."
-                      value={formData.company}
-                      onChange={(e) =>
-                        setFormData({ ...formData, company: e.target.value })
-                      }
-                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-mono text-slate-600 uppercase mb-2 font-semibold">
-                    SERVICES NEEDED
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {CONTACT_SERVICES.map((svc) => {
-                      const isChecked = formData.services.includes(svc);
-                      return (
-                        <div
-                          key={svc}
-                          onClick={() => toggleService(svc)}
-                          className={`flex items-center gap-3 p-3 min-h-[44px] rounded-xl border cursor-pointer transition-all active:scale-98 ${
-                            isChecked
-                              ? "bg-[#ff5e00]/10 border-[#ff5e00] text-slate-900 shadow-xs font-medium"
-                              : "bg-white border-slate-200 text-slate-700 hover:border-slate-300"
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={() => {}}
-                            className="w-4 h-4 rounded border-slate-300 text-[#ff5e00] accent-[#ff5e00] cursor-pointer"
-                          />
-                          <span className="text-xs font-semibold select-none leading-tight">
-                            {svc}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
-                    YOUR PROJECT DETAILS & GOALS *
-                  </label>
-                  <textarea
-                    required
-                    rows={4}
-                    placeholder="Tell us about your brand, current challenges, and target growth objectives..."
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full min-h-[48px] py-3.5 sm:py-4 rounded-full font-changa text-base sm:text-lg font-bold text-white bg-[#ff5e00] shadow-[0_4px_20px_rgba(255,94,0,0.35)] hover:brightness-110 active:scale-98 transition-all flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <span>SENDING MESSAGE...</span>
-                  ) : (
-                    <>
-                      <span>SUBMIT INQUIRY</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
+                  {/* High Energy CTA Button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="group relative w-full py-4 rounded-2xl font-changa text-base sm:text-lg font-extrabold uppercase tracking-wide text-white bg-[#ff5e00] shadow-[0_8px_25px_rgba(255,94,0,0.35)] hover:bg-[#e05300] hover:shadow-[0_12px_30px_rgba(255,94,0,0.45)] active:scale-[0.99] disabled:opacity-75 transition-all duration-200 flex items-center justify-center gap-2.5 overflow-hidden"
+                  >
+                    {isSubmitting ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Sending Inquiry...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <span>Submit Inquiry</span>
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
