@@ -14,7 +14,7 @@ export default function PortfolioCarousel() {
       <div className="w-full relative z-10">
         {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto px-4">
-          <h2 className="font-changa text-2xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-slate-900 leading-none">
+          <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-slate-900 leading-none">
             <span className="text-[#ff5e00]">Our Work</span>
           </h2>
         </div>

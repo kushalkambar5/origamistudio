@@ -69,7 +69,7 @@ export default function FaqSection() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <h2 className="font-changa text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-center text-slate-900 mb-12 sm:mb-16">
+        <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-center text-slate-900 mb-12 sm:mb-16">
           <span className="text-[#ff5e00]">FAQS</span>
         </h2>
 

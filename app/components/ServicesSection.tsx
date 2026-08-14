@@ -123,7 +123,7 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <h2 className="font-changa text-2xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
+          <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
             What We Do?
           </h2>
         </div>

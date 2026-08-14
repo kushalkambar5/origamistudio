@@ -114,7 +114,7 @@ export default function TeamSection() {
       id="team"
       ref={containerRef}
       onMouseMove={handleMove}
-      className="relative py-24 bg-slate-50 text-slate-900 border-t border-slate-200 overflow-hidden"
+      className="relative z-10 py-24 bg-slate-50 text-slate-900 border-t border-slate-200"
     >
       {/* Ambient Lighting Background */}
       <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-[#ff5e00]/10 blur-[160px] rounded-full pointer-events-none" />
@@ -122,7 +122,7 @@ export default function TeamSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
+          <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
             Team
           </h2>
           <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
