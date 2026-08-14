@@ -172,11 +172,11 @@
 }
 
 .card-3d {
-  --w: 17.5em;
+  --w: 14.5em;
   --ba: calc(1turn / var(--n));
   grid-area: 1 / 1;
   width: var(--w);
-  aspect-ratio: 7 / 10;
+  aspect-ratio: 9 / 16;
   object-fit: cover;
   border-radius: 1.5em;
   backface-visibility: hidden;
@@ -193,17 +193,17 @@
     perspective: 26em;
   }
   .card-3d {
-    --w: 11em;
+    --w: 9.5em;
     border-radius: 1.2em;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
   .scene-3d {
-    perspective: 30em;
+    perspective: 32em;
   }
   .card-3d {
-    --w: 14.5em;
+    --w: 12em;
     border-radius: 1.35em;
   }
 }

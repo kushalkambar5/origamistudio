@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ShieldCheck, FileText } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import Footer from "../components/Footer";
 
 export const metadata = {
