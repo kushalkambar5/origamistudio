@@ -2,37 +2,25 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 
-const PLATFORM_LINKS = [
-  { label: "Dashboard", href: "#home" },
-  { label: "AI Assistant", href: "#products" },
-  { label: "Automations", href: "#what-we-do" },
-  { label: "Integrations", href: "#products" },
-  { label: "API", href: "#products" },
+const SERVICES_LINKS = [
+  { label: "Social Media Marketing", href: "#what-we-do" },
+  { label: "Fullstack Web & SEO", href: "#what-we-do" },
+  { label: "Google Maps & GBP Ranking", href: "#what-we-do" },
+  { label: "Offline Shoot & Video Editing", href: "#what-we-do" },
+  { label: "Custom AI & WhatsApp Agents", href: "#products" },
 ];
 
-const SOLUTIONS_COL_1 = [
-  { label: "Marketing", href: "#what-we-do" },
-  { label: "Operations", href: "#what-we-do" },
-  { label: "Sales", href: "#what-we-do" },
-  { label: "HR", href: "#what-we-do" },
-  { label: "Finance", href: "#what-we-do" },
-];
-
-const SOLUTIONS_COL_2 = [
-  { label: "AI Assistants", href: "#products" },
-  { label: "Enterprise", href: "#products" },
-  { label: "Threat Center", href: "#products" },
-  { label: "Solutions", href: "#what-we-do" },
-  { label: "Renovation", href: "#what-we-do" },
-];
-
-const COMPANY_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Blog", href: "#about" },
-  { label: "Careers", href: "#team" },
-  { label: "Contact", href: "#contact-us" },
-  { label: "Help Center", href: "#faqs" },
+const QUICK_LINKS = [
+  { label: "Home", href: "#home" },
+  { label: "What We Do", href: "#what-we-do" },
+  { label: "About Us", href: "#about" },
+  { label: "Our Work", href: "#our-work" },
+  { label: "Products", href: "#products" },
+  { label: "Team", href: "#team" },
+  { label: "FAQs", href: "#faqs" },
 ];
 
 export default function Footer() {
@@ -60,19 +48,19 @@ export default function Footer() {
     <footer className="w-full bg-[#FAF9F6] text-slate-900 border-t border-slate-200 overflow-hidden font-sans">
       {/* Top Main Grid Section */}
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-          {/* Column 1: PLATFORM */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+          {/* Column 1: SERVICES */}
           <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-start">
             <h3 className="text-xs sm:text-sm font-bold uppercase text-slate-900 tracking-wider mb-6">
-              PLATFORM
+              OUR SERVICES
             </h3>
             <ul className="space-y-3">
-              {PLATFORM_LINKS.map((link) => (
+              {SERVICES_LINKS.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-xs sm:text-sm text-slate-600 hover:text-[#FC6100] transition-colors font-normal block"
+                    className="text-xs sm:text-sm text-slate-600 hover:text-[#ff5e00] transition-colors font-normal block"
                   >
                     {link.label}
                   </a>
@@ -81,19 +69,19 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2: SOLUTIONS (2 Sub-columns) */}
+          {/* Column 2: QUICK LINKS */}
           <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-start">
             <h3 className="text-xs sm:text-sm font-bold uppercase text-slate-900 tracking-wider mb-6">
-              SOLUTIONS
+              QUICK NAVIGATION
             </h3>
             <div className="grid grid-cols-2 gap-x-4 gap-y-3">
               <ul className="space-y-3">
-                {SOLUTIONS_COL_1.map((link) => (
+                {QUICK_LINKS.slice(0, 4).map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="text-xs sm:text-sm text-slate-600 hover:text-[#FC6100] transition-colors font-normal block"
+                      className="text-xs sm:text-sm text-slate-600 hover:text-[#ff5e00] transition-colors font-normal block"
                     >
                       {link.label}
                     </a>
@@ -101,12 +89,12 @@ export default function Footer() {
                 ))}
               </ul>
               <ul className="space-y-3">
-                {SOLUTIONS_COL_2.map((link) => (
+                {QUICK_LINKS.slice(4).map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="text-xs sm:text-sm text-slate-600 hover:text-[#FC6100] transition-colors font-normal block"
+                      className="text-xs sm:text-sm text-slate-600 hover:text-[#ff5e00] transition-colors font-normal block"
                     >
                       {link.label}
                     </a>
@@ -116,73 +104,50 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 3: COMPANY */}
-          <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-start">
-            <h3 className="text-xs sm:text-sm font-bold uppercase text-slate-900 tracking-wider mb-6">
-              COMPANY
-            </h3>
-            <ul className="space-y-3">
-              {COMPANY_LINKS.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-xs sm:text-sm text-slate-600 hover:text-[#FC6100] transition-colors font-normal block"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4: CONTACT */}
+          {/* Column 3: CONTACT & CTA */}
           <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
             <div>
               <h3 className="text-xs sm:text-sm font-bold uppercase text-slate-900 tracking-wider mb-6">
-                CONTACT
+                GET IN TOUCH
               </h3>
 
-              <div className="mb-4">
-                <span className="text-[11px] font-bold uppercase text-slate-900 tracking-wider block mb-1">
-                  GENERAL INQUIRIES:
-                </span>
-                <a
-                  href="mailto:hello@origamistudio.in"
-                  className="text-xs sm:text-sm text-slate-600 hover:text-[#FC6100] transition-colors font-normal block"
-                >
-                  hello@origamistudio.in
-                </a>
-              </div>
+              <div className="space-y-3.5 text-xs sm:text-sm text-slate-600">
+                <div className="flex items-center gap-2.5">
+                  <Mail className="w-4 h-4 text-[#ff5e00] shrink-0" />
+                  <a
+                    href="mailto:hello@origamistudio.in"
+                    className="hover:text-[#ff5e00] transition-colors"
+                  >
+                    hello@origamistudio.in
+                  </a>
+                </div>
 
-              <div>
-                <span className="text-[11px] font-bold uppercase text-slate-900 tracking-wider block mb-1">
-                  SUPPORT:
-                </span>
-                <a
-                  href="mailto:support@origamistudio.in"
-                  className="text-xs sm:text-sm text-slate-600 hover:text-[#FC6100] transition-colors font-normal block"
-                >
-                  support@origamistudio.in
-                </a>
+                <div className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-[#ff5e00] shrink-0" />
+                  <a
+                    href="tel:+918919300467"
+                    className="hover:text-[#ff5e00] transition-colors"
+                  >
+                    +91 8919300467
+                  </a>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-[#ff5e00] shrink-0 mt-0.5" />
+                  <span>NITK Surathkal, Mangalore, Karnataka 575025</span>
+                </div>
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="space-y-2.5 pt-2">
+            {/* CTA Button */}
+            <div className="pt-2">
               <a
                 href="#contact-us"
                 onClick={(e) => handleNavClick(e, "#contact-us")}
-                className="w-full py-3 px-5 rounded-lg bg-slate-950 hover:bg-[#FC6100] text-white text-xs font-bold tracking-wider uppercase transition-all duration-200 text-center block shadow-xs"
+                className="w-full py-3.5 px-6 rounded-full bg-[#ff5e00] hover:bg-[#e05300] text-white text-xs font-bold tracking-wider uppercase transition-all duration-200 text-center flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(255,94,0,0.3)] hover:scale-[1.02]"
               >
-                START FREE
-              </a>
-              <a
-                href="#contact-us"
-                onClick={(e) => handleNavClick(e, "#contact-us")}
-                className="w-full py-3 px-5 rounded-lg bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-900 text-xs font-bold tracking-wider uppercase transition-all duration-200 text-center block shadow-xs"
-              >
-                BOOK DEMO
+                <span>Book a Call</span>
+                <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -193,47 +158,24 @@ export default function Footer() {
       <div className="border-t border-slate-200 py-8 sm:py-12 px-4 sm:px-8 bg-[#FAF9F6]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden">
           <div className="flex items-center gap-4 sm:gap-6 w-full justify-between">
-            {/* Origami Custom Geometric Logo Mark */}
+            {/* Origami Studio Logo Image */}
             <div className="flex items-center gap-3 shrink-0">
-              <div className="relative w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex items-center justify-center p-2 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                {/* Embedded Origami Fold Geometric Icon */}
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <svg
-                    viewBox="0 0 100 100"
-                    className="w-full h-full drop-shadow-sm"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {/* Orange Fold Facet */}
-                    <path
-                      d="M15 85 L45 15 L35 85 Z"
-                      fill="#FC6100"
-                    />
-                    {/* Dark Primary Fold Facet */}
-                    <path
-                      d="M35 85 L45 15 L75 85 Z"
-                      fill="#0F172A"
-                    />
-                    {/* Accent Fold Shadow Facet */}
-                    <path
-                      d="M75 85 L45 15 L88 48 Z"
-                      fill="#1E293B"
-                    />
-                  </svg>
-                  <Image
-                    src="/logo.png"
-                    alt="Origami Logo"
-                    fill
-                    className="object-contain p-2"
-                  />
-                </div>
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex items-center justify-center p-3 rounded-2xl bg-white border border-slate-200/90 shadow-md">
+                <Image
+                  src="/logo.png"
+                  alt="Origami Studio Logo"
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-contain"
+                  priority
+                />
               </div>
             </div>
 
             {/* Giant Title Typography */}
             <div className="grow text-right md:text-center lg:text-right">
               <h2 className="text-3xl sm:text-6xl md:text-7xl lg:text-[7vw] xl:text-[7.5vw] font-black uppercase text-slate-950 tracking-tighter leading-none select-none font-changa">
-                ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
+                ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
               </h2>
             </div>
           </div>
@@ -248,20 +190,18 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-6 font-semibold uppercase">
-            <a
-              href="#home"
-              onClick={(e) => handleNavClick(e, "#home")}
-              className="hover:text-slate-900 transition-colors"
+            <Link
+              href="/terms-and-conditions"
+              className="hover:text-[#ff5e00] transition-colors"
             >
               TERMS & CONDITIONS
-            </a>
-            <a
-              href="#home"
-              onClick={(e) => handleNavClick(e, "#home")}
-              className="hover:text-slate-900 transition-colors"
+            </Link>
+            <Link
+              href="/privacy-policy"
+              className="hover:text-[#ff5e00] transition-colors"
             >
               PRIVACY POLICY
-            </a>
+            </Link>
           </div>
 
           <div className="uppercase font-medium text-slate-500">
@@ -272,4 +212,3 @@ export default function Footer() {
     </footer>
   );
 }
-

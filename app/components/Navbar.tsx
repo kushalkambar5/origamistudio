@@ -111,7 +111,7 @@ export default function Navbar() {
           onClick={(e) => handleNavClick(e, "#home")}
           className="flex items-center gap-3 group transition-transform duration-300 hover:scale-[1.02]"
         >
-          <div className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-white to-slate-50 p-1 border border-slate-200 shadow-sm group-hover:border-[#FC6100]/40 transition-colors">
+          <div className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-white to-slate-50 p-1 border border-slate-200 shadow-sm group-hover:border-[#ff5e00]/40 transition-colors">
             <Image
               src="/logo.png"
               alt="Origami Studio Logo"
@@ -122,7 +122,7 @@ export default function Navbar() {
             />
           </div>
           <span className="font-changa text-lg font-bold tracking-wider text-slate-900 uppercase">
-            ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
+            ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
           </span>
         </a>
 
@@ -138,7 +138,7 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, item.href)}
                 className={`relative px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all duration-200 ${
                   isActive
-                    ? "bg-white text-[#FC6100] shadow-sm"
+                    ? "bg-white text-[#ff5e00] shadow-sm"
                     : "text-slate-600 hover:text-slate-950 hover:bg-white/50"
                 }`}
               >
@@ -153,7 +153,7 @@ export default function Navbar() {
           <a
             href="#contact-us"
             onClick={(e) => handleNavClick(e, "#contact-us")}
-            className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] shadow-[0_4px_16px_rgba(252,97,0,0.3)] hover:shadow-[0_6px_20px_rgba(252,97,0,0.45)] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-white bg-[#ff5e00] shadow-[0_4px_16px_rgba(255,94,0,0.3)] hover:shadow-[0_6px_20px_rgba(255,94,0,0.45)] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book Call</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -165,7 +165,7 @@ export default function Navbar() {
           <a
             href="#contact-us"
             onClick={(e) => handleNavClick(e, "#contact-us")}
-            className="px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#FC6100] to-[#FF8A3C] rounded-full shadow-sm"
+            className="px-3 py-1.5 text-xs font-bold text-white bg-[#ff5e00] rounded-full shadow-sm"
           >
             Book Call
           </a>
@@ -193,12 +193,12 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`px-3 py-2.5 rounded-xl text-xs font-medium flex items-center justify-between transition-colors ${
                     isActive
-                      ? "bg-[#FC6100]/10 text-[#FC6100] border border-[#FC6100]/30 font-bold"
+                      ? "bg-[#ff5e00]/10 text-[#ff5e00] border border-[#ff5e00]/30 font-bold"
                       : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
                   <span>{item.label}</span>
-                  {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#FC6100]" />}
+                  {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#ff5e00]" />}
                 </a>
               );
             })}
@@ -207,7 +207,7 @@ export default function Navbar() {
             <a
               href="#contact-us"
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="text-[#FC6100] font-semibold flex items-center gap-1 hover:underline"
+              className="text-[#ff5e00] font-semibold flex items-center gap-1 hover:underline"
             >
               <span>Get Custom Quote</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

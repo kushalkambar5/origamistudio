@@ -64,13 +64,13 @@ export default function FaqSection() {
       className="relative py-24 sm:py-32 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
     >
       {/* Background Decorative Glows */}
-      <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#FC6100]/10 rounded-full blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-[20%] -left-[10%] w-[400px] h-[400px] bg-[#FC6100]/8 rounded-full blur-[80px] pointer-events-none z-0" />
+      <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#ff5e00]/10 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-[20%] -left-[10%] w-[400px] h-[400px] bg-[#ff5e00]/8 rounded-full blur-[80px] pointer-events-none z-0" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <h2 className="font-changa text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-center text-slate-900 mb-12 sm:mb-16">
-          <span className="text-[#FC6100]">FAQS</span>
+          <span className="text-[#ff5e00]">FAQS</span>
         </h2>
 
         {/* Accordion Container matching Horyn2 layout */}
@@ -104,7 +104,7 @@ export default function FaqSection() {
                       size={20}
                       className={`shrink-0 transition-transform duration-300 ${
                         isActive
-                          ? "rotate-45 text-[#FC6100]"
+                          ? "rotate-45 text-[#ff5e00]"
                           : "rotate-0 text-slate-400"
                       }`}
                     />
@@ -141,7 +141,7 @@ export default function FaqSection() {
           </p>
           <a
             href="#contact-us"
-            className="inline-flex items-center gap-2 mt-3 text-xs font-changa font-bold text-[#FC6100] hover:underline uppercase tracking-wider"
+            className="inline-flex items-center gap-2 mt-3 text-xs font-changa font-bold text-[#ff5e00] hover:underline uppercase tracking-wider"
           >
             <span>SPEAK DIRECTLY WITH OUR TEAM →</span>
           </a>

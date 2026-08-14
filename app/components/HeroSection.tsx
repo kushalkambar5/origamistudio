@@ -49,8 +49,8 @@ export default function HeroSection() {
       >
         {/* Background Decorative Origami Facets & Glow Effects */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FC6100]/10 blur-[140px] rounded-full" />
-          <div className="absolute top-1/3 left-10 w-96 h-96 bg-orange-400/10 blur-[100px] rounded-full" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#ff5e00]/10 blur-[140px] rounded-full" />
+          <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#ff5e00]/10 blur-[100px] rounded-full" />
           <div className="absolute bottom-10 right-10 w-80 h-80 bg-amber-400/10 blur-[100px] rounded-full" />
 
           {/* Origami Polygon Wireframe Background Overlay */}
@@ -68,7 +68,7 @@ export default function HeroSection() {
                 <path
                   d="M 80 0 L 0 0 0 80 Z M 80 80 L 80 0 0 80 Z"
                   fill="none"
-                  stroke="rgba(252,97,0,0.3)"
+                  stroke="rgba(255,94,0,0.3)"
                   strokeWidth="0.5"
                 />
               </pattern>
@@ -80,7 +80,7 @@ export default function HeroSection() {
         {/* Brand Logo Heading - Above Video Carousel */}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pt-2">
           <h1 className="font-changa text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight uppercase text-slate-900">
-            ORIGAMI <span className="text-[#FC6100]">STUDIO</span>
+            ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
           </h1>
         </div>
 
@@ -93,11 +93,11 @@ export default function HeroSection() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 pb-4">
           <p className="max-w-3xl text-lg sm:text-2xl text-slate-600 font-light leading-relaxed">
             A digital marketing studio that helps brands{" "}
-            <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">
+            <span className="text-slate-900 font-semibold underline decoration-[#ff5e00] underline-offset-4">
               stand out
             </span>
             ,{" "}
-            <span className="text-slate-900 font-semibold underline decoration-[#FC6100] underline-offset-4">
+            <span className="text-slate-900 font-semibold underline decoration-[#ff5e00] underline-offset-4">
               scale up
             </span>{" "}
             and stay ahead.
@@ -106,7 +106,7 @@ export default function HeroSection() {
       </section>
 
       {/* Client Logos Loop Strip */}
-      <div className="w-full bg-slate-100/90 border-y border-[#FC6100]/20 py-4 relative z-10 overflow-hidden">
+      <div className="w-full bg-slate-100/90 border-y border-[#ff5e00]/20 py-4 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <LogoLoop
             logos={CLIENT_LOGOS}

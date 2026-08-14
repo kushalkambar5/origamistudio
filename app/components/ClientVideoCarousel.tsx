@@ -359,7 +359,7 @@ export default function ClientVideoCarousel() {
 
               {/* Minimal Client Name Tag */}
               <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
-                <p className="text-[10px] sm:text-xs font-mono text-[#FC6100] font-bold uppercase tracking-wider truncate">
+                <p className="text-[10px] sm:text-xs font-mono text-[#ff5e00] font-bold uppercase tracking-wider truncate">
                   {video.client}
                 </p>
               </div>

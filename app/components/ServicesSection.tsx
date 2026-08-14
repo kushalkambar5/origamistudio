@@ -155,13 +155,13 @@ export default function ServicesSection() {
       className="relative py-24 bg-slate-50 border-t border-slate-200 text-slate-900 overflow-hidden"
     >
       {/* Background Accent Gradients */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#FC6100]/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#ff5e00]/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#FC6100]">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
             What We Do?
           </h2>
         </div>
@@ -172,7 +172,7 @@ export default function ServicesSection() {
           speed={18}
           textColor="#0f172a"
           bgColor="#ffffff"
-          marqueeBgColor="#FC6100"
+          marqueeBgColor="#ff5e00"
           marqueeTextColor="#ffffff"
           borderColor="#e2e8f0"
         />

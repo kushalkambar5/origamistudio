@@ -1,23 +1,33 @@
 import type { Metadata } from "next";
-import { Changa_One, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const changaOne = Changa_One({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--font-changa-one",
+const nohemi = localFont({
+  src: [
+    {
+      path: "../public/fonts/Nohemi-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Nohemi-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-nohemi",
   display: "swap",
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -146,7 +156,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${changaOne.variable} ${plusJakartaSans.variable} ${geistMono.variable} scroll-smooth light h-full antialiased`}
+      className={`${nohemi.variable} ${inter.variable} scroll-smooth light h-full antialiased`}
     >
       <head>
         <script
@@ -154,7 +164,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full bg-[#F8FAFC] text-slate-900 font-sans overflow-x-hidden selection:bg-[#FC6100] selection:text-white flex flex-col">
+      <body className="min-h-full bg-[#F8FAFC] text-slate-900 font-sans overflow-x-hidden selection:bg-[#ff5e00] selection:text-white flex flex-col">
         {children}
       </body>
     </html>

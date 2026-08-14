@@ -33,7 +33,7 @@ export default function FlowingMenu({
   speed = 15,
   textColor = "#0f172a",
   bgColor = "#ffffff",
-  marqueeBgColor = "#FC6100",
+  marqueeBgColor = "#ff5e00",
   marqueeTextColor = "#ffffff",
   borderColor = "#e2e8f0",
 }: FlowingMenuProps) {
@@ -200,7 +200,7 @@ function MenuItem({
         onMouseLeave={handleMouseLeave}
         style={{ color: textColor }}
       >
-        <h3 className="font-changa text-xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-[#FC6100] transition-colors text-center w-full">
+        <h3 className="font-changa text-xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-[#ff5e00] transition-colors text-center w-full">
           {item.title}
         </h3>
       </div>

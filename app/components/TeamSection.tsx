@@ -117,12 +117,12 @@ export default function TeamSection() {
       className="relative py-24 bg-slate-50 text-slate-900 border-t border-slate-200 overflow-hidden"
     >
       {/* Ambient Lighting Background */}
-      <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-[#FC6100]/10 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-[#ff5e00]/10 blur-[160px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#FC6100]">
+          <h2 className="font-changa text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
             Team
           </h2>
           <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
@@ -145,9 +145,9 @@ export default function TeamSection() {
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-12 h-12 rounded-full object-cover border border-[#FC6100]/40 md:hidden flex-shrink-0"
+                  className="w-12 h-12 rounded-full object-cover border border-[#ff5e00]/40 md:hidden flex-shrink-0"
                 />
-                <h3 className="font-changa text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 group-hover:text-[#FC6100] transition-colors duration-200 whitespace-nowrap">
+                <h3 className="font-changa text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 group-hover:text-[#ff5e00] transition-colors duration-200 whitespace-nowrap">
                   {member.name}
                 </h3>
               </div>
@@ -156,7 +156,7 @@ export default function TeamSection() {
               <div className="flex items-center justify-start md:justify-center px-2">
                 <span className="text-sm sm:text-base text-slate-600 font-medium font-mono capitalize flex items-center gap-2 text-left md:text-center">
                   {member.role}
-                  <span className="w-3 h-3 bg-[#FC6100] inline-block rounded-sm group-hover:scale-125 transition-transform duration-200 flex-shrink-0"></span>
+                  <span className="w-3 h-3 bg-[#ff5e00] inline-block rounded-sm group-hover:scale-125 transition-transform duration-200 flex-shrink-0"></span>
                 </span>
               </div>
 
@@ -182,7 +182,7 @@ export default function TeamSection() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-white hover:bg-[#FC6100] hover:border-[#FC6100] text-xs font-semibold shadow-sm transition-all duration-200 group/link"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-white hover:bg-[#ff5e00] hover:border-[#ff5e00] text-xs font-semibold shadow-sm transition-all duration-200 group/link"
                     title={link.label}
                   >
                     {link.icon === "linkedin" ? (
@@ -206,7 +206,7 @@ export default function TeamSection() {
           ref={imageRef}
           src={img.src}
           alt={img.alt}
-          className="w-[260px] sm:w-[300px] h-[320px] sm:h-[360px] rounded-2xl object-cover shadow-2xl border-2 border-[#FC6100]/40 absolute top-0 left-0 transition-opacity duration-200 ease-in-out pointer-events-none z-30 hidden md:block"
+          className="w-[260px] sm:w-[300px] h-[320px] sm:h-[360px] rounded-2xl object-cover shadow-2xl border-2 border-[#ff5e00]/40 absolute top-0 left-0 transition-opacity duration-200 ease-in-out pointer-events-none z-30 hidden md:block"
           style={{
             x: imagePos.x,
             y: imagePos.y,

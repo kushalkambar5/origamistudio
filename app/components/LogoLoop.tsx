@@ -344,7 +344,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         ) : (
           <img
             className={cx(
-              'h-[var(--logoloop-logoHeight)] w-auto block object-contain rounded-xl border border-slate-200/80 bg-white p-1.5 shadow-xs hover:border-[#FC6100]/60 hover:shadow-md transition-all duration-300',
+              'h-[var(--logoloop-logoHeight)] w-auto block object-contain rounded-xl border border-slate-200/80 bg-white p-1.5 shadow-xs hover:border-[#ff5e00]/60 hover:shadow-md transition-all duration-300',
               '[-webkit-user-drag:none]',
               '[image-rendering:-webkit-optimize-contrast]',
               'motion-reduce:transition-none',
