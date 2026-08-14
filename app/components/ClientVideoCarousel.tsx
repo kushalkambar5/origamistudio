@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface ClientVideo {
   id: string;
@@ -106,18 +106,21 @@ const BASE_VIDEOS: ClientVideo[] = [
 
 export default function ClientVideoCarousel() {
   const ringRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [videos, setVideos] = useState<ClientVideo[]>(BASE_VIDEOS);
 
-  // Interaction & drag state
-  const [isManualControl, setIsManualControl] = useState(false);
-  const [rotationY, setRotationY] = useState(0);
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const startRotationRef = useRef(0);
-  const lastXRef = useRef(0);
-  const velocityXRef = useRef(0);
-  const lastTimeRef = useRef(0);
+  // Animation & Motion Refs (mutated directly without triggering React re-renders)
+  const rotationRef = useRef<number>(0);
+  const velocityRef = useRef<number>(0);
+  const isDraggingRef = useRef<boolean>(false);
+  const isHoveredRef = useRef<boolean>(false);
+  const targetAngleRef = useRef<number | null>(null);
+
+  // Drag tracking refs
+  const startXRef = useRef<number>(0);
+  const lastXRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
   const animFrameRef = useRef<number | null>(null);
 
   // Load videos from API or fallback
@@ -143,160 +146,140 @@ export default function ClientVideoCarousel() {
     };
   }, []);
 
-  // Helper: Extract current visual rotation angle from computed matrix
-  const getComputedAngle = useCallback((): number => {
-    if (!ringRef.current) return rotationY;
-    const computed = window.getComputedStyle(ringRef.current).transform;
-    if (computed === "none" || !computed) return rotationY;
+  // Main high-performance RAF Animation Loop
+  useEffect(() => {
+    let lastFrameTime = performance.now();
+    const AUTO_SPIN_SPEED = 0.12; // Degrees per frame (~60fps target)
 
-    try {
-      const values = computed.split("(")[1]?.split(")")[0]?.split(",");
-      if (values && values.length === 16) {
-        // matrix3d(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
-        // a = cos(Y), c = -sin(Y)
-        const a = parseFloat(values[0]);
-        const c = parseFloat(values[2]);
-        const rad = Math.atan2(-c, a);
-        const deg = (rad * 180) / Math.PI;
-        return deg;
-      } else if (values && values.length === 6) {
-        const a = parseFloat(values[0]);
-        const b = parseFloat(values[1]);
-        const rad = Math.atan2(b, a);
-        return (rad * 180) / Math.PI;
+    const updateLoop = (now: number) => {
+      const dt = Math.min(32, Math.max(1, now - lastFrameTime)); // cap dt to avoid skips
+      lastFrameTime = now;
+      const timeScale = dt / 16.667; // Normalized frame scale (1.0 @ 60fps)
+
+      if (isDraggingRef.current) {
+        // Pointer drag is actively updating rotationRef directly in move handler
+        targetAngleRef.current = null;
+      } else if (targetAngleRef.current !== null) {
+        // Smoothly damp towards target card angle (card click to center)
+        const diff = targetAngleRef.current - rotationRef.current;
+        if (Math.abs(diff) < 0.05) {
+          rotationRef.current = targetAngleRef.current;
+          targetAngleRef.current = null;
+          velocityRef.current = 0;
+        } else {
+          const step = diff * Math.min(1, 0.12 * timeScale);
+          rotationRef.current += step;
+        }
+      } else {
+        // Momentum & Auto-spin state
+        if (Math.abs(velocityRef.current) > 0.02) {
+          rotationRef.current += velocityRef.current * timeScale;
+          // Apply friction decay
+          velocityRef.current *= Math.pow(0.92, timeScale);
+        } else {
+          velocityRef.current = 0;
+          // Smooth auto-spin (decelerated to 25% speed when hovered)
+          const currentSpeed = isHoveredRef.current ? AUTO_SPIN_SPEED * 0.25 : AUTO_SPIN_SPEED;
+          rotationRef.current += currentSpeed * timeScale;
+        }
       }
-    } catch {
-      // Fallback
-    }
-    return rotationY;
-  }, [rotationY]);
 
-  // Pointer drag handlers
+      // Hardware-accelerated direct DOM transform update (0 React re-renders!)
+      if (ringRef.current) {
+        ringRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
+      }
+
+      animFrameRef.current = requestAnimationFrame(updateLoop);
+    };
+
+    animFrameRef.current = requestAnimationFrame(updateLoop);
+
+    return () => {
+      if (animFrameRef.current) {
+        cancelAnimationFrame(animFrameRef.current);
+      }
+    };
+  }, []);
+
+  // Pointer drag event handlers
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (animFrameRef.current) {
-      cancelAnimationFrame(animFrameRef.current);
-    }
-    const currentAngle = isManualControl ? rotationY : getComputedAngle();
+    // Primary button or touch only
+    if (e.button !== undefined && e.button !== 0) return;
+
     isDraggingRef.current = true;
+    targetAngleRef.current = null;
     startXRef.current = e.clientX;
     lastXRef.current = e.clientX;
-    startRotationRef.current = currentAngle;
-    velocityXRef.current = 0;
     lastTimeRef.current = performance.now();
+    velocityRef.current = 0;
 
-    setIsManualControl(true);
-    setRotationY(currentAngle);
-
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    // Attach global window listeners so drag continues even if cursor leaves element
+    window.addEventListener("pointermove", handleWindowPointerMove);
+    window.addEventListener("pointerup", handleWindowPointerUp);
+    window.addEventListener("pointercancel", handleWindowPointerUp);
   };
 
-  const handlePointerMove = (e: React.PointerEvent) => {
+  const handleWindowPointerMove = (e: PointerEvent) => {
     if (!isDraggingRef.current) return;
+
     const now = performance.now();
     const dt = Math.max(1, now - lastTimeRef.current);
     const dx = e.clientX - lastXRef.current;
 
-    velocityXRef.current = dx / dt;
+    // Sensitivity factor: 0.35 deg per pixel drag (drag left -> rotate right)
+    const deltaAngle = -dx * 0.35;
+    rotationRef.current += deltaAngle;
+
+    // Exponential moving average for velocity estimation
+    const instVelocity = deltaAngle / (dt / 16.667);
+    velocityRef.current = velocityRef.current * 0.4 + instVelocity * 0.6;
+
     lastXRef.current = e.clientX;
     lastTimeRef.current = now;
-
-    const totalDeltaX = e.clientX - startXRef.current;
-    // 0.35 degrees per pixel drag (negative to track finger/cursor naturally)
-    const newAngle = startRotationRef.current - totalDeltaX * 0.35;
-    setRotationY(newAngle);
   };
 
-  const handlePointerUp = (e: React.PointerEvent) => {
+  const handleWindowPointerUp = () => {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
 
-    try {
-      (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
-    } catch {}
+    // Clean up global window listeners
+    window.removeEventListener("pointermove", handleWindowPointerMove);
+    window.removeEventListener("pointerup", handleWindowPointerUp);
+    window.removeEventListener("pointercancel", handleWindowPointerUp);
 
-    // Momentum glide in the direction of the swipe
-    let currentVel = -velocityXRef.current * 18; // momentum boost in correct direction
-    let currentRot = rotationY;
-
-    const friction = 0.94;
-    const minVel = 0.08;
-
-    const step = () => {
-      if (Math.abs(currentVel) > minVel) {
-        currentRot += currentVel;
-        currentVel *= friction;
-        setRotationY(currentRot);
-        animFrameRef.current = requestAnimationFrame(step);
-      } else {
-        // Continuous slow rotation loop after drag ends
-        const autoSpinStep = () => {
-          if (!isDraggingRef.current) {
-            currentRot += 0.18; // ~32s full revolution speed
-            setRotationY((prev) => prev + 0.18);
-            animFrameRef.current = requestAnimationFrame(autoSpinStep);
-          }
-        };
-        animFrameRef.current = requestAnimationFrame(autoSpinStep);
-      }
-    };
-
-    animFrameRef.current = requestAnimationFrame(step);
+    // Clamp maximum drag release launch velocity
+    if (Math.abs(velocityRef.current) > 10) {
+      velocityRef.current = Math.sign(velocityRef.current) * 10;
+    }
   };
+
+  // Clean up window listeners on unmount as safety measure
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("pointermove", handleWindowPointerMove);
+      window.removeEventListener("pointerup", handleWindowPointerUp);
+      window.removeEventListener("pointercancel", handleWindowPointerUp);
+    };
+  }, []);
 
   // Click card to center it in front
   const handleCardClick = (index: number) => {
-    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    // Prevent triggering click if user was dragging
+    const totalDragDistance = Math.abs(lastXRef.current - startXRef.current);
+    if (totalDragDistance > 6) return;
 
     const n = videos.length;
     const angleStep = 360 / n;
-    const currentAngle = isManualControl ? rotationY : getComputedAngle();
 
-    // Target rotation where card i is at front facing viewer (angle = -i * angleStep)
+    // Target angle where card index i faces front (0 deg)
     const cardTarget = -index * angleStep;
-    // Find shortest rotational path
-    const diff = ((cardTarget - currentAngle) % 360 + 540) % 360 - 180;
-    const finalAngle = currentAngle + diff;
+    const current = rotationRef.current;
 
-    setIsManualControl(true);
-
-    const startTime = performance.now();
-    const duration = 650;
-    const startAngle = currentAngle;
-
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
-    const animateToTarget = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(1, elapsed / duration);
-      const eased = easeOutCubic(progress);
-      const current = startAngle + (finalAngle - startAngle) * eased;
-      setRotationY(current);
-
-      if (progress < 1) {
-        animFrameRef.current = requestAnimationFrame(animateToTarget);
-      } else {
-        // Resume slow rotation
-        let cur = finalAngle;
-        const autoSpinStep = () => {
-          if (!isDraggingRef.current) {
-            cur += 0.18;
-            setRotationY(cur);
-            animFrameRef.current = requestAnimationFrame(autoSpinStep);
-          }
-        };
-        animFrameRef.current = requestAnimationFrame(autoSpinStep);
-      }
-    };
-
-    animFrameRef.current = requestAnimationFrame(animateToTarget);
+    // Shortest rotation path delta
+    const diff = ((cardTarget - current) % 360 + 540) % 360 - 180;
+    targetAngleRef.current = current + diff;
+    velocityRef.current = 0;
   };
-
-  // Clean up RAF on unmount
-  useEffect(() => {
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
-  }, []);
 
   // Ensure videos autoplay properly
   useEffect(() => {
@@ -311,23 +294,21 @@ export default function ClientVideoCarousel() {
 
   return (
     <div
-      className="scene scene-3d relative w-full overflow-visible select-none py-4 sm:py-6"
+      ref={containerRef}
+      className="scene scene-3d relative w-full overflow-visible select-none py-4 sm:py-6 cursor-grab active:cursor-grabbing touch-pan-y"
       onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
+      onMouseEnter={() => {
+        isHoveredRef.current = true;
+      }}
+      onMouseLeave={() => {
+        isHoveredRef.current = false;
+      }}
     >
       <div
         ref={ringRef}
-        className={`a3d a3d-ring ${isManualControl ? "is-dragging" : ""}`}
+        className="a3d a3d-ring"
         style={{
           ["--n" as string]: n,
-          ...(isManualControl
-            ? {
-                transform: `rotateY(${rotationY}deg)`,
-                animation: "none",
-              }
-            : {}),
         }}
       >
         {videos.map((video, i) => (
