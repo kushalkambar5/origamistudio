@@ -109,9 +109,9 @@ export default function ClientVideoCarousel() {
 
   // Dimensions for full viewport 3D arc
   const [dimensions, setDimensions] = useState({
-    radius: 900,
-    cardWidth: 280,
-    cardHeight: 440,
+    radius: 750,
+    cardWidth: 260,
+    cardHeight: 380,
   });
 
   useEffect(() => {
@@ -129,19 +129,59 @@ export default function ClientVideoCarousel() {
 
     const updateDimensions = () => {
       const vw = window.innerWidth;
-      const sin52 = Math.sin((52 * Math.PI) / 180);
-      const r = Math.max(480, Math.round(vw / (2 * sin52)));
-      const sin9 = Math.sin((9 * Math.PI) / 180);
-      const w = Math.round(2 * r * sin9);
-      // Larger video card dimensions for prominent hero display
-      const h = Math.round(w * 1.38);
-      setDimensions({ radius: r, cardWidth: w, cardHeight: h });
+      const isMobile = vw < 640;
+      const isTablet = vw >= 640 && vw < 1024;
+
+      if (isMobile) {
+        // Mobile-tuned card dimensions & radius for optimal touch readability
+        const cardW = Math.min(210, Math.max(160, Math.round(vw * 0.44)));
+        const cardH = Math.round(cardW * 1.42);
+        const r = Math.max(380, Math.round(vw * 1.05));
+        setDimensions({ radius: r, cardWidth: cardW, cardHeight: cardH });
+      } else if (isTablet) {
+        const cardW = 230;
+        const cardH = Math.round(cardW * 1.4);
+        const r = 620;
+        setDimensions({ radius: r, cardWidth: cardW, cardHeight: cardH });
+      } else {
+        const sin52 = Math.sin((52 * Math.PI) / 180);
+        const r = Math.max(720, Math.round(vw / (2 * sin52)));
+        const sin9 = Math.sin((9 * Math.PI) / 180);
+        const w = Math.min(300, Math.max(250, Math.round(2 * r * sin9)));
+        const h = Math.round(w * 1.38);
+        setDimensions({ radius: r, cardWidth: w, cardHeight: h });
+      }
     };
 
     updateDimensions();
-    window.addEventListener("resize", updateDimensions);
+    window.addEventListener("resize", updateDimensions, { passive: true });
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
+
+  // Selective video playback helper: only play front-facing cards to maintain 60+ FPS on mobile
+  const manageVideoPlayback = (currentRotY: number) => {
+    if (videoRefs.current.length === 0) return;
+    const numItems = ringItems.length || 20;
+    const angleStep = 360 / numItems;
+
+    videoRefs.current.forEach((vid, i) => {
+      if (!vid) return;
+      // Calculate normalized relative angle facing viewer (0deg = front center)
+      const cardAngle = (i * -angleStep + currentRotY) % 360;
+      const normalized = ((cardAngle % 360) + 540) % 360 - 180; // range [-180, 180]
+
+      // If within 75 degrees of the front camera view, play; else pause to save GPU/battery
+      if (Math.abs(normalized) < 80) {
+        if (vid.paused) {
+          vid.play().catch(() => {});
+        }
+      } else {
+        if (!vid.paused) {
+          vid.pause();
+        }
+      }
+    });
+  };
 
   useEffect(() => {
     if (typeof window === "undefined" || ringItems.length === 0) return;
@@ -170,6 +210,10 @@ export default function ClientVideoCarousel() {
           duration: 55,
           ease: "none",
           repeat: -1,
+          onUpdate: () => {
+            const rot = (gsap.getProperty(ring, "rotationY") as number) || 180;
+            manageVideoPlayback(rot);
+          },
         });
       };
 
@@ -186,13 +230,14 @@ export default function ClientVideoCarousel() {
 
       // Entrance animation
       gsap.from(".ring-img-card", {
-        duration: 1.4,
-        y: 120,
+        duration: 1.2,
+        y: 80,
         opacity: 0,
-        stagger: 0.06,
+        stagger: 0.04,
         ease: "power3.out",
         onComplete: () => {
           startAutoRotate();
+          manageVideoPlayback(180);
         },
       });
 
@@ -204,12 +249,15 @@ export default function ClientVideoCarousel() {
 
       Draggable.create(dragger, {
         type: "x",
+        allowNativeTouchScrolling: true,
+        dragResistance: 0.1,
+        minimumMovement: 6,
+        dragClickables: true,
+
         onDragStart: function () {
-          // Kill auto-rotate immediately so it never snaps back
           if (autoRotateTween.current) {
             autoRotateTween.current.kill();
           }
-
           startRotationY = (gsap.getProperty(ring, "rotationY") as number) || 180;
           lastX = this.x;
           velocityX = 0;
@@ -221,31 +269,31 @@ export default function ClientVideoCarousel() {
           const dt = Math.max(1, now - lastTime);
           const dx = this.x - lastX;
 
-          // Calculate drag velocity for smooth inertia momentum on release
           velocityX = dx / dt;
           lastX = this.x;
           lastTime = now;
 
-          // Sensitivity scaling for natural touch/mouse feel
           const rotationDelta = this.x * 0.35;
-          gsap.set(ring, { rotationY: startRotationY - rotationDelta });
+          const newRot = startRotationY - rotationDelta;
+          gsap.set(ring, { rotationY: newRot });
+          manageVideoPlayback(newRot);
         },
 
         onDragEnd: function () {
           const currentRotation = (gsap.getProperty(ring, "rotationY") as number) || 180;
-
-          // Calculate smooth momentum glide based on drag velocity
-          const momentumGlide = velocityX * 180; // glide distance
+          const momentumGlide = velocityX * 160;
           const targetRotation = currentRotation - momentumGlide;
 
-          // Reset dragger position instantly without altering ring position
           gsap.set(dragger, { x: 0, y: 0 });
 
-          // Smooth inertia glide animation to desired state, then resume auto-rotation
           gsap.to(ring, {
             rotationY: targetRotation,
-            duration: Math.min(1.8, Math.max(0.6, Math.abs(velocityX) * 0.8)),
+            duration: Math.min(1.6, Math.max(0.5, Math.abs(velocityX) * 0.7)),
             ease: "power2.out",
+            onUpdate: () => {
+              const rot = (gsap.getProperty(ring, "rotationY") as number) || targetRotation;
+              manageVideoPlayback(rot);
+            },
             onComplete: () => {
               startAutoRotate();
             },
@@ -258,15 +306,6 @@ export default function ClientVideoCarousel() {
       ctx.revert();
     };
   }, [dimensions, ringItems]);
-
-  // Ensure all videos play
-  useEffect(() => {
-    videoRefs.current.forEach((vid) => {
-      if (vid) {
-        vid.play().catch(() => {});
-      }
-    });
-  }, [ringItems]);
 
   const rotateToCard = (i: number) => {
     const ring = ringRef.current;
@@ -281,15 +320,26 @@ export default function ClientVideoCarousel() {
 
     gsap.to(ring, {
       rotationY: targetAngle,
-      duration: 1.2,
+      duration: 1.1,
       ease: "power2.out",
+      onUpdate: () => {
+        const rot = (gsap.getProperty(ring, "rotationY") as number) || targetAngle;
+        manageVideoPlayback(rot);
+      },
       onComplete: () => {
         const currRot = (gsap.getProperty(ring, "rotationY") as number) || targetAngle;
+        if (autoRotateTween.current) {
+          autoRotateTween.current.kill();
+        }
         autoRotateTween.current = gsap.to(ring, {
           rotationY: currRot + 360,
           duration: 55,
           ease: "none",
           repeat: -1,
+          onUpdate: () => {
+            const rot = (gsap.getProperty(ring, "rotationY") as number) || currRot;
+            manageVideoPlayback(rot);
+          },
         });
       },
     });
@@ -298,29 +348,29 @@ export default function ClientVideoCarousel() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-hidden select-none bg-transparent py-1"
+      className="relative w-full overflow-hidden select-none bg-transparent py-1 touch-pan-y"
       style={{
-        height: `${dimensions.cardHeight + 10}px`,
+        height: `${dimensions.cardHeight + 14}px`,
       }}
     >
-      {/* Invisible Dragger Layer */}
+      {/* Invisible Dragger Layer with touch-pan-y */}
       <div
         ref={draggerRef}
-        className="absolute inset-0 z-30 cursor-grab active:cursor-grabbing w-full h-full opacity-0"
+        className="absolute inset-0 z-30 cursor-grab active:cursor-grabbing w-full h-full opacity-0 touch-pan-y"
       />
 
       {/* Full Viewport 3D Stage Container */}
       <div
-        className="relative z-10 w-full h-full flex items-center justify-center"
+        className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none"
         style={{
-          perspective: "1800px",
+          perspective: "1600px",
           transformStyle: "preserve-3d",
         }}
       >
         {/* Ring Container */}
         <div
           ref={ringRef}
-          className="relative"
+          className="relative pointer-events-auto"
           style={{
             width: `${dimensions.cardWidth}px`,
             height: `${dimensions.cardHeight}px`,
@@ -331,7 +381,7 @@ export default function ClientVideoCarousel() {
             <div
               key={video.uniqueKey}
               onClick={() => rotateToCard(i)}
-              className="ring-img-card absolute top-0 left-0 overflow-hidden bg-slate-950 border-x border-white/10 shadow-2xl cursor-pointer"
+              className="ring-img-card absolute top-0 left-0 overflow-hidden bg-slate-950 rounded-xl border border-white/10 shadow-2xl cursor-pointer will-change-transform"
               style={{
                 width: `${dimensions.cardWidth}px`,
                 height: `${dimensions.cardHeight}px`,
@@ -355,12 +405,15 @@ export default function ClientVideoCarousel() {
               </div>
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
               {/* Minimal Client Name Tag */}
-              <div className="absolute bottom-3 left-3 right-3 text-left pointer-events-none">
+              <div className="absolute bottom-2.5 sm:bottom-3 left-2.5 sm:left-3 right-2.5 sm:right-3 text-left pointer-events-none">
                 <p className="text-[10px] sm:text-xs font-mono text-[#ff5e00] font-bold uppercase tracking-wider truncate">
                   {video.client}
+                </p>
+                <p className="text-[9px] sm:text-[11px] text-white/80 font-medium truncate">
+                  {video.title}
                 </p>
               </div>
             </div>

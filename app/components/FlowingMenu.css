@@ -2,9 +2,15 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 1.75rem;
+  border-radius: 1.25rem;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
+}
+
+@media (min-width: 640px) {
+  .menu-wrap {
+    border-radius: 1.75rem;
+  }
 }
 
 .menu {
@@ -32,17 +38,24 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 1.25rem 1rem;
   position: relative;
   cursor: pointer;
   text-decoration: none;
   width: 100%;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 640px) {
+@media (min-width: 640px) {
   .menu__item-link {
-    padding: 1.5rem 1rem;
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu__item-link {
+    padding: 2rem 1.5rem;
   }
 }
 
@@ -56,6 +69,7 @@
   pointer-events: none;
   transform: translate3d(0, 101%, 0);
   z-index: 10;
+  will-change: transform;
 }
 
 .marquee__inner-wrap {
@@ -86,25 +100,19 @@
   white-space: nowrap;
   text-transform: uppercase;
   font-weight: 800;
-  font-size: 1.75rem;
+  font-size: clamp(1.1rem, 4vw, 2.25rem);
   letter-spacing: -0.01em;
-  padding: 0 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .marquee span {
-    font-size: 2.25rem;
-  }
+  padding: 0 clamp(0.6rem, 2vw, 1.25rem);
 }
 
 .marquee__img {
-  width: 120px;
-  height: 50px;
-  margin: 0 1.25rem;
+  width: clamp(60px, 12vw, 120px);
+  height: clamp(28px, 6vw, 50px);
+  margin: 0 clamp(0.5rem, 1.5vw, 1.25rem);
   border-radius: 9999px;
   background-size: cover;
   background-position: center;
-  border: 2px solid rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.7);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
 }

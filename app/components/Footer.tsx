@@ -155,12 +155,12 @@ export default function Footer() {
       </div>
 
       {/* Middle Banner: Giant Branding & Logo */}
-      <div className="border-t border-slate-200 py-8 sm:py-12 px-4 sm:px-8 bg-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden">
-          <div className="flex items-center gap-4 sm:gap-6 w-full justify-between">
+      <div className="border-t border-slate-200 py-6 sm:py-12 px-4 sm:px-8 bg-[#FAF9F6]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 overflow-hidden">
+          <div className="flex items-center gap-3 sm:gap-6 w-full justify-between">
             {/* Origami Studio Logo Image */}
             <div className="flex items-center gap-3 shrink-0">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex items-center justify-center p-3 rounded-2xl bg-white border border-slate-200/90 shadow-md">
+              <div className="relative w-14 h-14 sm:w-22 sm:h-22 lg:w-28 lg:h-28 flex items-center justify-center p-2 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-md">
                 <Image
                   src="/logo.png"
                   alt="Origami Studio Logo"
@@ -174,7 +174,7 @@ export default function Footer() {
 
             {/* Giant Title Typography */}
             <div className="grow text-right md:text-center lg:text-right">
-              <h2 className="text-3xl sm:text-6xl md:text-7xl lg:text-[7vw] xl:text-[7.5vw] font-black uppercase text-slate-950 tracking-tighter leading-none select-none font-changa">
+              <h2 className="text-2xl xs:text-3xl sm:text-6xl md:text-7xl lg:text-[7vw] xl:text-[7.5vw] font-black uppercase text-slate-950 tracking-tight sm:tracking-tighter leading-none select-none font-changa">
                 ORIGAMI <span className="text-[#ff5e00]">STUDIO</span>
               </h2>
             </div>
@@ -183,22 +183,22 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar Section */}
-      <div className="border-t border-slate-200 py-5 px-4 sm:px-8 bg-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] sm:text-xs text-slate-500 font-mono tracking-wider">
+      <div className="border-t border-slate-200 py-4 sm:py-5 px-4 sm:px-8 bg-[#FAF9F6]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-500 font-mono tracking-wider text-center md:text-left">
           <div className="uppercase font-semibold text-slate-700">
             YOUR BRAND. FOLDED TO PERFECTION.
           </div>
 
-          <div className="flex items-center gap-6 font-semibold uppercase">
+          <div className="flex items-center gap-4 sm:gap-6 font-semibold uppercase flex-wrap justify-center">
             <Link
               href="/terms-and-conditions"
-              className="hover:text-[#ff5e00] transition-colors"
+              className="py-1 px-2 hover:text-[#ff5e00] transition-colors min-h-[36px] flex items-center"
             >
               TERMS & CONDITIONS
             </Link>
             <Link
               href="/privacy-policy"
-              className="hover:text-[#ff5e00] transition-colors"
+              className="py-1 px-2 hover:text-[#ff5e00] transition-colors min-h-[36px] flex items-center"
             >
               PRIVACY POLICY
             </Link>

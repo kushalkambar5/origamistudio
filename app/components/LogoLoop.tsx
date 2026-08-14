@@ -481,13 +481,16 @@ export const LogoLoop = React.memo<LogoLoopProps>(
 
         <div
           className={cx(
-            'flex will-change-transform select-none relative z-0 items-center',
+            'flex will-change-transform select-none relative z-0 items-center touch-pan-y',
             'motion-reduce:transform-none',
             isVertical ? 'flex-col h-max w-full' : 'flex-row w-max'
           )}
           ref={trackRef}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={handleMouseEnter}
+          onTouchEnd={handleMouseLeave}
+          onTouchCancel={handleMouseLeave}
         >
           {logoLists}
         </div>

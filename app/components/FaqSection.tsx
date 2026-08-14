@@ -73,12 +73,11 @@ export default function FaqSection() {
           <span className="text-[#ff5e00]">FAQS</span>
         </h2>
 
-        {/* Accordion Container matching Horyn2 layout */}
+        {/* Accordion Container */}
         <LayoutGroup>
           <motion.div
             layout
-            className="border border-slate-200 rounded-3xl p-4 sm:p-6 bg-slate-50/50 backdrop-blur-md shadow-lg"
-            onMouseLeave={() => setActiveIndex(null)}
+            className="border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-6 bg-slate-50/70 backdrop-blur-md shadow-lg"
           >
             {FAQS.map((faq, index) => {
               const isActive = activeIndex === index;
@@ -89,40 +88,42 @@ export default function FaqSection() {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className={`overflow-hidden cursor-pointer transition-colors ${
+                  transition={{ duration: 0.4, delay: index * 0.04 }}
+                  className={`overflow-hidden transition-colors ${
                     index !== FAQS.length - 1 ? "border-b border-slate-200" : ""
                   }`}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => setActiveIndex(isActive ? null : index)}
                 >
                   <button
                     type="button"
-                    className="w-full py-5 px-3 flex items-center gap-4 text-left font-changa font-bold text-slate-900 text-base sm:text-xl bg-transparent border-none outline-none cursor-pointer"
+                    onClick={() => setActiveIndex(isActive ? null : index)}
+                    aria-expanded={isActive}
+                    className="w-full py-4 sm:py-5 px-2 sm:px-3 flex items-center justify-between gap-3 sm:gap-4 text-left font-changa font-bold text-slate-900 text-sm sm:text-lg lg:text-xl bg-transparent border-none outline-none cursor-pointer group active:text-[#ff5e00]"
                   >
-                    <Plus
-                      size={20}
-                      className={`shrink-0 transition-transform duration-300 ${
-                        isActive
-                          ? "rotate-45 text-[#ff5e00]"
-                          : "rotate-0 text-slate-400"
-                      }`}
-                    />
-                    <span>{faq.question}</span>
+                    <span className="leading-snug">{faq.question}</span>
+                    <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 group-hover:border-[#ff5e00]/50 transition-colors">
+                      <Plus
+                        size={18}
+                        className={`shrink-0 transition-transform duration-300 ${
+                          isActive
+                            ? "rotate-45 text-[#ff5e00]"
+                            : "rotate-0 text-slate-500"
+                        }`}
+                      />
+                    </div>
                   </button>
 
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {isActive && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{
-                          duration: 0.2,
+                          duration: 0.25,
                           ease: "easeOut",
                         }}
                       >
-                        <p className="text-slate-600 pl-11 sm:pl-12 pr-4 pb-6 pt-1 text-sm sm:text-base leading-relaxed max-w-3xl font-normal">
+                        <p className="text-slate-600 px-2 sm:px-3 pb-5 pt-1 text-xs sm:text-base leading-relaxed max-w-3xl font-normal">
                           {faq.answer}
                         </p>
                       </motion.div>

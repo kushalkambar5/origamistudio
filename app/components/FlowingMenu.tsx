@@ -162,6 +162,8 @@ function MenuItem({
     };
   }, [item.title, item.image, repetitions, speed]);
 
+  const [isMarqueeOpen, setIsMarqueeOpen] = useState(false);
+
   const handleMouseEnter = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current)
       return;
@@ -189,18 +191,39 @@ function MenuItem({
       .timeline({ defaults: animationDefaults })
       .to(marqueeRef.current, { y: edge === "top" ? "-101%" : "101%" }, 0)
       .to(marqueeInnerRef.current, { y: edge === "top" ? "101%" : "-101%" }, 0);
+    setIsMarqueeOpen(false);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (onClick) onClick();
+    if (!marqueeRef.current || !marqueeInnerRef.current) return;
+
+    if (!isMarqueeOpen) {
+      gsap
+        .timeline({ defaults: animationDefaults })
+        .set(marqueeRef.current, { y: "101%" }, 0)
+        .set(marqueeInnerRef.current, { y: "-101%" }, 0)
+        .to([marqueeRef.current, marqueeInnerRef.current], { y: "0%" }, 0);
+      setIsMarqueeOpen(true);
+    } else {
+      gsap
+        .timeline({ defaults: animationDefaults })
+        .to(marqueeRef.current, { y: "101%" }, 0)
+        .to(marqueeInnerRef.current, { y: "-101%" }, 0);
+      setIsMarqueeOpen(false);
+    }
   };
 
   return (
     <div className="menu__item group" ref={itemRef} style={{ borderColor }}>
       <div
         className="menu__item-link"
-        onClick={onClick}
+        onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ color: textColor }}
       >
-        <h3 className="font-changa text-xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-[#ff5e00] transition-colors text-center w-full">
+        <h3 className="font-changa text-lg sm:text-2xl lg:text-3xl font-extrabold uppercase tracking-tight text-slate-900 group-hover:text-[#ff5e00] transition-colors text-center w-full px-2">
           {item.title}
         </h3>
       </div>

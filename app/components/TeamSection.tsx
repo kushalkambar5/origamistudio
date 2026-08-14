@@ -138,31 +138,31 @@ export default function TeamSection() {
               onMouseEnter={() => handleImageInteraction(member, 1)}
               onMouseMove={() => handleImageInteraction(member, 1)}
               onMouseLeave={() => handleImageInteraction(member, 0)}
-              className="group relative py-7 sm:py-9 px-2 sm:px-6 grid grid-cols-1 md:grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-8 cursor-pointer border-b border-slate-200 hover:bg-white/80 transition-colors duration-200"
+              className="group relative py-5 sm:py-8 px-3 sm:px-6 flex flex-col md:grid md:grid-cols-[auto_1fr_auto] items-start md:items-center gap-3 sm:gap-6 cursor-pointer border-b border-slate-200 hover:bg-white/80 transition-colors duration-200"
             >
-              {/* Column 1: Left - Name (Single line) */}
-              <div className="flex items-center gap-4 justify-start whitespace-nowrap">
+              {/* Column 1: Left - Name with Avatar */}
+              <div className="flex items-center gap-3.5 justify-start w-full md:w-auto">
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-12 h-12 rounded-full object-cover border border-[#ff5e00]/40 md:hidden flex-shrink-0"
+                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#ff5e00]/40 md:hidden shrink-0 shadow-xs"
                 />
-                <h3 className="font-changa text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 group-hover:text-[#ff5e00] transition-colors duration-200 whitespace-nowrap">
+                <h3 className="font-changa text-xl sm:text-3xl lg:text-5xl font-bold text-slate-900 group-hover:text-[#ff5e00] transition-colors duration-200 leading-tight">
                   {member.name}
                 </h3>
               </div>
 
-              {/* Column 2: Middle - Role (Centered in remaining space) */}
-              <div className="flex items-center justify-start md:justify-center px-2">
-                <span className="text-sm sm:text-base text-slate-600 font-medium font-mono capitalize flex items-center gap-2 text-left md:text-center">
+              {/* Column 2: Middle - Role */}
+              <div className="flex items-center justify-start md:justify-center w-full md:w-auto pl-14 md:pl-2">
+                <span className="text-xs sm:text-base text-slate-600 font-medium font-mono capitalize flex items-center gap-2 text-left md:text-center">
                   {member.role}
-                  <span className="w-3 h-3 bg-[#ff5e00] inline-block rounded-sm group-hover:scale-125 transition-transform duration-200 flex-shrink-0"></span>
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#ff5e00] inline-block rounded-xs group-hover:scale-125 transition-transform duration-200 shrink-0"></span>
                 </span>
               </div>
 
               {/* Column 3: Right - Links */}
               <div
-                className="flex items-center justify-start md:justify-end gap-2 z-20 whitespace-nowrap"
+                className="flex items-center justify-start md:justify-end gap-2 z-20 w-full md:w-auto pl-14 md:pl-0 flex-wrap"
                 onMouseEnter={(e) => {
                   e.stopPropagation();
                   hideImageInteraction();
@@ -182,7 +182,7 @@ export default function TeamSection() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-white hover:bg-[#ff5e00] hover:border-[#ff5e00] text-xs font-semibold shadow-sm transition-all duration-200 group/link"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[38px] rounded-full bg-white border border-slate-200 text-slate-700 hover:text-white hover:bg-[#ff5e00] hover:border-[#ff5e00] active:scale-95 text-xs font-semibold shadow-xs transition-all duration-200 group/link"
                     title={link.label}
                   >
                     {link.icon === "linkedin" ? (

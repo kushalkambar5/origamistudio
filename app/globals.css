@@ -8,10 +8,24 @@
     --font-sans: var(--font-nohemi), 'Nohemi', sans-serif;
     --font-mono: var(--font-inter), 'Inter', monospace;
   }
-}
 
-body {
-  font-family: var(--font-nohemi), 'Nohemi', sans-serif;
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: var(--font-nohemi), 'Nohemi', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Optimize tap delays on mobile */
+  a, button, [role="button"], input, select, textarea {
+    touch-action: manipulation;
+  }
 }
 
 .font-nohemi, .font-changa {
@@ -21,6 +35,12 @@ body {
 
 .font-inter {
   font-family: var(--font-inter), 'Inter', sans-serif;
+}
+
+.gpu-accelerate {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* Custom Origami Theme Utilities */

@@ -90,57 +90,57 @@ export default function ContactSection() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           {/* Left Column: Direct Contact & Agency Info */}
-          <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-lg space-y-8">
+          <div className="lg:col-span-5 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200 shadow-lg space-y-6 sm:space-y-8">
 
-            <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <div className="w-10 h-10 rounded-xl bg-[#ff5e00]/5 border border-[#ff5e00]/30 flex items-center justify-center text-[#ff5e00] shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div>
-                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold">
+                <div className="min-w-0">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold block">
                     EMAIL DIRECTLY
                   </span>
                   <a
                     href="mailto:hello@origamistudio.in"
-                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#ff5e00] transition-colors"
+                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#ff5e00] transition-colors truncate"
                   >
                     hello@origamistudio.in
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+              <div className="flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <div className="w-10 h-10 rounded-xl bg-[#ff5e00]/5 border border-[#ff5e00]/30 flex items-center justify-center text-[#ff5e00] shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
-                <div>
-                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold">
+                <div className="min-w-0">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold block">
                     CALL / WHATSAPP
                   </span>
                   <a
-                    href="tel:+919876543210"
-                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#ff5e00] transition-colors"
+                    href="tel:+918919300467"
+                    className="block text-sm sm:text-base font-semibold text-slate-900 hover:text-[#ff5e00] transition-colors truncate"
                   >
                     +91 8919300467
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+              <div className="flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <div className="w-10 h-10 rounded-xl bg-[#ff5e00]/5 border border-[#ff5e00]/30 flex items-center justify-center text-[#ff5e00] shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase font-semibold block">
                     LOCATION
                   </span>
-                  <span className="block text-sm font-semibold text-slate-900 mb-3">
+                  <span className="block text-xs sm:text-sm font-semibold text-slate-900 mb-3">
                     NITK Surathkal, Mangalore, Karnataka 575025
                   </span>
-                  <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden border border-slate-200 shadow-xs mt-2">
+                  <div className="w-full h-44 sm:h-56 rounded-xl overflow-hidden border border-slate-200 shadow-xs mt-2">
                     <iframe
                       title="NITK Surathkal Location Map"
                       src="https://maps.google.com/maps?q=National%20Institute%20of%20Technology%20Karnataka%20Surathkal&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -155,8 +155,8 @@ export default function ContactSection() {
             </div>
 
             {/* Social Handles */}
-            <div className="pt-4 border-t border-slate-200">
-              <span className="text-xs font-mono text-slate-500 uppercase block mb-3 font-semibold">
+            <div className="pt-3 sm:pt-4 border-t border-slate-200">
+              <span className="text-[11px] font-mono text-slate-500 uppercase block mb-3 font-semibold">
                 CONNECT WITH US ON SOCIAL:
               </span>
               <div className="flex items-center gap-3">
@@ -165,7 +165,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Instagram"
-                  className="p-3 rounded-xl bg-white border border-slate-200 hover:bg-[#ff5e00] hover:border-[#ff5e00] text-slate-700 hover:text-white transition-colors shadow-xs"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 hover:bg-[#ff5e00] hover:border-[#ff5e00] text-slate-700 hover:text-white transition-colors shadow-xs active:scale-95"
                 >
                   <InstagramIcon />
                 </a>
@@ -174,7 +174,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="p-3 rounded-xl bg-white border border-slate-200 hover:bg-[#ff5e00] hover:border-[#ff5e00] text-slate-700 hover:text-white transition-colors shadow-xs"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 hover:bg-[#ff5e00] hover:border-[#ff5e00] text-slate-700 hover:text-white transition-colors shadow-xs active:scale-95"
                 >
                   <LinkedInIcon />
                 </a>
@@ -183,23 +183,23 @@ export default function ContactSection() {
           </div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-lg">
-            <h3 className="font-changa text-2xl font-bold uppercase text-slate-900 mb-2">
+          <div className="lg:col-span-7 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200 shadow-lg">
+            <h3 className="font-changa text-xl sm:text-2xl font-bold uppercase text-slate-900 mb-1 sm:mb-2">
               SEND US A MESSAGE
             </h3>
-            <p className="text-xs text-slate-500 mb-6 font-normal">
+            <p className="text-xs text-slate-500 mb-5 sm:mb-6 font-normal">
               Fill in your details below and our team will get back to you within 4 business hours.
             </p>
 
             {submitted ? (
-              <div className="p-8 rounded-2xl bg-[#ff5e00]/5 border border-[#ff5e00] text-center animate-in fade-in duration-300">
-                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#ff5e00] text-white flex items-center justify-center shadow-md">
-                  <CheckCircle className="w-7 h-7" />
+              <div className="p-6 sm:p-8 rounded-2xl bg-[#ff5e00]/5 border border-[#ff5e00] text-center animate-in fade-in duration-300">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 rounded-full bg-[#ff5e00] text-white flex items-center justify-center shadow-md">
+                  <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
-                <h4 className="font-changa text-2xl font-bold text-slate-900 uppercase">
+                <h4 className="font-changa text-xl sm:text-2xl font-bold text-slate-900 uppercase">
                   MESSAGE RECEIVED!
                 </h4>
-                <p className="text-sm text-slate-600 mt-2 max-w-md mx-auto">
+                <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">
                   Thank you,{" "}
                   <span className="text-[#ff5e00] font-bold">
                     {formData.name}
@@ -222,13 +222,13 @@ export default function ContactSection() {
                       message: "",
                     });
                   }}
-                  className="mt-6 px-6 py-2.5 rounded-full text-xs font-semibold text-slate-700 hover:text-slate-950 bg-white border border-slate-200 shadow-xs"
+                  className="mt-6 px-6 py-2.5 min-h-[44px] rounded-full text-xs font-semibold text-slate-700 hover:text-slate-950 bg-white border border-slate-200 shadow-xs active:scale-95 transition-transform"
                 >
                   Send Another Message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[11px] font-mono text-slate-600 uppercase mb-1 font-semibold">
@@ -242,7 +242,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
+                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
 
@@ -258,7 +258,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
+                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, phone: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
+                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
 
@@ -290,7 +290,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, company: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
+                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
                     />
                   </div>
                 </div>
@@ -299,16 +299,16 @@ export default function ContactSection() {
                   <label className="block text-[11px] font-mono text-slate-600 uppercase mb-2 font-semibold">
                     SERVICES NEEDED
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {CONTACT_SERVICES.map((svc) => {
                       const isChecked = formData.services.includes(svc);
                       return (
                         <div
                           key={svc}
                           onClick={() => toggleService(svc)}
-                          className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
+                          className={`flex items-center gap-3 p-3 min-h-[44px] rounded-xl border cursor-pointer transition-all active:scale-98 ${
                             isChecked
-                              ? "bg-[#ff5e00]/10 border-[#ff5e00] text-slate-900 shadow-xs"
+                              ? "bg-[#ff5e00]/10 border-[#ff5e00] text-slate-900 shadow-xs font-medium"
                               : "bg-white border-slate-200 text-slate-700 hover:border-slate-300"
                           }`}
                         >
@@ -318,7 +318,7 @@ export default function ContactSection() {
                             onChange={() => {}}
                             className="w-4 h-4 rounded border-slate-300 text-[#ff5e00] accent-[#ff5e00] cursor-pointer"
                           />
-                          <span className="text-xs font-semibold select-none">
+                          <span className="text-xs font-semibold select-none leading-tight">
                             {svc}
                           </span>
                         </div>
@@ -339,14 +339,14 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
+                    className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white border border-slate-200 text-slate-900 text-base sm:text-sm focus:border-[#ff5e00] focus:outline-none placeholder:text-slate-400"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-full font-changa text-lg font-bold text-white bg-[#ff5e00] shadow-[0_4px_20px_rgba(255,94,0,0.35)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                  className="w-full min-h-[48px] py-3.5 sm:py-4 rounded-full font-changa text-base sm:text-lg font-bold text-white bg-[#ff5e00] shadow-[0_4px_20px_rgba(255,94,0,0.35)] hover:brightness-110 active:scale-98 transition-all flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <span>SENDING MESSAGE...</span>
