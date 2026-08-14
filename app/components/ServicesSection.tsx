@@ -16,7 +16,7 @@ const SERVICES: FlowingMenuItem[] = [
   {
     id: "video-editing",
     title: "Video Editing & Motion Graphics",
-    subtitle: "High-Retention Reels, Shorts & Brand Films",
+    subtitle: ["Long-Form", "Reels", "Shorts", "Ads", "BrandFilms"],
     icon: Video,
     badge: "High Impact",
     image: "/what_we_do/video_editing.jpg",
@@ -35,7 +35,7 @@ const SERVICES: FlowingMenuItem[] = [
   {
     id: "social-media",
     title: "Social Media Management",
-    subtitle: "Viral Content & Brand Positioning",
+    subtitle: ["Content Planning", "Content Creation", "Paid Media & Ads"],
     icon: Share2,
     badge: "Core Service",
     image: "/what_we_do/social_media_management.jpg",
@@ -54,7 +54,7 @@ const SERVICES: FlowingMenuItem[] = [
   {
     id: "media-production",
     title: "Media Production",
-    subtitle: "Cinematic Brand & Commercial Photography",
+    subtitle: ["Offline Shoots", "Product Photography", "Commercial Videography"],
     icon: Camera,
     badge: "Creative Studio",
     image: "/what_we_do/offline_shoots.jpg",
@@ -73,7 +73,7 @@ const SERVICES: FlowingMenuItem[] = [
   {
     id: "seo-ready-wesbite",
     title: "Fullstack Websites",
-    subtitle: "Next-Gen Web Apps Built for Speed & Conversion",
+    subtitle: ["Fullstack Websites", "E-Commerce", "Real Estate 3d Walkthroughs", "Web Apps"],
     icon: Globe,
     badge: "Tech Solution",
     image: "/what_we_do/websites.jpg",
@@ -92,7 +92,7 @@ const SERVICES: FlowingMenuItem[] = [
   {
     id: "ai-agents",
     title: "Custom AI Agents & Bots",
-    subtitle: "24/7 Lead Qualification & Auto-Support",
+    subtitle: ["Voice Call Agents", "Whatsapp Agents", "Website Chatbots", "Instagram Agents",],
     icon: Bot,
     badge: "AI Powered",
     image: "/what_we_do/ai_agents.png",

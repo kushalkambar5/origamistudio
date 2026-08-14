@@ -7,7 +7,7 @@ import "./FlowingMenu.css";
 export interface FlowingMenuItem {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle: string | string[];
   icon: React.ElementType;
   description: string;
   deliverables: string[];
@@ -86,6 +86,10 @@ function MenuItem({
 
   const animationDefaults = { duration: 0.5, ease: "power2.out" };
 
+  const subtitles = Array.isArray(item.subtitle)
+    ? item.subtitle
+    : [item.subtitle];
+
   const findClosestEdge = (
     mouseX: number,
     mouseY: number,
@@ -127,7 +131,7 @@ function MenuItem({
     calculateRepetitions();
     window.addEventListener("resize", calculateRepetitions);
     return () => window.removeEventListener("resize", calculateRepetitions);
-  }, [item.title, item.image]);
+  }, [item.title, item.subtitle, item.image]);
 
   useEffect(() => {
     const setupMarquee = () => {
@@ -160,7 +164,7 @@ function MenuItem({
         animationRef.current.kill();
       }
     };
-  }, [item.title, item.image, repetitions, speed]);
+  }, [item.title, item.subtitle, item.image, repetitions, speed]);
 
   const [isMarqueeOpen, setIsMarqueeOpen] = useState(false);
 
@@ -246,7 +250,12 @@ function MenuItem({
                 key={idx}
                 style={{ color: marqueeTextColor }}
               >
-                <span className="font-changa">{item.title}</span>
+                {subtitles.map((sub, sIdx) => (
+                  <React.Fragment key={sIdx}>
+                    <span className="font-changa">{sub}</span>
+                    <span className="marquee__dot">•</span>
+                  </React.Fragment>
+                ))}
                 {item.image && (
                   <div
                     className="marquee__img"
