@@ -132,3 +132,79 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #ff5e00;
 }
+
+/* ==========================================================================
+   3D Cylinder Carousel Effect (crousaleffect)
+   ========================================================================== */
+.scene-3d {
+  display: grid;
+  overflow: hidden;
+  perspective: 35em;
+  width: 100%;
+}
+
+.a3d-ring {
+  display: grid;
+  place-self: center;
+  transform-style: preserve-3d;
+  animation: ry 32s linear infinite;
+  will-change: transform;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.a3d-ring:active {
+  cursor: grabbing;
+}
+
+.scene-3d:hover .a3d-ring {
+  animation-play-state: paused;
+}
+
+.a3d-ring.is-dragging {
+  animation: none !important;
+}
+
+@keyframes ry {
+  to {
+    transform: rotateY(1turn);
+  }
+}
+
+.card-3d {
+  --w: 17.5em;
+  --ba: calc(1turn / var(--n));
+  grid-area: 1 / 1;
+  width: var(--w);
+  aspect-ratio: 7 / 10;
+  object-fit: cover;
+  border-radius: 1.5em;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform:
+    rotateY(calc(var(--i) * var(--ba)))
+    translateZ(calc(-1 * (.5 * var(--w) + .5em) / tan(.5 * var(--ba))));
+  will-change: transform;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .scene-3d {
+    perspective: 26em;
+  }
+  .card-3d {
+    --w: 11em;
+    border-radius: 1.2em;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .scene-3d {
+    perspective: 30em;
+  }
+  .card-3d {
+    --w: 14.5em;
+    border-radius: 1.35em;
+  }
+}
+
