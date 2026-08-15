@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -172,6 +173,19 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full bg-[#000000] text-slate-900 font-sans overflow-x-hidden w-full max-w-full selection:bg-[#ff5e00] selection:text-white flex flex-col">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-89F5PD2RMF"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-89F5PD2RMF');
+          `}
+        </Script>
         {children}
       </body>
     </html>
