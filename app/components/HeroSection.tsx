@@ -9,7 +9,7 @@ export default function HeroSection() {
     <>
       <section
         id="home"
-        className="relative w-full h-full pt-16 sm:pt-20 pb-3 sm:pb-5 flex flex-col justify-between items-center overflow-hidden bg-white text-slate-900"
+        className="relative w-full h-full pt-14 sm:pt-20 pb-4 sm:pb-5 flex flex-col justify-center sm:justify-between items-center overflow-hidden bg-white text-slate-900"
       >
         {/* Background Image */}
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
@@ -50,7 +50,7 @@ export default function HeroSection() {
 
 
         {/* Full Viewport Width 3D Video Carousel Container */}
-        <div className="w-full relative z-10 overflow-visible my-auto py-2">
+        <div className="w-full relative z-10 overflow-visible my-auto py-1 sm:py-2">
           <ClientVideoCarousel />
         </div>
 
@@ -58,11 +58,11 @@ export default function HeroSection() {
         <div className="absolute inset-x-0 bottom-0 h-64 sm:h-80 md:h-96 pointer-events-none bg-gradient-to-t from-black via-black/85 to-transparent z-0" />
 
         {/* Subtitle / Big Headline - Below Video Carousel */}
-         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 -mt-6 sm:-mt-10 md:-mt-14 pb-4 sm:pb-8">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center z-10 mt-3 xs:mt-5 sm:-mt-10 md:-mt-14 pb-5 sm:pb-8">
           {/* Soft Black Radial Shadow / Glow behind text */}
           <div className="absolute inset-0 -z-10 bg-black/80 blur-2xl rounded-full scale-125 pointer-events-none" />
 
-          <h2 className="font-changa text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] sm:leading-[1.1] max-w-4xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+          <h2 className="font-changa text-3xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] sm:leading-[1.1] max-w-xs xs:max-w-sm sm:max-w-4xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
             We help you outgrow the competetion
           </h2>
         </div>
