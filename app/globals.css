@@ -168,16 +168,9 @@
    ========================================================================== */
 .scene-3d {
   display: grid;
-  overflow: hidden;
+  overflow: visible;
   perspective: 35em;
   width: 100%;
-  max-width: 100vw;
-}
-
-@media (min-width: 1024px) {
-  .scene-3d {
-    overflow: visible;
-  }
 }
 
 .a3d-ring {

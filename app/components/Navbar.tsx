@@ -285,7 +285,7 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, "#contact-us")}
                 className="text-[#ff5e00] font-semibold flex items-center gap-1 min-h-[36px] items-center"
               >
-                <span>Get Custom Quote</span>
+                <span>Let's Work Together</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>
