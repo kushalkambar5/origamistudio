@@ -107,14 +107,30 @@ export const pageMarkdownMap: Record<string, PageMarkdownData> = {
 
 ## Frequently Asked Questions (FAQ)
 
-### What sets Origami Studio apart from traditional agencies?
-We integrate creative storytelling directly with modern fullstack software development and artificial intelligence workflows, ensuring measurable ROI rather than just superficial vanity metrics.
+### What services does Origami Studio offer, and can we hire you for a single service?
+Origami Studio is a full-service digital marketing and technology agency. You can hire us for standalone specialized projects — such as Next.js Web Development, Google Business Profile Local SEO, AI Lead Capture Agents, or Video Production — or partner with us for an end-to-end multi-channel growth bundle designed to scale your brand.
 
-### How quickly can a project launch?
-Standard web app and digital marketing onboardings take between 1 to 3 weeks depending on scope, assets, and custom AI requirements.
+### Why should we build a custom Next.js website with Origami Studio over WordPress or Wix?
+Traditional CMS platforms like WordPress or Wix suffer from heavy plugin bloat, slow server response times, and poor Core Web Vitals scores that lower search rankings. Our custom Next.js web applications render instantly on edge networks with sub-100ms load speeds, 100/100 Google Lighthouse performance, and built-in JSON-LD structured data.
 
-### Do you handle ongoing maintenance and optimization?
-Yes, we offer ongoing retainers for social media management, continuous SEO optimization, video production, and AI model tuning.
+### How fast is project delivery, and what is your onboarding process?
+Onboarding takes 24-48 hours following an initial discovery call. Standard social media management and digital campaign launches take 5 to 7 business days. Custom Next.js web development and AI bot deployments are typically completed in 2 to 4 weeks.
+
+### How do your AI Lead Capture Agents and WhatsApp Automation integrate with our CRM?
+We engineer custom conversational AI agents trained specifically on your brand documentation, service offerings, and product catalogs. Via robust APIs and webhooks, they connect directly to CRMs like HubSpot, Salesforce, Zoho, Google Sheets, or custom databases to automatically qualify leads, answer customer queries, and schedule appointments 24/7 on WhatsApp and your website.
+
+### How does Google Business Profile (GBP) Local SEO help our business get more customers?
+We optimize your Google Business Profile to dominate the local Google Maps "Local 3-Pack" for targeted geographic searches ("near me" intent). By maintaining NAP consistency, geotagging uploaded media, and establishing automated review workflows, we convert local online searchers into phone calls, map directions, and in-person sales.
+
+### Do you provide complete end-to-end commercial video production and offline shoots?
+Yes! We handle the entire video production pipeline — from creative concepting, scriptwriting, and storyboarding to on-location 4K filming, lighting, color grading, dynamic motion graphics, and audio mastering optimized for Instagram Reels, YouTube Shorts, commercial ads, and site banners.
+
+### What is your pricing model, and who owns the website code & video assets?
+We offer transparent, fixed-price contracts for web app development, brand redesigns, and AI bot builds, alongside flexible monthly retainers for ongoing Social Media, GBP Ranking, and Video Production. Upon final payment, you retain 100% full ownership of all intellectual property, custom website source code, design assets, and raw video footage.
+
+### What performance reporting and ROI metrics will we receive?
+Complete transparency is fundamental to our agency. You receive live analytics dashboards and monthly executive strategy calls detailing organic reach, keyword position shifts, web conversion rates, ad Return on Ad Spend (ROAS), and total revenue driven by our campaigns.
+
 
 ---
 

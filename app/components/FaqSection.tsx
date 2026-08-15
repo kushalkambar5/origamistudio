@@ -1,77 +1,148 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 
 interface FaqItem {
   question: string;
   answer: string;
-  category: string;
+  category: "Services" | "Web & SEO" | "AI & Automation" | "Social & Video" | "Pricing & Ownership";
 }
 
 const FAQS: FaqItem[] = [
   {
-    question: "What services does Origami Studio provide?",
+    question: "What services does Origami Studio offer, and can we hire you for a single service?",
     answer:
-      "Origami Studio is a full-service digital marketing & tech agency. We provide Social Media Management & Marketing, Fullstack Web Development with SEO, Google Business Profile (GBP) Local Ranking, Offline Commercial Shoots, Video Editing & Motion Graphics, AI Lead Capture Agents, and WhatsApp Marketing Automation.",
+      "Origami Studio is a full-service digital marketing and technology agency. You can hire us for standalone specialized projects — such as Next.js Web Development, Google Business Profile Local SEO, AI Lead Capture Agents, or Video Production — or partner with us for an end-to-end multi-channel growth bundle designed to scale your brand.",
     category: "Services",
   },
   {
-    question: "How fast can you launch a website or digital campaign?",
+    question: "Why should we build a custom Next.js website with Origami Studio over WordPress or Wix?",
     answer:
-      "For standard digital marketing campaigns & social media management, onboarding and content launch take 5-7 business days. For fullstack Next.js websites, delivery ranges from 2 to 4 weeks depending on scope, complete with 100/100 Core Web Vitals performance and technical SEO built in.",
-    category: "Timeline",
+      "Traditional CMS platforms like WordPress or Wix suffer from heavy plugin bloat, slow server response times, and poor Core Web Vitals scores that lower your search engine rankings. Our custom Next.js web applications render instantly on edge networks with sub-100ms load speeds, 100/100 Google Lighthouse performance, and built-in JSON-LD structured data that search engines rank higher.",
+    category: "Web & SEO",
   },
   {
-    question: "Why are your Next.js websites better for SEO than WordPress or Wix?",
+    question: "How fast is project delivery, and what is your onboarding process?",
     answer:
-      "Traditional CMS platforms like WordPress or Wix suffer from bloated plugin code, slow server response times, and poor Core Web Vitals scores. Our custom Next.js websites render static HTML instantly on edge networks, achieve sub-100ms load times, and include structured JSON-LD schema — giving search engines clean, fast data to index.",
-    category: "Technology",
+      "Onboarding is fast and simple: after an initial discovery call, we deliver a detailed strategy roadmap within 48 hours. Standard social media management and digital campaign launches take 5 to 7 business days. Custom Next.js web development and AI bot deployments are typically completed in 2 to 4 weeks.",
+    category: "Services",
   },
   {
-    question: "How do your AI Agents & WhatsApp Bots integrate with our CRM?",
+    question: "How do your AI Lead Capture Agents and WhatsApp Automation integrate with our CRM?",
     answer:
-      "We build custom AI agents trained specifically on your company documentation, FAQs, and product catalogs. They integrate seamlessly via webhooks and APIs with CRMs such as HubSpot, Salesforce, Zoho, Google Sheets, or custom web apps to automatically qualify leads and schedule appointments 24/7.",
-    category: "Automation",
+      "We engineer custom conversational AI agents trained specifically on your brand documentation, service offerings, and product catalogs. Via robust APIs and webhooks, they connect directly to CRMs like HubSpot, Salesforce, Zoho, Google Sheets, or custom databases to automatically qualify leads, answer customer queries, and schedule appointments 24/7 on WhatsApp and your website.",
+    category: "AI & Automation",
   },
   {
-    question: "What is your pricing model (retainer vs project-based)?",
+    question: "How does Google Business Profile (GBP) Local SEO help our business get more customers?",
     answer:
-      "We offer both flexible monthly retainers (for ongoing Social Media, SEO, GBP Ranking, and Video Production) as well as fixed-price project contracts (for Fullstack Website Development, Brand Redesigns, and AI Bot Deployments). Contact us for a transparent, custom estimate.",
-    category: "Pricing",
+      "We optimize your Google Business Profile to dominate the local Google Maps 'Local 3-Pack' for targeted geographic searches ('near me' intent). By maintaining NAP consistency across local directories, geotagging uploaded media, and establishing automated review workflows, we convert local online searchers into phone calls, map directions, and in-person customers.",
+    category: "Web & SEO",
   },
   {
-    question: "Do you work with local businesses as well as international startups?",
+    question: "Do you provide complete end-to-end commercial video production and offline shoots?",
     answer:
-      "Yes! We work with local brick-and-mortar businesses (restaurants, real estate agencies, clinics, fitness centers) to dominate Google Maps Local 3-Pack rankings, as well as e-commerce brands, startup founders, and global consultants across North America, Europe, and Asia.",
-    category: "Scope",
+      "Yes! We handle the entire video production pipeline — from creative concepting, scriptwriting, and storyboarding to on-location 4K filming, lighting, color grading, dynamic motion graphics, and audio mastering. We deliver high-converting video assets optimized for Instagram Reels, YouTube Shorts, commercial ads, and site banners.",
+    category: "Social & Video",
   },
   {
-    question: "What reporting and analytics metrics will we receive?",
+    question: "What is your pricing model, and who owns the website code & video assets?",
     answer:
-      "Transparency is fundamental to our process. You receive weekly metric dashboards and monthly executive strategy calls detailing organic reach, keyword position shifts, web conversion rates, ROAS on paid campaigns, and total revenue generated.",
-    category: "Reporting",
+      "We offer transparent, fixed-price contracts for web app development, brand redesigns, and AI bot builds, alongside flexible monthly retainers for ongoing Social Media, GBP Ranking, and Video Production. Upon final payment, you retain 100% full ownership of all intellectual property, custom website source code, design assets, and raw video footage.",
+    category: "Pricing & Ownership",
+  },
+  {
+    question: "What performance reporting and ROI metrics will we receive?",
+    answer:
+      "Complete transparency is fundamental to our agency. You receive live analytics dashboards and monthly executive strategy calls detailing organic reach, keyword position shifts, web conversion rates, ad Return on Ad Spend (ROAS), and total revenue driven by our campaigns.",
+    category: "Pricing & Ownership",
   },
 ];
 
+const CATEGORIES = [
+  "All",
+  "Web & SEO",
+  "AI & Automation",
+  "Social & Video",
+  "Pricing & Ownership",
+] as const;
+
 export default function FaqSection() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const filteredFaqs = useMemo(() => {
+    if (selectedCategory === "All") return FAQS;
+    return FAQS.filter((faq) => faq.category === selectedCategory);
+  }, [selectedCategory]);
+
+  const faqSchema = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    }),
+    []
+  );
 
   return (
     <section
       id="faqs"
       className="relative py-24 sm:py-32 bg-white text-slate-900 border-t border-slate-200 overflow-hidden"
     >
+      {/* FAQPage JSON-LD Structured Data for SEO Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Background Decorative Glows */}
       <div className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] bg-[#ff5e00]/10 rounded-full blur-[100px] pointer-events-none z-0" />
       <div className="absolute bottom-[20%] -left-[10%] w-[400px] h-[400px] bg-[#ff5e00]/8 rounded-full blur-[80px] pointer-events-none z-0" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-center text-slate-900 mb-12 sm:mb-16">
-          <span className="text-[#ff5e00]">FAQS</span>
-        </h2>
+        <div className="text-center mb-10 sm:mb-14">
+          <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-slate-900 mb-4">
+            <span className="text-[#ff5e00]">FAQS</span>
+          </h2>
+          <p className="text-slate-600 max-w-xl mx-auto text-sm sm:text-base font-normal">
+            Everything you need to know about our services, technology stack, project delivery, and pricing models.
+          </p>
+        </div>
+
+        {/* Category Filter Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 sm:mb-12">
+          {CATEGORIES.map((cat) => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setActiveIndex(null);
+                }}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                  isSelected
+                    ? "bg-[#ff5e00] text-white shadow-md shadow-[#ff5e00]/20 scale-105"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
 
         {/* Accordion Container */}
         <LayoutGroup>
@@ -79,7 +150,7 @@ export default function FaqSection() {
             layout
             className="border border-slate-200 rounded-2xl sm:rounded-3xl p-3 sm:p-6 bg-slate-50/70 backdrop-blur-md shadow-lg"
           >
-            {FAQS.map((faq, index) => {
+            {filteredFaqs.map((faq, index) => {
               const isActive = activeIndex === index;
               return (
                 <motion.div
@@ -88,9 +159,9 @@ export default function FaqSection() {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
+                  transition={{ duration: 0.3, delay: index * 0.03 }}
                   className={`overflow-hidden transition-colors ${
-                    index !== FAQS.length - 1 ? "border-b border-slate-200" : ""
+                    index !== filteredFaqs.length - 1 ? "border-b border-slate-200" : ""
                   }`}
                 >
                   <button
@@ -138,4 +209,5 @@ export default function FaqSection() {
     </section>
   );
 }
+
 
