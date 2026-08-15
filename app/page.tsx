@@ -30,7 +30,7 @@ export default function Home() {
         <PortfolioCarousel />
 
         {/* 5. Products Section */}
-        <ProductsSection />
+        {/* <ProductsSection /> */}
 
         {/* 6. Team Section */}
         <TeamSection />
