@@ -163,7 +163,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nohemi.variable} ${inter.variable} scroll-smooth light h-full antialiased`}
+      className={`${nohemi.variable} ${inter.variable} scroll-smooth light h-full antialiased overflow-x-hidden w-full max-w-full`}
     >
       <head>
         <script
@@ -171,7 +171,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full bg-[#F8FAFC] text-slate-900 font-sans overflow-x-hidden selection:bg-[#ff5e00] selection:text-white flex flex-col">
+      <body className="min-h-full bg-[#000000] text-slate-900 font-sans overflow-x-hidden w-full max-w-full selection:bg-[#ff5e00] selection:text-white flex flex-col">
         {children}
       </body>
     </html>

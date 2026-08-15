@@ -50,7 +50,7 @@ export default function HeroSection() {
 
 
         {/* Full Viewport Width 3D Video Carousel Container */}
-        <div className="w-full relative z-10 overflow-visible my-auto py-2">
+        <div className="w-full max-w-full relative z-10 overflow-x-hidden my-auto py-2">
           <ClientVideoCarousel />
         </div>
 

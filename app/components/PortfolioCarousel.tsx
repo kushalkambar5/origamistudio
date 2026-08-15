@@ -19,8 +19,8 @@ const WORK_ITEMS: WorkItem[] = [
   {
     id: "zero-point-five",
     title: "0.5 Show",
-    category: "YouTube Video Editing",
-    description: "Long Youtube videos editing",
+    category: "Long-Form Video Editing",
+    description: "Long form video editing",
     link: "https://youtube.com/@thezeropointfiveshow?si=8QIY4RAYgQYCqq5H",
     image: "/our_work/zero_point_five_show.png",
     side: "left",
@@ -37,8 +37,8 @@ const WORK_ITEMS: WorkItem[] = [
   {
     id: "boatigo",
     title: "Boatigo",
-    category: "Short-Form Management",
-    description: "short form content management",
+    category: "Marketing Your Brand",
+    description: "Grow your business locally",
     link: "https://www.instagram.com/boatigo.in/",
     image: "/our_work/boatigo.png",
     side: "left",
@@ -55,7 +55,7 @@ const WORK_ITEMS: WorkItem[] = [
   {
     id: "nitk-racing",
     title: "NITK Racing",
-    category: "Animated Website",
+    category: "Our Majestic Work",
     description: "Made GSAP and ThreeJS made 3d animated website for the Formula Student club of NITK.",
     link: "https://nitkracing.vercel.app/",
     image: "/our_work/nitkracing.png",

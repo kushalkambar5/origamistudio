@@ -153,16 +153,16 @@ export default function Navbar() {
         }`}
       >
         <nav
-          className="w-full bg-transparent border-none shadow-none px-1 sm:px-2 py-1 flex items-center justify-between transition-all duration-300"
+          className="w-full bg-transparent border-none shadow-none px-0.5 sm:px-2 py-1 flex items-center justify-between transition-all duration-300 gap-1"
           aria-label="Main Navigation"
         >
           {/* Left: Brand Logo & Title */}
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="flex items-center gap-2 sm:gap-3 group transition-all duration-300 active:scale-98 px-2 py-1 rounded-2xl bg-transparent"
+            className="flex items-center gap-1.5 sm:gap-3 group transition-all duration-300 active:scale-98 px-1 sm:px-2 py-1 rounded-2xl bg-transparent shrink min-w-0"
           >
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl p-1 transition-transform duration-300 group-hover:scale-105 shrink-0">
+            <div className="relative w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl p-0.5 sm:p-1 transition-transform duration-300 group-hover:scale-105 shrink-0">
               <Image
                 src="/logo.png"
                 alt="Origami Studio Logo"
@@ -173,7 +173,7 @@ export default function Navbar() {
               />
             </div>
             <span
-              className={`font-changa text-base sm:text-lg font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${
+              className={`font-changa text-xs xs:text-sm sm:text-lg font-bold tracking-wider uppercase whitespace-nowrap transition-colors duration-300 ${
                 activeSection === "our-work"
                   ? "text-white"
                   : isWhatWeDoFullScreen
@@ -230,10 +230,10 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Actions (Phone & Tablet) */}
-          <div className="flex lg:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2 shrink-0">
             <InteractiveHoverButton
               onClick={(e) => handleNavClick(e, "#contact-us")}
-              className="text-xs font-bold py-1.5 px-4 bg-white/90 text-slate-900 border-white/50 min-h-[36px]"
+              className="text-[11px] sm:text-xs font-bold py-1 px-2.5 sm:py-1.5 sm:px-4 bg-white/90 text-slate-900 border-white/50 min-h-[32px] sm:min-h-[36px] whitespace-nowrap"
             >
               Book Call
             </InteractiveHoverButton>
@@ -241,7 +241,7 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
               aria-expanded={mobileMenuOpen}
-              className={`w-9 h-9 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl border transition-all active:scale-95 ${
+              className={`w-8 h-8 sm:w-9 sm:h-9 min-h-[32px] sm:min-h-[36px] min-w-[32px] sm:min-w-[36px] flex items-center justify-center rounded-xl border transition-all active:scale-95 ${
                 activeSection === "our-work"
                   ? "bg-neutral-900/80 text-white border-neutral-800 shadow-sm backdrop-blur-xl hover:bg-neutral-800"
                   : isWhatWeDoFullScreen
@@ -249,7 +249,7 @@ export default function Navbar() {
                   : "bg-slate-950/40 text-white border-white/20 backdrop-blur-md hover:bg-slate-900/60"
               }`}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
           </div>
         </nav>

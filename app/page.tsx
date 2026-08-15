@@ -12,17 +12,17 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F8FAFC] text-slate-900 relative">
+    <main className="min-h-screen bg-[#000000] text-slate-900 relative w-full max-w-full overflow-x-hidden">
       {/* Top-Middle Transparent Navbar */}
       <Navbar />
 
       {/* 1. Home Section (Pinned Sticky Hero) */}
-      <div className="sticky top-0 h-[100dvh] w-full z-0 overflow-hidden">
+      <div className="sticky top-0 h-[100dvh] w-full max-w-full z-0 overflow-hidden">
         <HeroSection />
       </div>
 
       {/* Main Content Overlaying Sticky Hero on Scroll */}
-      <div className="relative z-10 bg-slate-50 shadow-[0_-25px_60px_rgba(0,0,0,0.25)] rounded-t-3xl sm:rounded-t-[2.5rem]">
+      <div className="relative z-10 bg-slate-50 shadow-[0_-25px_60px_rgba(0,0,0,0.25)] rounded-t-3xl sm:rounded-t-[2.5rem] w-full max-w-full overflow-x-hidden">
         {/* 2. What We Do Section */}
         <ServicesSection />
 

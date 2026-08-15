@@ -125,9 +125,6 @@ export default function TeamSection() {
           <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-[#ff5e00]">
             Team
           </h2>
-          <p className="mt-4 text-slate-600 text-base sm:text-lg font-light leading-relaxed">
-            All team members are from NITK Surathkal, Mangalore.
-          </p>
         </div>
 
         {/* Team Image Reveal List */}
