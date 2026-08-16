@@ -112,8 +112,8 @@ export default function FaqSection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-14">
-          <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-slate-900 mb-4">
-            <span className="text-[#ff5e00]">FAQS</span>
+          <h2 className="font-changa text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 mb-4">
+            <span className="text-[#ff5e00]">FAQs</span>
           </h2>
           <p className="text-slate-600 max-w-xl mx-auto text-sm sm:text-base font-normal">
             Everything you need to know about our services, technology stack, project delivery, and pricing models.

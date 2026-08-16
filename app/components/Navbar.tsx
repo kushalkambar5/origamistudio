@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { label: "Team", href: "#team" },
   { label: "FAQs", href: "#faqs" },
   { label: "Testimonials", href: "#testimonials" },
+  { label: "Blogs", href: "#blogs" },
   { label: "Contact Us", href: "#contact-us" },
 ];
 
@@ -111,6 +112,11 @@ export default function Navbar() {
     e.preventDefault();
     setMobileMenuOpen(false);
     const targetId = href.replace("#", "");
+
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      window.location.href = `/#${targetId}`;
+      return;
+    }
 
     if (targetId === "home") {
       window.scrollTo({ top: 0, behavior: "smooth" });

@@ -7,6 +7,7 @@ import ProductsSection from "./components/ProductsSection";
 import TeamSection from "./components/TeamSection";
 import FaqSection from "./components/FaqSection";
 import TestimonialsSection from "./components/TestimonialsSection";
+import BlogsSection from "./components/BlogsSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
@@ -41,7 +42,10 @@ export default function Home() {
         {/* Testimonials Section */}
         <TestimonialsSection />
 
-        {/* 8. Contact Us Section */}
+        {/* 8. Blogs Section */}
+        <BlogsSection />
+
+        {/* 9. Contact Us Section */}
         <ContactSection />
 
 
