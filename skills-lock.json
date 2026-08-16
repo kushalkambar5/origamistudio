@@ -13,6 +13,12 @@
       "skillPath": "skills/tailwind-4-docs/SKILL.md",
       "computedHash": "4900f575f24641b1af459cda37cbb8438ecf3f8f1a63148384197cb730895093"
     },
+    "topic-to-blog": {
+      "source": "kushalkambar5/topic-to-blog-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "d3151813cf98e54d8ceb9ba2f61cf58a6771a1512f371e6bf4dcd6a30aec9084"
+    },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",
       "ref": "main",
