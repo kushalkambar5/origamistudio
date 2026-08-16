@@ -1,9 +1,3 @@
-export interface BlogAuthor {
-  name: string;
-  role: string;
-  avatar: string;
-}
-
 export interface BlogPost {
   slug: string;
   title: string;
@@ -11,7 +5,6 @@ export interface BlogPost {
   category: string;
   readTime: string;
   date: string;
-  author: BlogAuthor;
   coverGradient: string;
   tags: string[];
   featured?: boolean;
@@ -41,11 +34,6 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "5 min read",
     date: "Aug 15, 2026",
     featured: true,
-    author: {
-      name: "Kushal B K",
-      role: "Lead Tech & AI",
-      avatar: "/team/kushal.jpg",
-    },
     coverGradient: "from-[#ff5e00]/20 via-orange-500/10 to-slate-900",
     tags: ["Next.js", "CRO", "UI/UX", "Web Design"],
     content: {
@@ -115,11 +103,6 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "6 min read",
     date: "Aug 12, 2026",
     featured: true,
-    author: {
-      name: "Kushal B K",
-      role: "Lead Tech & AI",
-      avatar: "/team/kushal.jpg",
-    },
     coverGradient: "from-blue-600/20 via-[#ff5e00]/15 to-slate-950",
     tags: ["AI Agents", "WhatsApp API", "CRM Automation", "Lead Gen"],
     content: {
@@ -171,11 +154,6 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "7 min read",
     date: "Aug 08, 2026",
     featured: true,
-    author: {
-      name: "Shrujan Satish",
-      role: "Shoots & Marketing",
-      avatar: "/team/shrujan.jpg",
-    },
     coverGradient: "from-emerald-500/20 via-[#ff5e00]/15 to-slate-900",
     tags: ["GBP", "Local SEO", "Google Maps", "Reputation"],
     content: {
@@ -226,11 +204,6 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "5 min read",
     date: "Aug 02, 2026",
     featured: false,
-    author: {
-      name: "Rudra Prathap",
-      role: "Video Editing & Marketing",
-      avatar: "/team/rudra.jpg",
-    },
     coverGradient: "from-purple-600/20 via-[#ff5e00]/15 to-slate-900",
     tags: ["Reels", "Shorts", "Video Editing", "Content Strategy"],
     content: {
@@ -280,11 +253,6 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "8 min read",
     date: "Jul 28, 2026",
     featured: false,
-    author: {
-      name: "Kushal B K",
-      role: "Lead Tech & AI",
-      avatar: "/team/kushal.jpg",
-    },
     coverGradient: "from-cyan-500/20 via-[#ff5e00]/15 to-slate-900",
     tags: ["Next.js", "SEO", "TypeScript", "Core Web Vitals"],
     content: {
@@ -334,11 +302,6 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "6 min read",
     date: "Jul 20, 2026",
     featured: false,
-    author: {
-      name: "Rudra Prathap",
-      role: "Video Editing & Marketing",
-      avatar: "/team/rudra.jpg",
-    },
     coverGradient: "from-rose-500/20 via-[#ff5e00]/15 to-slate-900",
     tags: ["Branding", "Design System", "Art Direction", "Typography"],
     content: {

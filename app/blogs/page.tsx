@@ -52,10 +52,6 @@ export default function BlogsPage() {
       description: blog.excerpt,
       url: `https://origamistudio.in/blogs/${blog.slug}`,
       datePublished: blog.date,
-      author: {
-        "@type": "Person",
-        name: blog.author.name,
-      },
     })),
   };
 
@@ -112,16 +108,9 @@ export default function BlogsPage() {
       <div className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 w-full space-y-12 sm:space-y-16">
         {/* Page Hero Banner */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff5e00]/10 border border-[#ff5e00]/20 text-[#ff5e00] text-xs font-semibold font-mono tracking-wide">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>ORIGAMI KNOWLEDGE BASE</span>
-          </div>
           <h1 className="font-changa text-3xl sm:text-6xl font-extrabold uppercase tracking-tight text-slate-950 leading-[1.1]">
-            STORIES, STRATEGY & <span className="text-[#ff5e00]">INSIGHTS</span>
+            <span className="text-[#ff5e00]">BLOGS</span>
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            High-leverage engineering blueprints, conversion rate optimization tactics, AI automation playbooks, and video production masterclasses.
-          </p>
         </div>
 
         {/* Interactive Blog Cards + Filtering */}

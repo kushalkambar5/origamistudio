@@ -56,7 +56,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Origami Studio",
       type: "article",
       publishedTime: post.date,
-      authors: [post.author.name],
       images: [
         {
           url: "/logo.png",
@@ -92,11 +91,6 @@ export default async function BlogPostPage({ params }: Props) {
     description: post.excerpt,
     image: "https://origamistudio.in/logo.png",
     datePublished: post.date,
-    author: {
-      "@type": "Person",
-      name: post.author.name,
-      jobTitle: post.author.role,
-    },
     publisher: {
       "@type": "Organization",
       name: "Origami Studio",
@@ -206,26 +200,11 @@ export default async function BlogPostPage({ params }: Props) {
             {post.excerpt}
           </p>
 
-          {/* Author and Social Share Toolbar */}
-          <div className="pt-4 border-t border-b border-slate-200 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-200 bg-slate-100 shrink-0">
-                <Image
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-bold text-slate-900">
-                  {post.author.name}
-                </span>
-                <span className="text-xs text-slate-500 font-mono">
-                  {post.author.role} • Origami Studio
-                </span>
-              </div>
-            </div>
+          {/* Social Share Toolbar */}
+          <div className="pt-4 border-t border-b border-slate-200 py-4 flex items-center justify-between gap-4">
+            <span className="text-xs text-slate-500 font-mono">
+              Published: {post.date}
+            </span>
 
             <ShareButtons title={post.title} slug={post.slug} />
           </div>
@@ -315,53 +294,8 @@ export default async function BlogPostPage({ params }: Props) {
             </p>
           </div>
 
-          {/* Tags */}
-          <div className="pt-6 border-t border-slate-100 flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-mono text-slate-400">TAGS:</span>
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
         </div>
 
-        {/* Author Bio Box */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-xs">
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#ff5e00]/30 shrink-0 bg-slate-100">
-            <Image
-              src={post.author.avatar}
-              alt={post.author.name}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="space-y-2 text-center sm:text-left grow">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-              <h4 className="font-changa text-lg font-bold text-slate-900">
-                Written by {post.author.name}
-              </h4>
-              <span className="text-xs font-mono text-[#ff5e00] font-semibold">
-                {post.author.role}
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Core team member at Origami Studio specializing in high-performance digital marketing, fullstack engineering, video production, and AI automation systems.
-            </p>
-            <div className="pt-1">
-              <Link
-                href="/#team"
-                className="inline-flex items-center gap-1 text-xs font-bold text-[#ff5e00] hover:underline"
-              >
-                <span>View Full Team</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-        </div>
 
         {/* Call to Action Box */}
         <div className="relative rounded-3xl bg-slate-950 text-white p-8 sm:p-12 overflow-hidden shadow-xl">
