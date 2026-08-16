@@ -245,24 +245,19 @@ Origami Studio shall not be liable for indirect, incidental, or consequential da
   "/blogs": {
     title: "Blogs & Tactical Playbooks | Origami Studio",
     description:
-      "Explore technical guides, CRO strategies, local SEO playbooks, AI agent automation, and video marketing breakdowns by Origami Studio.",
+      "Explore articles, startup analyses, and tactical playbooks by Origami Studio.",
     image: `${siteUrl}/logo.png`,
     jsonLd: mainJsonLd,
     originalHtmlLengthEstimate: 16000,
     content: `
 # Origami Studio — Stories, Strategy & Tactical Insights
 
-Discover actionable engineering blueprints, conversion rate optimization strategies, Google Business Profile ranking playbooks, short-form video production secrets, and custom AI agent workflows.
+Explore actionable engineering blueprints, startup breakdowns, and tactical guides from Origami Studio.
 
 ---
 
 ## Featured Articles & Guides:
-- **The Anatomy of a High-Converting Agency Landing Page in 2026:** Why traditional agency websites fail to convert traffic, and the exact architectural blueprint to turn visitors into booked calls.
-- **How Custom AI Agents & WhatsApp Automation 10x Lead Capture:** Automated conversational workflows and custom trained AI assistants turning midnight visitors into qualified appointments.
-- **Dominating Local Search: The 2026 Google Business Profile Playbook:** Step-by-step masterclass on ranking in the Google Local 3-Pack.
-- **From Views to Revenue: Building a Viral Short-Form Video Engine:** Short-form video narrative frameworks that generate inbound business.
-- **Next.js SEO Mastery:** Server Components, OpenGraph generation, JSON-LD automation, and sub-100ms speeds.
-- **Visual Storytelling:** How cohesive brand identity across web, video, and social drives trust and pricing power.
+- **NITK Student & Alumni Startups: Campus Ideas to Unicorns:** Explore the thriving startup ecosystem at NITK Surathkal. Discover active student-run agencies like Origami Studio, Wash Express, and Helixar alongside alumni unicorns like Practo and Delhivery.
 `,
   },
 };

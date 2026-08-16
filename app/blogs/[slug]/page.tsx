@@ -210,20 +210,6 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </header>
 
-        {/* Featured Visual Hero Accent */}
-        <div className="relative rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-neutral-900 border border-slate-800 p-8 sm:p-12 overflow-hidden shadow-xl text-white">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#ff5e00]/25 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 space-y-3">
-            <span className="text-[#ff5e00] font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              ORIGAMI STUDIO FIELD GUIDE
-            </span>
-            <p className="text-sm sm:text-base text-slate-300 font-mono max-w-xl">
-              &quot;Ideas become real through precision folding. Growth happens when strategy meets uncompromising execution.&quot;
-            </p>
-          </div>
-        </div>
-
         {/* Article Body */}
         <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 lg:p-12 shadow-xs space-y-10 text-slate-700 leading-relaxed text-sm sm:text-base">
           {/* Introduction */}
