@@ -257,6 +257,7 @@ Explore actionable engineering blueprints, startup breakdowns, and tactical guid
 ---
 
 ## Featured Articles & Guides:
+- **ChangePay App Breakdown: Founders, Supported Colleges & Honest Student Feedback:** A complete breakdown of ChangePay: what the campus commerce app does, founders Dhyvik GJ, Jeevan M & Chetan Jaydeep, supported colleges like NITK and MIT Manipal, and honest Reddit user reviews.
 - **NITK Student & Alumni Startups: Campus Ideas to Unicorns:** Explore the thriving startup ecosystem at NITK Surathkal. Discover active student-run agencies like Origami Studio, Wash Express, and Helixar alongside alumni unicorns like Practo and Delhivery.
 `,
   },
