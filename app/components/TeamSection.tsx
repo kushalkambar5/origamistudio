@@ -27,7 +27,7 @@ interface TeamMember {
 const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Rudra Prathap",
-    role: "video editting & marketting",
+    role: "Video Editing & Marketing",
     image: "/team/rudra.jpg",
     links: [
       {
@@ -39,7 +39,7 @@ const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     name: "Shrujan Satish",
-    role: "shoots & marketing",
+    role: "Video Shoots & Marketing",
     image: "/team/shrujan.jpg",
     links: [
       {
@@ -51,7 +51,7 @@ const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     name: "Kushal B K",
-    role: "tech (web & ai agents)",
+    role: "Tech (Web & AI Agents)",
     image: "/team/kushal.jpg",
     links: [
       {
