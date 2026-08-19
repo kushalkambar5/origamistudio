@@ -7,14 +7,17 @@ import BlogsClient from "./BlogsClient";
 import { getAllBlogs } from "@/lib/blogs-data";
 
 export const metadata = {
-  title: "Blogs & Tactical Playbooks | Origami Studio",
+  title: "Blogs & Tactical Playbooks",
   description:
     "Explore technical guides, CRO strategies, local SEO playbooks, AI agent automation, and video marketing breakdowns by Origami Studio.",
+  alternates: {
+    canonical: "https://www.origamistudio.in/blogs",
+  },
   openGraph: {
     title: "Blogs & Tactical Playbooks | Origami Studio",
     description:
       "Explore technical guides, CRO strategies, local SEO playbooks, AI agent automation, and video marketing breakdowns by Origami Studio.",
-    url: "https://origamistudio.in/blogs",
+    url: "https://www.origamistudio.in/blogs",
     siteName: "Origami Studio",
     images: [
       {
@@ -33,9 +36,9 @@ export default function BlogsPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "@id": "https://origamistudio.in/blogs",
+    "@id": "https://www.origamistudio.in/blogs",
     name: "Origami Studio Blogs & Tactical Insights",
-    url: "https://origamistudio.in/blogs",
+    url: "https://www.origamistudio.in/blogs",
     description:
       "Actionable engineering breakdowns, SEO rankings, AI automation workflows, and short-form video strategies from Origami Studio.",
     publisher: {
@@ -43,14 +46,14 @@ export default function BlogsPage() {
       name: "Origami Studio",
       logo: {
         "@type": "ImageObject",
-        url: "https://origamistudio.in/logo.png",
+        url: "https://www.origamistudio.in/logo.png",
       },
     },
     blogPost: allBlogs.map((blog) => ({
       "@type": "BlogPosting",
       headline: blog.title,
       description: blog.excerpt,
-      url: `https://origamistudio.in/blogs/${blog.slug}`,
+      url: `https://www.origamistudio.in/blogs/${blog.slug}`,
       datePublished: blog.date,
     })),
   };

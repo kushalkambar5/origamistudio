@@ -7,7 +7,7 @@ export interface PageMarkdownData {
   originalHtmlLengthEstimate?: number;
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://origamistudio.in";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.origamistudio.in";
 
 const mainJsonLd = {
   "@context": "https://schema.org",
@@ -139,7 +139,7 @@ Complete transparency is fundamental to our agency. You receive live analytics d
 - **Email:** hello@origamistudio.in
 - **Phone:** +91 8919300467
 - **Location:** NITK Surathkal, Mangalore, Karnataka 575025, India
-- **Website:** [https://origamistudio.in](https://origamistudio.in)
+- **Website:** [https://www.origamistudio.in](https://www.origamistudio.in)
 `,
   },
   "/privacy-policy": {
@@ -154,7 +154,7 @@ Complete transparency is fundamental to our agency. You receive live analytics d
 
 **Last Updated:** August 14, 2026
 
-At **Origami Studio** ("we", "our", "us"), we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines how we collect, use, store, and safeguard your data when you visit [https://origamistudio.in](https://origamistudio.in) or interact with our services.
+At **Origami Studio** ("we", "our", "us"), we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines how we collect, use, store, and safeguard your data when you visit [https://www.origamistudio.in](https://www.origamistudio.in) or interact with our services.
 
 ---
 
@@ -201,7 +201,7 @@ You have the right to request access to, correction of, or deletion of your pers
 
 **Last Updated:** August 14, 2026
 
-Welcome to **Origami Studio** ("Company", "we", "our", or "us"). By accessing our website ([https://origamistudio.in](https://origamistudio.in)) or engaging our digital marketing, web development, SEO, video production, or AI agent services, you agree to be bound by these Terms and Conditions ("Terms").
+Welcome to **Origami Studio** ("Company", "we", "our", or "us"). By accessing our website ([https://www.origamistudio.in](https://www.origamistudio.in)) or engaging our digital marketing, web development, SEO, video production, or AI agent services, you agree to be bound by these Terms and Conditions ("Terms").
 
 ---
 

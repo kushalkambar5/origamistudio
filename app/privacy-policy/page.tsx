@@ -5,8 +5,18 @@ import { ArrowLeft, ShieldCheck } from "lucide-react";
 import Footer from "../components/Footer";
 
 export const metadata = {
-  title: "Privacy Policy | Origami Studio",
+  title: "Privacy Policy",
   description: "Privacy Policy governing how Origami Studio collects, uses, and safeguards user and client information.",
+  alternates: {
+    canonical: "https://www.origamistudio.in/privacy-policy",
+  },
+  openGraph: {
+    title: "Privacy Policy | Origami Studio",
+    description: "Privacy Policy governing how Origami Studio collects, uses, and safeguards user and client information.",
+    url: "https://www.origamistudio.in/privacy-policy",
+    siteName: "Origami Studio",
+    images: [{ url: "/logo.png", width: 800, height: 800, alt: "Origami Studio Privacy Policy" }],
+  },
 };
 
 export default function PrivacyPolicy() {
@@ -71,7 +81,7 @@ export default function PrivacyPolicy() {
                 1. Overview & Commitment
               </h2>
               <p>
-                At <strong>Origami Studio</strong> (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;), we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines how we collect, use, store, and safeguard your data when you visit <a href="https://origamistudio.in" className="text-[#ff5e00] hover:underline font-medium">origamistudio.in</a> or interact with our services.
+                At <strong>Origami Studio</strong> (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;), we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines how we collect, use, store, and safeguard your data when you visit <a href="https://www.origamistudio.in" className="text-[#ff5e00] hover:underline font-medium">origamistudio.in</a> or interact with our services.
               </p>
             </section>
 

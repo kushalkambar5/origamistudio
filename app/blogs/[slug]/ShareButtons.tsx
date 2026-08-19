@@ -33,7 +33,7 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
     if (typeof window !== "undefined") {
       return window.location.href;
     }
-    return `https://origamistudio.in/blogs/${slug}`;
+    return `https://www.origamistudio.in/blogs/${slug}`;
   };
 
   const handleCopy = async () => {

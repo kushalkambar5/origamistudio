@@ -109,7 +109,7 @@ export default function TestimonialsSection() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "@id": "https://origamistudio.in",
+    "@id": "https://www.origamistudio.in",
     "name": "Origami Studio",
     "aggregateRating": {
       "@type": "AggregateRating",

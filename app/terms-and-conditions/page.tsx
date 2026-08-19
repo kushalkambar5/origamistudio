@@ -5,8 +5,18 @@ import { ArrowLeft, FileText } from "lucide-react";
 import Footer from "../components/Footer";
 
 export const metadata = {
-  title: "Terms & Conditions | Origami Studio",
+  title: "Terms & Conditions",
   description: "Terms and Conditions governing the use of Origami Studio's digital marketing, web development, SEO, and AI services.",
+  alternates: {
+    canonical: "https://www.origamistudio.in/terms-and-conditions",
+  },
+  openGraph: {
+    title: "Terms & Conditions | Origami Studio",
+    description: "Terms and Conditions governing the use of Origami Studio's digital marketing, web development, SEO, and AI services.",
+    url: "https://www.origamistudio.in/terms-and-conditions",
+    siteName: "Origami Studio",
+    images: [{ url: "/logo.png", width: 800, height: 800, alt: "Origami Studio Terms & Conditions" }],
+  },
 };
 
 export default function TermsAndConditions() {
@@ -71,7 +81,7 @@ export default function TermsAndConditions() {
                 1. Acceptance of Terms
               </h2>
               <p>
-                Welcome to <strong>Origami Studio</strong> (&quot;Company&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By accessing our website (<a href="https://origamistudio.in" className="text-[#ff5e00] hover:underline font-medium">origamistudio.in</a>), engaging our digital marketing, web development, SEO, video production, or AI agent services, you agree to be bound by these Terms and Conditions (&quot;Terms&quot;).
+                Welcome to <strong>Origami Studio</strong> (&quot;Company&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By accessing our website (<a href="https://www.origamistudio.in" className="text-[#ff5e00] hover:underline font-medium">origamistudio.in</a>), engaging our digital marketing, web development, SEO, video production, or AI agent services, you agree to be bound by these Terms and Conditions (&quot;Terms&quot;).
               </p>
               <p>
                 If you do not agree with any part of these Terms, you must not use our website or services.

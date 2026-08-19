@@ -40,7 +40,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://origamistudio.in"),
+  metadataBase: new URL("https://www.origamistudio.in"),
+  alternates: {
+    canonical: "https://www.origamistudio.in",
+  },
   title: {
     default: "Origami Studio | Digital Marketing & Tech Services Agency",
     template: "%s | Origami Studio",
@@ -61,7 +64,7 @@ export const metadata: Metadata = {
     "Origami Studio",
     "origamistudio.in",
   ],
-  authors: [{ name: "Origami Studio Team", url: "https://origamistudio.in" }],
+  authors: [{ name: "Origami Studio Team", url: "https://www.origamistudio.in" }],
   creator: "Origami Studio",
   publisher: "Origami Studio",
   manifest: "/site.webmanifest",
@@ -82,7 +85,7 @@ export const metadata: Metadata = {
     title: "Origami Studio | Folding Ideas. Creating Impact.",
     description:
       "A digital marketing studio that helps brands stand out, scale up and stay ahead. Strategy • Creativity • Technology • Results.",
-    url: "https://origamistudio.in",
+    url: "https://www.origamistudio.in",
     siteName: "Origami Studio",
     images: [
       {
@@ -119,14 +122,15 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Origami Studio",
-  image: "https://origamistudio.in/logo.png",
-  "@id": "https://origamistudio.in",
-  url: "https://origamistudio.in",
-  telephone: "+919876543210",
+  image: "https://www.origamistudio.in/logo.png",
+  "@id": "https://www.origamistudio.in",
+  url: "https://www.origamistudio.in",
+  telephone: "+918919300467",
   priceRange: "$$",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Bangalore",
+    addressLocality: "Mangalore",
+    addressRegion: "Karnataka",
     addressCountry: "IN",
   },
   geo: {

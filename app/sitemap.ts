@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllBlogs } from "@/lib/blogs-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://origamistudio.in";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.origamistudio.in";
   const allBlogs = getAllBlogs();
 
   const blogUrls: MetadataRoute.Sitemap = allBlogs.map((blog) => ({

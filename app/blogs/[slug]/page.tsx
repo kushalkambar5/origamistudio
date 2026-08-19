@@ -41,18 +41,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "Article Not Found | Origami Studio",
+      title: "Article Not Found",
     };
   }
 
   return {
-    title: `${post.title} | Origami Studio`,
+    title: post.title,
     description: post.excerpt,
     keywords: post.tags,
+    alternates: {
+      canonical: `https://www.origamistudio.in/blogs/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://origamistudio.in/blogs/${post.slug}`,
+      url: `https://www.origamistudio.in/blogs/${post.slug}`,
       siteName: "Origami Studio",
       type: "article",
       publishedTime: post.date,
@@ -89,19 +92,19 @@ export default async function BlogPostPage({ params }: Props) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
-    image: "https://origamistudio.in/logo.png",
+    image: "https://www.origamistudio.in/logo.png",
     datePublished: post.date,
     publisher: {
       "@type": "Organization",
       name: "Origami Studio",
       logo: {
         "@type": "ImageObject",
-        url: "https://origamistudio.in/logo.png",
+        url: "https://www.origamistudio.in/logo.png",
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://origamistudio.in/blogs/${post.slug}`,
+      "@id": `https://www.origamistudio.in/blogs/${post.slug}`,
     },
   };
 
